@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title }} - Kelurahan Tipulu</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -86,7 +89,7 @@
             <div class="w-full md:ml-64 flex-1 flex flex-col overflow-hidden animate-slide-in-top">
 
                 <!-- ===== Header ===== -->
-                @include('layouts.githeader')
+                @include('layouts.header')
 
                 <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-4 md:p-6">
                     <!-- Konten dinamis akan dimuat di sini -->
@@ -97,6 +100,25 @@
     </div>
 
     <script>
+        // Toggle Sidebar
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.getElementById("sidebar-overlay");
+        const hamburger = document.getElementById("hamburger");
+
+        if (hamburger) {
+            hamburger.addEventListener("click", () => {
+                sidebar.classList.toggle("-translate-x-full");
+                overlay.classList.toggle("hidden");
+            });
+        }
+
+        if (overlay) {
+            overlay.addEventListener("click", () => {
+                sidebar.classList.add("-translate-x-full");
+                overlay.classList.add("hidden");
+            });
+        }
+
         function updateTime() {
             const now = new Date();
             const options = {
