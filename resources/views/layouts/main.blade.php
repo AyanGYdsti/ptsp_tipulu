@@ -119,29 +119,40 @@
             });
         }
 
-        const modal = document.getElementById('modal');
-        const modalContent = document.getElementById('modalContent');
-        const openModalBtn = document.getElementById('openModalBtn');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const closeModalBtn2 = document.getElementById('closeModalBtn2');
+        document.addEventListener("DOMContentLoaded", function() {
+            const modal = document.getElementById('modal');
+            const modalContent = document.getElementById('modalContent');
+            const openModalBtn = document.getElementById('openModalBtn');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const closeModalBtn2 = document.getElementById('closeModalBtn2');
 
-        function openModal() {
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modalContent.classList.remove('scale-95', 'opacity-0');
-                modalContent.classList.add('scale-100', 'opacity-100');
-            }, 10);
-        }
+            if (modal && modalContent) {
+                function openModal() {
+                    modal.classList.remove('hidden');
+                    setTimeout(() => {
+                        modalContent.classList.remove('scale-95', 'opacity-0');
+                        modalContent.classList.add('scale-100', 'opacity-100');
+                    }, 10);
+                }
 
-        function closeModal() {
-            modalContent.classList.remove('scale-100', 'opacity-100');
-            modalContent.classList.add('scale-95', 'opacity-0');
-            setTimeout(() => modal.classList.add('hidden'), 200);
-        }
+                function closeModal() {
+                    modalContent.classList.remove('scale-100', 'opacity-100');
+                    modalContent.classList.add('scale-95', 'opacity-0');
+                    setTimeout(() => modal.classList.add('hidden'), 200);
+                }
 
-        openModalBtn.addEventListener('click', openModal);
-        closeModalBtn.addEventListener('click', closeModal);
-        closeModalBtn2.addEventListener('click', closeModal);
+                if (openModalBtn) openModalBtn.addEventListener('click', openModal);
+                if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+                if (closeModalBtn2) closeModalBtn2.addEventListener('click', closeModal);
+
+                // Optional: klik area di luar modalContent untuk menutup modal
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        closeModal();
+                    }
+                });
+            }
+        });
 
         function updateTime() {
             const now = new Date();

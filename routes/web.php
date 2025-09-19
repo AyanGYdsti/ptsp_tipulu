@@ -3,7 +3,8 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Frontend\BerandaController;
-use App\Http\Controllers\PersyaratanController;
+use App\Http\Controllers\Backend\PersyaratanController;
+use App\Http\Controllers\Backend\PelayananController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -21,3 +22,10 @@ Route::get('/persyaratan/edit/{id}', [PersyaratanController::class, 'edit'])->na
 Route::post('/persyaratan/store', [PersyaratanController::class, 'store'])->name('persyaratan.store');
 Route::put('/persyaratan/update/{id}', [PersyaratanController::class, 'update'])->name('persyaratan.update');
 Route::get('/persyaratan/delete/{id}', [PersyaratanController::class, 'delete'])->name('persyaratan.delete');
+Route::get('/persyaratan', [PersyaratanController::class, 'index'])->name('persyaratan');
+
+Route::get('/pelayanan', [PelayananController::class, 'index'])->name('pelayanan');
+Route::get('/pelayanan/edit/{id}', [PelayananController::class, 'edit'])->name('pelayanan.edit');
+Route::post('/pelayanan/store', [PelayananController::class, 'store'])->name('pelayanan.store');
+Route::put('/pelayanan/update/{id}', [PelayananController::class, 'update'])->name('pelayanan.update');
+Route::get('/pelayanan/delete/{id}', [PelayananController::class, 'delete'])->name('pelayanan.delete');

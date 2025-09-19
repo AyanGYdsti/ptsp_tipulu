@@ -34,7 +34,8 @@
             <div id="masterDataDropdown" class="ml-8 space-y-1 hidden">
                 <a href="{{ route('persyaratan') }}"
                     class="block px-3 py-2 rounded-md hover:bg-blue-500 text-sm">Persyaratan</a>
-                <a href="" class="block px-3 py-2 rounded-md hover:bg-blue-500 text-sm">Pelayanan</a>
+                <a href="{{ route('pelayanan') }}"
+                    class="block px-3 py-2 rounded-md hover:bg-blue-500 text-sm">Pelayanan</a>
             </div>
         </div>
         <a href="#" class="sidebar-link flex items-center gap-3 px-3 py-2 hover:bg-blue-600 rounded-md">📰

@@ -1,0 +1,103 @@
+<?php
+
+namespace App\Http\Controllers\Backend;
+
+use App\Http\Controllers\Controller;
+use App\Models\Pelayanan;
+use App\Models\PelayananPersyaratan;
+use App\Models\Persyaratan;
+use Illuminate\Http\Request;
+
+class PelayananController extends Controller
+{
+    public function index()
+    {
+        $title = "Pelayanan";
+
+
+        $pelayanan = Pelayanan::with('pelayananPersyaratan.persyaratan')->get();
+
+        $persyaratan = Persyaratan::get(['id', 'nama']);
+
+        return view('backend.pelayanan.index', compact('title', 'pelayanan', 'persyaratan'));
+    }
+
+    public function edit($id)
+    {
+        $title = "Edit Pelayanan";
+        $pelayanan = Pelayanan::find($id);
+
+        $persyaratan = Persyaratan::get(['id', 'nama']);
+
+        return view('backend.pelayanan.edit', compact('title', 'pelayanan', 'persyaratan'));
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'nama' => 'required',
+            'persyaratan_id' => 'required'
+        ]);
+        try {
+            $pelayanan_id = Pelayanan::create([
+                'nama' => $data['nama']
+            ])->id;
+
+            foreach ($data['persyaratan_id'] as $persyaratan_id) {
+                PelayananPersyaratan::create([
+                    'pelayanan_id' => $pelayanan_id,
+                    'persyaratan_id' => $persyaratan_id,
+                ]);
+            }
+
+            return back()->with('success', 'Berhasil menambah data');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal menambah data');
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $pelayanan = Pelayanan::find($id);
+
+        $data = $request->validate([
+            'nama' => 'required',
+            'persyaratan_id' => 'required'
+        ]);
+
+        try {
+            $pelayanan->update([
+                'nama' => $data['nama']
+            ]);
+
+            $pelayanan->pelayananPersyaratan()->delete();
+
+            foreach ($data['persyaratan_id'] as $persyaratan_id) {
+                PelayananPersyaratan::create([
+                    'pelayanan_id'   => $pelayanan->id,
+                    'persyaratan_id' => $persyaratan_id,
+                ]);
+            }
+
+            return redirect('/pelayanan')->with('success', 'Berhasil update data');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal update data');
+        }
+    }
+
+
+    public function delete($id)
+    {
+        $pelayanan = Pelayanan::find($id);
+
+        try {
+            $pelayanan->delete();
+
+            PelayananPersyaratan::where('pelayanan_id', $id)->delete();
+
+            return back()->with('success', 'Berhasil menghapus data');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal menghapus data');
+        }
+    }
+}
