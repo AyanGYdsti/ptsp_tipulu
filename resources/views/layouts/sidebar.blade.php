@@ -45,7 +45,9 @@
     </nav>
 
     <div class="mt-auto p-4 border-t border-gray-700">
-        <a href="#" class="flex items-center gap-3 px-3 py-2 hover:bg-blue-600 rounded-md">🚪 Logout</a>
+        <a href="{{ route('auth.logout') }}" onclick="return confirm('Apakah Anda Yakin Ingin Logout?')"
+            class="flex items-center gap-3 px-3 py-2 hover:bg-blue-600 rounded-md">🚪
+            Logout</a>
     </div>
 </div>
 
