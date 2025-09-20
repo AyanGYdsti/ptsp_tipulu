@@ -46,7 +46,7 @@
                         <div>
                             <p class="text-sm text-slate-500 dark:text-slate-300">Pelayanan</p>
                             <p class="mt-1 text-2xl font-bold text-slate-900 dark:text-white" aria-live="polite">
-                                {{ number_format($pelayananCount ?? 0, 0, ',', '.') }}
+                                {{ number_format($jumlahPelayanan ?? 0, 0, ',', '.') }}
                             </p>
                         </div>
                     </div>

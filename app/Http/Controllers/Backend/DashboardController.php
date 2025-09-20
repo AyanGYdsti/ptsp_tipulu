@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pelayanan;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -11,6 +12,8 @@ class DashboardController extends Controller
     {
         $title = "Dashboard";
 
-        return view('backend.dashboard.index', compact('title'));
+        $jumlahPelayanan = Pelayanan::count();
+
+        return view('backend.dashboard.index', compact('title', 'jumlahPelayanan'));
     }
 }
