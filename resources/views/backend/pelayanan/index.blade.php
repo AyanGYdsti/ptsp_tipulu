@@ -9,12 +9,12 @@
         <!-- Card -->
         <div class="bg-gradient-to-br from-blue-50 to-blue-100 shadow-xl rounded-2xl p-6 border border-blue-200">
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-extrabold text-blue-800 tracking-wide flex items-center gap-2">
+                <h2 class="lg:text-2xl md:text-[12px] font-extrabold text-blue-800 tracking-wide flex items-center gap-2">
                     <i class="fa fa-list-alt text-blue-600"></i> Daftar {{ $title }}
                 </h2>
                 <button id="openModalBtn"
-                    class="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:from-blue-700 hover:to-blue-600 shadow-md transition">
-                    <i class="fa fa-plus"></i> Tambah Data
+                    class="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:from-blue-700 hover:to-blue-600 shadow-md transition text-[12px]">
+                    <i class="fa fa-plus"></i> Data
                 </button>
             </div>
 
