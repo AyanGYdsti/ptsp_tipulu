@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Berita;
 use App\Models\LandingPage;
 use Illuminate\Http\Request;
 
@@ -14,6 +15,8 @@ class BerandaController extends Controller
 
         $landingPage = LandingPage::first();
 
-        return view('frontend.beranda.index', compact('title', 'landingPage'));
+        $berita = Berita::get();
+
+        return view('frontend.beranda.index', compact('title', 'landingPage', 'berita'));
     }
 }

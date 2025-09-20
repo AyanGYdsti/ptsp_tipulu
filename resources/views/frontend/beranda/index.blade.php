@@ -175,57 +175,26 @@
                 <div class="relative fade-in-up">
                     <div id="carousel-wrapper" class="overflow-hidden">
                         <div id="carousel-inner" class="flex transition-transform duration-500 ease-in-out">
-                            <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 p-4">
-                                <div class="bg-white rounded-lg shadow-md overflow-hidden h-full">
-                                    <img src="https://img.freepik.com/free-vector/glitch-error-404-page_23-2148105404.jpg"
-                                        class="w-full h-48 object-cover" alt="[Gambar kegiatan rapat warga]">
-                                    <div class="p-6">
-                                        <p class="text-sm text-blue-600 font-semibold mb-2">Kegiatan RW</p>
-                                        <h3 class="text-xl font-bold mb-3 hover:text-blue-700"><a
-                                                href="#">Sosialisasi Program Kebersihan Lingkungan di RW 03</a>
-                                        </h3>
-                                        <p class="text-sm text-gray-500">15 September 2025</p>
+                            @foreach ($berita as $item)
+                                <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 p-4">
+                                    <div class="bg-white rounded-lg shadow-md overflow-hidden h-full">
+                                        @if ($item->thumbnail)
+                                            <img src="{{ asset($item->thumbnail) }}" class="w-full h-48 object-cover"
+                                                alt="[Gambar kegiatan rapat warga]">
+                                        @else
+                                            <span class="text-gray-400">-</span>
+                                        @endif
+                                        <div class="p-6">
+                                            <h3 class="text-xl font-bold mb-3 hover:text-blue-700"><a
+                                                    href="#">{{ $item->judul ?? '-' }}</a>
+                                            </h3>
+                                            <p class="text-sm text-gray-500">
+                                                {{ $item->tgl_posting ? \Carbon\Carbon::parse($item->tgl_posting)->format('d-m-Y') : '' }}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 p-4">
-                                <div class="bg-white rounded-lg shadow-md overflow-hidden h-full">
-                                    <img src="https://img.freepik.com/free-vector/glitch-error-404-page_23-2148105404.jpg"
-                                        class="w-full h-48 object-cover" alt="[Gambar pengumuman layanan]">
-                                    <div class="p-6">
-                                        <p class="text-sm text-green-600 font-semibold mb-2">Pemberitahuan</p>
-                                        <h3 class="text-xl font-bold mb-3 hover:text-blue-700"><a
-                                                href="#">Jadwal Baru Pelayanan Administrasi Selama Bulan
-                                                Oktober</a></h3>
-                                        <p class="text-sm text-gray-500">12 September 2025</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 p-4">
-                                <div class="bg-white rounded-lg shadow-md overflow-hidden h-full">
-                                    <img src="https://img.freepik.com/free-vector/glitch-error-404-page_23-2148105404.jpg"
-                                        class="w-full h-48 object-cover" alt="[Gambar pelatihan UMKM]">
-                                    <div class="p-6">
-                                        <p class="text-sm text-yellow-600 font-semibold mb-2">UMKM</p>
-                                        <h3 class="text-xl font-bold mb-3 hover:text-blue-700"><a
-                                                href="#">Pelatihan Pemasaran Digital untuk Pelaku UMKM Kelurahan
-                                                Tipulu</a></h3>
-                                        <p class="text-sm text-gray-500">10 September 2025</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 p-4">
-                                <div class="bg-white rounded-lg shadow-md overflow-hidden h-full">
-                                    <img src="https://img.freepik.com/free-vector/glitch-error-404-page_23-2148105404.jpg"
-                                        class="w-full h-48 object-cover" alt="[Gambar gotong royong]">
-                                    <div class="p-6">
-                                        <p class="text-sm text-blue-600 font-semibold mb-2">Kegiatan Warga</p>
-                                        <h3 class="text-xl font-bold mb-3 hover:text-blue-700"><a href="#">Kerja
-                                                Bakti Massal Membersihkan Saluran Air Jelang Musim Hujan</a></h3>
-                                        <p class="text-sm text-gray-500">08 September 2025</p>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                     <button id="prev-btn"

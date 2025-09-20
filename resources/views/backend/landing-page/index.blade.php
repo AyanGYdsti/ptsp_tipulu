@@ -3,7 +3,7 @@
 @section('content')
     <div class="mx-auto">
         <div class="bg-gradient-to-br from-blue-50 to-blue-100 shadow-xl rounded-2xl p-6 border border-blue-200">
-            <h2 class="text-2xl font-bold text-blue-800 mb-6 flex items-center gap-2">
+            <h2 class="lg:text-2xl md:text-[12px] font-bold text-blue-800 mb-6 flex items-center gap-2">
                 <i class="fa fa-building text-blue-600"></i> Form Data Instansi
             </h2>
 

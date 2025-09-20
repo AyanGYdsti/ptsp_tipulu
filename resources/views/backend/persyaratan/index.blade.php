@@ -10,7 +10,7 @@
                 </h2>
                 <button id="openModalBtn"
                     class="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-3 py-2 rounded-lg flex items-center gap-2 hover:from-blue-700 hover:to-blue-600 shadow-md transition text-[12px]">
-                    <i class="fa fa-plus"></i> Data
+                    <i class="fa fa-plus"></i> Persyaratan
                 </button>
             </div>
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Backend\BeritaController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\LandingPageController;
 use App\Http\Controllers\Frontend\BerandaController;
@@ -31,6 +32,12 @@ Route::get('/pelayanan/edit/{id}', [PelayananController::class, 'edit'])->name('
 Route::post('/pelayanan/store', [PelayananController::class, 'store'])->name('pelayanan.store');
 Route::put('/pelayanan/update/{id}', [PelayananController::class, 'update'])->name('pelayanan.update');
 Route::get('/pelayanan/delete/{id}', [PelayananController::class, 'delete'])->name('pelayanan.delete');
+
+Route::get('/berita', [BeritaController::class, 'index'])->name('berita');
+Route::get('/berita/edit/{id}', [BeritaController::class, 'edit'])->name('berita.edit');
+Route::post('/berita/store', [BeritaController::class, 'store'])->name('berita.store');
+Route::put('/berita/update/{id}', [BeritaController::class, 'update'])->name('berita.update');
+Route::get('/berita/delete/{id}', [BeritaController::class, 'delete'])->name('berita.delete');
 
 Route::get('/landing-page', [LandingPageController::class, 'index'])->name('landing-page');
 Route::post('/landing-page/store', [LandingPageController::class, 'store'])->name('landing-page.store');

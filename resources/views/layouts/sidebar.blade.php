@@ -38,10 +38,9 @@
                     class="block px-3 py-2 rounded-md hover:bg-blue-500 text-sm">Pelayanan</a>
                 <a href="{{ route('landing-page') }}"
                     class="block px-3 py-2 rounded-md hover:bg-blue-500 text-sm">Landing Page</a>
+                <a href="{{ route('berita') }}" class="block px-3 py-2 rounded-md hover:bg-blue-500 text-sm">Berita</a>
             </div>
         </div>
-        <a href="#" class="sidebar-link flex items-center gap-3 px-3 py-2 hover:bg-blue-600 rounded-md">📰
-            Berita</a>
     </nav>
 
     <div class="mt-auto p-4 border-t border-gray-700">
