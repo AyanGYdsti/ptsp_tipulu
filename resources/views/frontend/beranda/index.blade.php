@@ -84,9 +84,9 @@
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
                 <div class="max-w-3xl text-center mx-auto">
                     <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight animate-fade-in">
-                        Selamat Datang di Portal Resmi Kelurahan Tipulu</h1>
-                    <p class="mt-6 text-lg md:text-xl text-gray-200 animate-fade-in-delay">Melayani dengan Cepat, Tepat,
-                        dan Transparan. Temukan semua informasi dan layanan administrasi di sini.</p>
+                        Selamat Datang di Portal Resmi {{ $landingPage->nama_instansi ?? '-' }}</h1>
+                    <p class="mt-6 text-lg md:text-xl text-gray-200 animate-fade-in-delay">
+                        {{ $landingPage->slogan ?? '-' }}</p>
                     <div
                         class="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4 animate-fade-in-up-delay">
                         <a href="#layanan"
@@ -339,21 +339,27 @@
                         <h3 class="text-2xl font-bold mb-4 text-gray-900">Sejarah Singkat & Visi Misi Kelurahan Tipulu
                         </h3>
                         <p class="text-gray-600 leading-relaxed mb-6">
-                            Kelurahan Tipulu merupakan bagian integral dari Kecamatan Kendari Barat, Kota Kendari.
-                            Dengan komitmen untuk menjadi garda terdepan dalam pelayanan publik, kami berupaya
-                            mewujudkan tata kelola pemerintahan yang baik, transparan, dan akuntabel. Visi kami adalah
-                            "Mewujudkan Kelurahan Tipulu yang Maju, Sejahtera, dan Berbudaya Berbasis Pelayanan
-                            Digital".
+                            {{ $landingPage->deskripsi ?? '-' }}
                         </p>
                         <a href="#"
                             class="font-semibold text-blue-600 hover:text-blue-800 transition-colors">Baca Selengkapnya
                             →</a>
                     </div>
                     <div class="h-96 rounded-lg overflow-hidden shadow-lg fade-in-up">
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15920.08051888496!2d122.5029891871582!3d-3.9877477999999913!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2d98ecde08713193%3A0xe5778e8055664536!2sTipulu%2C%2C%20Kec.%20Kendari%20Bar.%2C%20Kota%20Kendari%2C%20Sulawesi%20Tenggara!5e0!3m2!1sid!2sid!4v1726511394595!5m2!1sid!2sid"
-                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        @php
+                            // pastikan koordinat di DB formatnya: "lat,lng"
+                            $coords = explode(',', $landingPage->koordinat);
+                            $lat = $coords[0] ?? '-3.9877478'; // fallback default
+                            $lng = $coords[1] ?? '122.5029891'; // fallback default
+                        @endphp
+
+                        <div class="w-full h-[400px] rounded-xl overflow-hidden border border-blue-200">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d5000!2d{{ $lng }}!3d{{ $lat }}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sid!2sid!4v{{ time() }}"
+                                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -428,8 +434,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M15 11a3 3 0 11-4 0 2 2 0 014 0z" />
                                 </svg>
-                                <span>Jl. Antero Hamra No. 1, Tipulu, Kec. Kendari Bar., Kota Kendari, Sulawesi
-                                    Tenggara</span>
+                                <span>{{ $landingPage->alamat ?? '-' }}</span>
                             </li>
                             <li class="flex items-center">
                                 <svg class="h-6 w-6 text-blue-600 mr-3 flex-shrink-0" fill="none"
@@ -437,7 +442,8 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                                 </svg>
-                                <a href="tel:+62-XXX-XXXX-XXXX" class="hover:text-blue-600">(0401) 312XXXX</a>
+                                <a href="tel:+62-XXX-XXXX-XXXX"
+                                    class="hover:text-blue-600">{{ $landingPage->telpon ?? '-' }}</a>
                             </li>
                             <li class="flex items-center">
                                 <svg class="h-6 w-6 text-blue-600 mr-3 flex-shrink-0" fill="none"
@@ -452,11 +458,7 @@
                     </div>
                     <div>
                         <h3 class="text-2xl font-bold mb-4">Waktu Pelayanan</h3>
-                        <ul class="space-y-2 text-gray-700">
-                            <li><strong>Senin - Kamis:</strong> 08:00 - 16:00 WITA</li>
-                            <li><strong>Jumat:</strong> 08:00 - 11:00 WITA</li>
-                            <li><strong>Sabtu - Minggu:</strong> Tutup</li>
-                        </ul>
+                        <p>{!! $landingPage->waktu_pelayanan ?? '-' !!}</p>
                         <div class="mt-6">
                             <a href="#"
                                 class="inline-flex items-center bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">

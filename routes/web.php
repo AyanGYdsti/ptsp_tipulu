@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\LandingPageController;
 use App\Http\Controllers\Frontend\BerandaController;
 use App\Http\Controllers\Backend\PersyaratanController;
 use App\Http\Controllers\Backend\PelayananController;
@@ -29,3 +30,6 @@ Route::get('/pelayanan/edit/{id}', [PelayananController::class, 'edit'])->name('
 Route::post('/pelayanan/store', [PelayananController::class, 'store'])->name('pelayanan.store');
 Route::put('/pelayanan/update/{id}', [PelayananController::class, 'update'])->name('pelayanan.update');
 Route::get('/pelayanan/delete/{id}', [PelayananController::class, 'delete'])->name('pelayanan.delete');
+
+Route::get('/landing-page', [LandingPageController::class, 'index'])->name('landing-page');
+Route::post('/landing-page/store', [LandingPageController::class, 'store'])->name('landing-page.store');
