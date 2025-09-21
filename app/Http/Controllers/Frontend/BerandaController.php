@@ -14,12 +14,10 @@ class BerandaController extends Controller
     {
         $title = 'Beranda';
 
-        $landingPage = LandingPage::first();
-
         $berita = Berita::get();
 
         $pelayanan = Pelayanan::paginate(3);
 
-        return view('frontend.beranda.index', compact('title', 'landingPage', 'berita', 'pelayanan'));
+        return view('frontend.beranda.index', compact('title', 'berita', 'pelayanan'));
     }
 }

@@ -1,4 +1,4 @@
-@extends('layouts.main_frontend')
+@extends('layouts.main_frontend', ['landingPage' => ''])
 
 @section('content')
     <main>
