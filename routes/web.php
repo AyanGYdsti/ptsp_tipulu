@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\LandingPageController;
 use App\Http\Controllers\Frontend\BerandaController;
 use App\Http\Controllers\Backend\PersyaratanController;
 use App\Http\Controllers\Backend\PelayananController;
+use App\Http\Controllers\Frontend\DetailBeritaController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', [BerandaController::class, 'index'])->name('beranda');
+Route::get('/detail-berita/{id}', [DetailBeritaController::class, 'index'])->name('detail-berita');
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'authLogin'])->name('auth.login');
 Route::get('/logout', [AuthController::class, 'authLogout'])->name('auth.logout');
