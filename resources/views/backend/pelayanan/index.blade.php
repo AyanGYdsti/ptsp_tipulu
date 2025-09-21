@@ -25,6 +25,8 @@
                         <tr>
                             <th class="px-4 py-3 text-center">No</th>
                             <th class="px-4 py-3 text-left">Nama Pelayanan</th>
+                            <th class="px-4 py-3 text-left">Icon</th>
+                            <th class="px-4 py-3 text-left">Deskripsi</th>
                             <th class="px-4 py-3 text-left">Persyaratan</th>
                             <th class="px-4 py-3 text-center">Aksi</th>
                         </tr>
@@ -34,6 +36,8 @@
                             <tr class="hover:bg-blue-50 transition">
                                 <td class="px-4 py-3 text-center font-semibold text-blue-600">{{ $loop->iteration }}</td>
                                 <td class="px-4 py-3">{{ $data->nama }}</td>
+                                <td class="px-4 py-3">{!! $data->icon !!}</td>
+                                <td class="px-4 py-3">{{ $data->deskripsi }}</td>
                                 <td class="px-4 py-3">
                                     @foreach ($data->pelayananPersyaratan as $item)
                                         <span
@@ -88,6 +92,22 @@
                     <input type="text" name="nama" value="{{ old('nama') }}"
                         class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
                     @error('nama')
+                        <p class="text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-semibold text-gray-600 mb-1">Icon</label>
+                    <input type="text" name="icon" value="{{ old('icon') }}"
+                        class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
+                    @error('icon')
+                        <p class="text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-semibold text-gray-600 mb-1">Deskripsi</label>
+                    <textarea name="deskripsi"
+                        class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400">{{ old('deskripsi') }}</textarea>
+                    @error('deskripsi')
                         <p class="text-red-500">{{ $message }}</p>
                     @enderror
                 </div>

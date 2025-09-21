@@ -26,10 +26,10 @@
                 </div>
 
                 <div class="flex justify-end gap-2 mt-6">
-                    <button type="button" id="closeModalBtn2"
+                    <a href="{{ route('persyaratan') }}"
                         class="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500 transition">
-                        Batal
-                    </button>
+                        Back
+                    </a>
                     <button type="submit"
                         class="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-4 py-2 rounded-lg hover:from-blue-700 hover:to-blue-600 shadow-md transition">
                         <i class="fa fa-save"></i> Update

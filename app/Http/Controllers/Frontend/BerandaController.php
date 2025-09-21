@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Berita;
 use App\Models\LandingPage;
+use App\Models\Pelayanan;
 use Illuminate\Http\Request;
 
 class BerandaController extends Controller
@@ -17,6 +18,8 @@ class BerandaController extends Controller
 
         $berita = Berita::get();
 
-        return view('frontend.beranda.index', compact('title', 'landingPage', 'berita'));
+        $pelayanan = Pelayanan::paginate(3);
+
+        return view('frontend.beranda.index', compact('title', 'landingPage', 'berita', 'pelayanan'));
     }
 }

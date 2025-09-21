@@ -36,12 +36,12 @@ class PelayananController extends Controller
     {
         $data = $request->validate([
             'nama' => 'required',
+            'icon' => 'required',
+            'deskripsi' => 'required',
             'persyaratan_id' => 'required'
         ]);
         try {
-            $pelayanan_id = Pelayanan::create([
-                'nama' => $data['nama']
-            ])->id;
+            $pelayanan_id = Pelayanan::create($data)->id;
 
             foreach ($data['persyaratan_id'] as $persyaratan_id) {
                 PelayananPersyaratan::create([
@@ -62,13 +62,13 @@ class PelayananController extends Controller
 
         $data = $request->validate([
             'nama' => 'required',
+            'icon' => 'required',
+            'deskripsi' => 'required',
             'persyaratan_id' => 'required'
         ]);
 
         try {
-            $pelayanan->update([
-                'nama' => $data['nama']
-            ]);
+            $pelayanan->update($data);
 
             $pelayanan->pelayananPersyaratan()->delete();
 

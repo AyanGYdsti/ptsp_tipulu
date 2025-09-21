@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('pelayanans', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->string('icon');
+            $table->text('deskripsi');
             $table->timestamps();
         });
     }

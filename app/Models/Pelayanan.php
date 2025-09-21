@@ -6,9 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pelayanan extends Model
 {
-    protected $fillable = [
-        'nama',
-    ];
+    protected $guarded = ['id'];
 
     public function pelayananPersyaratan()
     {

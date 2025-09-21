@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Resmi Kelurahan Tipulu</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -108,54 +111,19 @@
                         dengan mudah dan cepat langsung dari genggaman Anda.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div
-                        class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-2 transition-all duration-300 fade-in-up">
+                    @foreach ($pelayanan as $item)
                         <div
-                            class="bg-blue-100 text-blue-600 rounded-full h-16 w-16 flex items-center justify-center mb-6">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                            </svg>
+                            class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-2 transition-all duration-300 fade-in-up">
+                            <div
+                                class="bg-blue-100 text-blue-600 rounded-full h-16 w-16 flex items-center justify-center mb-6">
+                                {!! $item->icon !!}
+                            </div>
+                            <h3 class="text-2xl font-bold mb-3">{{ $item->nama }}</h3>
+                            <p class="text-gray-600 mb-6">{!! $item->deskripsi !!}</p>
+                            <a href="#" class="font-semibold text-blue-600 hover:text-blue-800">Ajukan Sekarang
+                                →</a>
                         </div>
-                        <h3 class="text-2xl font-bold mb-3">Surat Domisili</h3>
-                        <p class="text-gray-600 mb-6">Ajukan permohonan surat keterangan domisili untuk berbagai
-                            keperluan Anda.</p>
-                        <a href="#" class="font-semibold text-blue-600 hover:text-blue-800">Ajukan Sekarang
-                            →</a>
-                    </div>
-                    <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-2 transition-all duration-300 fade-in-up"
-                        style="transition-delay: 150ms;">
-                        <div
-                            class="bg-green-100 text-green-600 rounded-full h-16 w-16 flex items-center justify-center mb-6">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-3">Pengantar SKCK</h3>
-                        <p class="text-gray-600 mb-6">Dapatkan surat pengantar untuk pembuatan Surat Keterangan Catatan
-                            Kepolisian.</p>
-                        <a href="#" class="font-semibold text-blue-600 hover:text-blue-800">Ajukan Sekarang
-                            →</a>
-                    </div>
-                    <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-2 transition-all duration-300 fade-in-up"
-                        style="transition-delay: 300ms;">
-                        <div
-                            class="bg-yellow-100 text-yellow-600 rounded-full h-16 w-16 flex items-center justify-center mb-6">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-3">SKTM</h3>
-                        <p class="text-gray-600 mb-6">Permohonan Surat Keterangan Tidak Mampu untuk keperluan
-                            pendidikan atau kesehatan.</p>
-                        <a href="#" class="font-semibold text-blue-600 hover:text-blue-800">Ajukan Sekarang
-                            →</a>
-                    </div>
+                    @endforeach
                 </div>
                 <div class="text-center mt-12 fade-in-up">
                     <a href="#"
