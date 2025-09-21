@@ -209,7 +209,7 @@
                     <div class="h-96 rounded-lg overflow-hidden shadow-lg fade-in-up">
                         @php
                             // pastikan koordinat di DB formatnya: "lat,lng"
-                            $coords = explode(',', $landingPage->koordinat);
+                            $coords = explode(',', $landingPage->koordinat ?? '');
                             $lat = $coords[0] ?? '-3.9877478'; // fallback default
                             $lng = $coords[1] ?? '122.5029891'; // fallback default
                         @endphp
