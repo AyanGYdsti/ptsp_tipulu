@@ -100,6 +100,8 @@ class BeritaController extends Controller
     {
         $berita = Berita::find($id);
 
+        Storage::delete(str_replace('storage/', 'public/', $berita->thumbnail));
+
         try {
             $berita->delete();
 

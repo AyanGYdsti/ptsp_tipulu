@@ -39,6 +39,8 @@
                 <a href="{{ route('landing-page') }}"
                     class="block px-3 py-2 rounded-md hover:bg-blue-500 text-sm">Landing Page</a>
                 <a href="{{ route('berita') }}" class="block px-3 py-2 rounded-md hover:bg-blue-500 text-sm">Berita</a>
+                <a href="{{ route('aparatur') }}"
+                    class="block px-3 py-2 rounded-md hover:bg-blue-500 text-sm">Aparatur</a>
             </div>
         </div>
     </nav>

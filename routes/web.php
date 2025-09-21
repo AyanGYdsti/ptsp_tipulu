@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Backend\AparaturController;
 use App\Http\Controllers\Backend\BeritaController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\LandingPageController;
@@ -46,4 +47,10 @@ Route::get('/berita/delete/{id}', [BeritaController::class, 'delete'])->name('be
 Route::get('/landing-page', [LandingPageController::class, 'index'])->name('landing-page');
 Route::post('/landing-page/store', [LandingPageController::class, 'store'])->name('landing-page.store');
 
-Route::get('/list-pelayanan',[FrontendListpelayananController::class, 'index'])->name('list-pelayanan');
+Route::get('/list-pelayanan', [FrontendListpelayananController::class, 'index'])->name('list-pelayanan');
+
+Route::get('/aparatur', [AparaturController::class, 'index'])->name('aparatur');
+Route::get('/aparatur/edit/{id}', [AparaturController::class, 'edit'])->name('aparatur.edit');
+Route::post('/aparatur/store', [AparaturController::class, 'store'])->name('aparatur.store');
+Route::put('/aparatur/update/{id}', [AparaturController::class, 'update'])->name('aparatur.update');
+Route::get('/aparatur/delete/{id}', [AparaturController::class, 'delete'])->name('aparatur.delete');
