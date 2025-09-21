@@ -8,6 +8,8 @@ use App\Http\Controllers\Frontend\BerandaController;
 use App\Http\Controllers\Backend\PersyaratanController;
 use App\Http\Controllers\Backend\PelayananController;
 use App\Http\Controllers\Frontend\DetailBeritaController;
+use App\Http\Controllers\Frontend\ListpelayananController as FrontendListpelayananController;
+use App\Http\Controllers\ListpelayananController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -43,3 +45,5 @@ Route::get('/berita/delete/{id}', [BeritaController::class, 'delete'])->name('be
 
 Route::get('/landing-page', [LandingPageController::class, 'index'])->name('landing-page');
 Route::post('/landing-page/store', [LandingPageController::class, 'store'])->name('landing-page.store');
+
+Route::get('/list-pelayanan',[FrontendListpelayananController::class, 'index'])->name('list-pelayanan');
