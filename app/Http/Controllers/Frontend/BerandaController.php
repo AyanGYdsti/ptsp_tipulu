@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Aparatur;
 use App\Models\Berita;
 use App\Models\LandingPage;
 use App\Models\Pelayanan;
@@ -18,6 +19,8 @@ class BerandaController extends Controller
 
         $pelayanan = Pelayanan::paginate(3);
 
-        return view('frontend.beranda.index', compact('title', 'berita', 'pelayanan'));
+        $aparatur = Aparatur::orderBy('posisi', 'asc')->paginate(4);
+
+        return view('frontend.beranda.index', compact('title', 'berita', 'pelayanan', 'aparatur'));
     }
 }

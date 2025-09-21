@@ -161,34 +161,19 @@
                         berdedikasi melayani masyarakat.</p>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div
-                        class="text-center bg-white p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 fade-in-up">
-                        <img class="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
-                            src="https://placehold.co/200x200/EFEFEF/7F7F7F?text=Foto" alt="[Foto Lurah]">
-                        <h3 class="text-xl font-bold">Nama Lurah, S.IP., M.Si.</h3>
-                        <p class="text-blue-600 font-semibold">Lurah</p>
-                    </div>
-                    <div class="text-center bg-white p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 fade-in-up"
-                        style="transition-delay: 100ms;">
-                        <img class="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
-                            src="https://placehold.co/200x200/EFEFEF/7F7F7F?text=Foto" alt="[Foto Sekretaris Lurah]">
-                        <h3 class="text-xl font-bold">Nama Sekretaris, S.E.</h3>
-                        <p class="text-blue-600 font-semibold">Sekretaris Lurah</p>
-                    </div>
-                    <div class="text-center bg-white p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 fade-in-up"
-                        style="transition-delay: 200ms;">
-                        <img class="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
-                            src="https://placehold.co/200x200/EFEFEF/7F7F7F?text=Foto" alt="[Foto Kasi Pemerintahan]">
-                        <h3 class="text-xl font-bold">Nama Kasi Pemerintahan</h3>
-                        <p class="text-blue-600 font-semibold">Kasi Pemerintahan</p>
-                    </div>
-                    <div class="text-center bg-white p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 fade-in-up"
-                        style="transition-delay: 300ms;">
-                        <img class="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
-                            src="https://placehold.co/200x200/EFEFEF/7F7F7F?text=Foto" alt="[Foto Staf Pelayanan]">
-                        <h3 class="text-xl font-bold">Nama Staf Pelayanan</h3>
-                        <p class="text-blue-600 font-semibold">Staf Pelayanan Umum</p>
-                    </div>
+                    @foreach ($aparatur as $item)
+                        <div
+                            class="text-center bg-white p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 fade-in-up">
+                            @if ($item->foto)
+                                <img src="{{ asset($item->foto) }}"
+                                    class="w-32 h-32 rounded-full mx-auto mb-4 object-cover" alt="[Foto Aparatur]">
+                            @else
+                                <span class="text-gray-400">-</span>
+                            @endif
+                            <h3 class="text-xl font-bold">{{ $item->nama }}</h3>
+                            <p class="text-blue-600 font-semibold">{{ $item->jabatan }}</p>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </section>
