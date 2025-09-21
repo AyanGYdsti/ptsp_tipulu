@@ -51,7 +51,7 @@
                 <div class="text-center mt-12 fade-in-up">
                     <a href="{{ route('list-pelayanan') }}"
                         class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors text-lg">Lihat
-                        Semua 16 Layanan</a>
+                        Semua {{ $pelayanan->count() }} Layanan</a>
                 </div>
             </div>
         </section>
