@@ -43,7 +43,8 @@
                             </div>
                             <h3 class="text-2xl font-bold mb-3">{{ $item->nama }}</h3>
                             <p class="text-gray-600 mb-6">{!! $item->deskripsi !!}</p>
-                            <a href="#" class="font-semibold text-blue-600 hover:text-blue-800">Ajukan Sekarang
+                            <a href="{{ route('pengajuan', $item->id) }}"
+                                class="font-semibold text-blue-600 hover:text-blue-800">Ajukan Sekarang
                                 →</a>
                         </div>
                     @endforeach
@@ -149,6 +150,12 @@
                             <canvas id="ageChart"></canvas>
                         </div>
                     </div>
+                </div>
+                <div class="text-center mt-4 fade-in-up">
+                    <a href="{{ route('masyarakat') }}"
+                        class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                        Pengisian Data Penduduk
+                    </a>
                 </div>
             </div>
         </section>

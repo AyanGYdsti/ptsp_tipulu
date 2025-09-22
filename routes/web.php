@@ -10,6 +10,8 @@ use App\Http\Controllers\Backend\PersyaratanController;
 use App\Http\Controllers\Backend\PelayananController;
 use App\Http\Controllers\Frontend\DetailBeritaController;
 use App\Http\Controllers\Frontend\ListpelayananController as FrontendListpelayananController;
+use App\Http\Controllers\Frontend\MasyarakatController;
+use App\Http\Controllers\Frontend\PengajuanController;
 use App\Http\Controllers\ListpelayananController;
 use Illuminate\Support\Facades\Route;
 
@@ -54,3 +56,10 @@ Route::get('/aparatur/edit/{id}', [AparaturController::class, 'edit'])->name('ap
 Route::post('/aparatur/store', [AparaturController::class, 'store'])->name('aparatur.store');
 Route::put('/aparatur/update/{id}', [AparaturController::class, 'update'])->name('aparatur.update');
 Route::get('/aparatur/delete/{id}', [AparaturController::class, 'delete'])->name('aparatur.delete');
+
+Route::get('/pengajuan/{id}', [PengajuanController::class, 'index'])->name('pengajuan');
+Route::post('/pengajuan/cek/{id}', [PengajuanController::class, 'cek'])->name('pengajuan.cek');
+Route::get('/pengajuan/detail/{id}/{nik}', [PengajuanController::class, 'detail'])->name('pengajuan.detail');
+
+Route::get('/masyarakat/{id?}/{nik?}', [MasyarakatController::class, 'index'])->name('masyarakat');
+Route::post('/masyarakat/store/{id?}', [MasyarakatController::class, 'store'])->name('masyarakat.store');

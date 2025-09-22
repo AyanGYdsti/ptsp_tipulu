@@ -14,7 +14,8 @@
                     </div>
                     <h3 class="text-2xl font-bold mb-3">{{ $item->nama }}</h3>
                     <p class="text-gray-600 mb-6">{!! $item->deskripsi !!}</p>
-                    <a href="#" class="font-semibold text-blue-600 hover:text-blue-800">Ajukan Sekarang
+                    <a href="{{ route('pengajuan', $item->id) }}"
+                        class="font-semibold text-blue-600 hover:text-blue-800">Ajukan Sekarang
                         →</a>
                 </div>
             @endforeach
