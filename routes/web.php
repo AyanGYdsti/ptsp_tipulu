@@ -59,6 +59,7 @@ Route::get('/aparatur/delete/{id}', [AparaturController::class, 'delete'])->name
 
 Route::get('/pengajuan/{id}', [PengajuanController::class, 'index'])->name('pengajuan');
 Route::post('/pengajuan/cek/{id}', [PengajuanController::class, 'cek'])->name('pengajuan.cek');
+Route::post('/pengajuan/store/{id}', [PengajuanController::class, 'store'])->name('pengajuan.store');
 Route::get('/pengajuan/detail/{id}/{nik}', [PengajuanController::class, 'detail'])->name('pengajuan.detail');
 
 Route::get('/masyarakat/{id?}/{nik?}', [MasyarakatController::class, 'index'])->name('masyarakat');

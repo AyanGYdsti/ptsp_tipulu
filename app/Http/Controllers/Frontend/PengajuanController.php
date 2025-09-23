@@ -36,4 +36,15 @@ class PengajuanController extends Controller
 
         return view('frontend.pengajuan.detail', compact('title', 'masyarakat', 'pelayanan'));
     }
+
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'pelayanan_id' => 'required',
+            'nik' => 'required',
+            'dokumen' => 'required|array',
+        ]);
+
+        dd($data);
+    }
 }
