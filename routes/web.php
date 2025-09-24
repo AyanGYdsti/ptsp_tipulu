@@ -15,6 +15,7 @@ use App\Http\Controllers\Frontend\PengajuanController;
 use App\Http\Controllers\ListpelayananController;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Backend\PermohonanController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -39,6 +40,8 @@ Route::post('/login', [AuthController::class, 'authLogin'])->name('auth.login');
 Route::get('/logout', [AuthController::class, 'authLogout'])->name('auth.logout');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/pengajuan-surat', [PermohonanController::class, 'index'])->name('permohonan.index');
+
 
 Route::get('/persyaratan', [PersyaratanController::class, 'index'])->name('persyaratan');
 Route::get('/persyaratan/edit/{id}', [PersyaratanController::class, 'edit'])->name('persyaratan.edit');

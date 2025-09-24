@@ -15,7 +15,11 @@
             class="sidebar-link flex items-center gap-3 px-3 py-2 hover:bg-blue-600 rounded-md {{ $title == 'Dashboard' ? 'active' : '' }}"><i
                 class="fa fa-home"></i>
             Dashboard</a>
-        <!-- Dropdown Master Data -->
+
+        <a href="{{ route('permohonan.index') }}"
+            class="sidebar-link flex items-center gap-3 px-3 py-2 hover:bg-blue-600 rounded-md {{ $title == 'Pengajuan Surat' ? 'active' : '' }}"><i
+                class="fa fa-inbox"></i>
+            Pengajuan Surat</a>
         <div class="space-y-1">
             <button type="button"
                 class="w-full flex items-center justify-between px-3 py-2 rounded-md hover:bg-blue-600 focus:outline-none transition"
@@ -30,7 +34,6 @@
                 </svg>
             </button>
 
-            <!-- Isi dropdown -->
             <div id="masterDataDropdown" class="ml-8 space-y-1 hidden">
                 <a href="{{ route('persyaratan') }}"
                     class="block px-3 py-2 rounded-md hover:bg-blue-500 text-sm">Persyaratan</a>
@@ -52,7 +55,6 @@
     </div>
 </div>
 
-<!-- Overlay untuk mobile -->
 <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden md:hidden z-40"></div>
 
 @push('scripts')
