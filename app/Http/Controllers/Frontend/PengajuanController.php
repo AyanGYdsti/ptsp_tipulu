@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\DokumenPersyaratan;
 use App\Models\Masyarakat;
 use App\Models\Pelayanan;
 use Illuminate\Http\Request;
@@ -41,10 +42,37 @@ class PengajuanController extends Controller
     {
         $data = $request->validate([
             'pelayanan_id' => 'required',
-            'nik' => 'required',
-            'dokumen' => 'required|array',
+            'nik'          => 'required',
+            'dokumen'      => 'required|array',
+            'dokumen.*'    => 'file|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);
 
-        dd($data);
+        try {
+            foreach ($data['dokumen'] as $persyaratanId => $file) {
+                if ($request->hasFile("dokumen.$persyaratanId")) {
+                    $file = $request->file("dokumen.$persyaratanId");
+
+                    // bikin nama file unik misalnya: nik-persyaratanid-timestamp.ext
+                    $filename = $data['nik'] . '-' . $persyaratanId . '-' . time() . '.' . $file->getClientOriginalExtension();
+
+                    // simpan di storage/app/public/dokumen
+                    $file->storeAs('public/dokumen', $filename);
+
+                    // path untuk disimpan di database (bisa langsung dipakai dengan asset())
+                    $path = 'storage/dokumen/' . $filename;
+
+                    DokumenPersyaratan::create([
+                        'nik'            => $data['nik'],
+                        'pelayanan_id'   => $data['pelayanan_id'],
+                        'persyaratan_id' => $persyaratanId,
+                        'dokumen'        => $path,
+                    ]);
+                }
+            }
+
+            return back()->with('success', 'Berhasil menambah data.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Terjadi kesalahan saat menyimpan dokumen.');
+        }
     }
 }

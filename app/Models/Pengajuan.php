@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DokumenPersyaratan extends Model
+class Pengajuan extends Model
 {
-    protected $guarded = ['id'];
+    //
 }
