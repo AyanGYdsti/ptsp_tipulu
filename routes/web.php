@@ -13,12 +13,25 @@ use App\Http\Controllers\Frontend\ListpelayananController as FrontendListpelayan
 use App\Http\Controllers\Frontend\MasyarakatController;
 use App\Http\Controllers\Frontend\PengajuanController;
 use App\Http\Controllers\ListpelayananController;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
 
+Route::get('/surat', function () {
+    // load view
+    $pdf = Pdf::loadView('backend.surat.template-surat', [
+        'judul' => 'Surat Keterangan',
+        'tahun' => now()->format('-Y'),
+        'tanggal' => now()->format('d-m-Y'),
+    ]);
+
+
+    // atau tampilkan di browser
+    return $pdf->stream('surat.pdf');
+});
 Route::get('/', [BerandaController::class, 'index'])->name('beranda');
 Route::get('/detail-berita/{id}', [DetailBeritaController::class, 'index'])->name('detail-berita');
 Route::get('/login', [AuthController::class, 'index'])->name('login');
