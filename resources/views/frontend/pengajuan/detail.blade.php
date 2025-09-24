@@ -9,6 +9,30 @@
                     Detail Pengajuan {{ ucfirst($pelayanan->nama) }}
                 </h2>
 
+                {{-- Flash success --}}
+                @if (session('success'))
+                    <div
+                        class="auto-hide mb-6 p-4 bg-green-50 border border-green-200 text-green-700 rounded-lg flex items-start justify-between">
+                        <div class="flex-1">
+                            <p class="font-medium">{{ session('success') }}</p>
+                        </div>
+                        <button type="button" onclick="this.closest('.auto-hide').remove()"
+                            class="ml-4 text-green-700">✕</button>
+                    </div>
+                @endif
+
+                {{-- Flash error (single message) --}}
+                @if (session('error'))
+                    <div
+                        class="auto-hide mb-6 p-4 bg-red-50 border border-red-200 text-red-600 rounded-lg flex items-start justify-between">
+                        <div class="flex-1">
+                            <p class="font-medium">{{ session('error') }}</p>
+                        </div>
+                        <button type="button" onclick="this.closest('.auto-hide').remove()"
+                            class="ml-4 text-red-600">✕</button>
+                    </div>
+                @endif
+
                 {{-- Form Pengajuan --}}
                 <form action="{{ route('pengajuan.store', $pelayanan->id) }}" method="POST" enctype="multipart/form-data"
                     class="space-y-5">
