@@ -34,25 +34,28 @@
                         dengan mudah dan cepat langsung dari genggaman Anda.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {{-- Mengambil data pelayanan yang dikirim dari controller --}}
                     @foreach ($pelayanan as $item)
                         <div
                             class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-2 transition-all duration-300 fade-in-up">
                             <div
-                                class="bg-blue-100 text-blue-600 rounded-full h-16 w-16 flex items-center justify-center mb-6">
-                                {!! $item->icon !!}
+                                class="bg-blue-100 text-blue-600 rounded-full h-16 w-16 flex items-center justify-center mb-6 text-3xl">
+                                {{-- PERBAIKAN: Menempatkan kelas ikon ke dalam tag <i> --}}
+                                <i class="{{ $item->icon }}"></i>
                             </div>
                             <h3 class="text-2xl font-bold mb-3">{{ $item->nama }}</h3>
-                            <p class="text-gray-600 mb-6">{!! $item->deskripsi !!}</p>
+                            {{-- Menggunakan {{ }} untuk keamanan --}}
+                            <p class="text-gray-600 mb-6">{{ $item->deskripsi }}</p>
                             <a href="{{ route('pengajuan', $item->id) }}"
-                                class="font-semibold text-blue-600 hover:text-blue-800">Ajukan Sekarang
-                                →</a>
+                                class="font-semibold text-blue-600 hover:text-blue-800 transition-colors">Ajukan Sekarang
+                                <i class="fas fa-arrow-right ml-1"></i></a>
                         </div>
                     @endforeach
                 </div>
                 <div class="text-center mt-12 fade-in-up">
                     <a href="{{ route('list-pelayanan') }}"
                         class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors text-lg">Lihat
-                        Semua {{ $pelayanan->count() }} Layanan</a>
+                        Semua Layanan</a>
                 </div>
             </div>
         </section>
@@ -218,7 +221,7 @@
             </div>
         </section>
 
-        <section id="pengaduan" class="py-20 bg-gray-50">
+        {{-- <section id="pengaduan" class="py-20 bg-gray-50">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12 fade-in-up">
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Layanan Pengaduan Online</h2>
@@ -265,7 +268,7 @@
                     </form>
                 </div>
             </div>
-        </section>
+        </section> --}}
 
         <section id="kontak" class="py-20 bg-blue-50">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
