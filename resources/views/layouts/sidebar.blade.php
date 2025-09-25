@@ -35,6 +35,8 @@
             </button>
 
             <div id="masterDataDropdown" class="ml-8 space-y-1 hidden">
+                <a href="{{ route('masyarakat') }}"
+                    class="block px-3 py-2 rounded-md hover:bg-blue-500 text-sm">Masyarakat</a>
                 <a href="{{ route('persyaratan') }}"
                     class="block px-3 py-2 rounded-md hover:bg-blue-500 text-sm">Persyaratan</a>
                 <a href="{{ route('pelayanan') }}"
@@ -46,6 +48,10 @@
                     class="block px-3 py-2 rounded-md hover:bg-blue-500 text-sm">Aparatur</a>
             </div>
         </div>
+        <a href="{{ route('list-pengajuan') }}"
+            class="sidebar-link flex items-center gap-3 px-3 py-2 hover:bg-blue-600 rounded-md {{ $title == 'Pengajuan' ? 'active' : '' }}"><i
+                class="fa fa-home"></i>
+            Pengajuan</a>
     </nav>
 
     <div class="mt-auto p-4 border-t border-gray-700">

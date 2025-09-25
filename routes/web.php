@@ -5,12 +5,13 @@ use App\Http\Controllers\Backend\AparaturController;
 use App\Http\Controllers\Backend\BeritaController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\LandingPageController;
-use App\Http\Controllers\Frontend\BerandaController;
+use App\Http\Controllers\Backend\ListPengajuanController;
 use App\Http\Controllers\Backend\PersyaratanController;
 use App\Http\Controllers\Backend\PelayananController;
+use App\Http\Controllers\Backend\MasyarakatController;
+use App\Http\Controllers\Frontend\BerandaController;
 use App\Http\Controllers\Frontend\DetailBeritaController;
 use App\Http\Controllers\Frontend\ListpelayananController as FrontendListpelayananController;
-use App\Http\Controllers\Frontend\MasyarakatController;
 use App\Http\Controllers\Frontend\PengajuanController;
 use App\Http\Controllers\ListpelayananController;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -43,12 +44,21 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::get('/pengajuan-surat', [PermohonanController::class, 'index'])->name('permohonan.index');
 
 
+Route::get('/list-pengajuan', [ListPengajuanController::class, 'index'])->name('list-pengajuan');
+Route::put('/list-pengajuan/verifikasi/{id}', [ListPengajuanController::class, 'verifikasi'])->name('list-pengajuan.verifikasi');
+
 Route::get('/persyaratan', [PersyaratanController::class, 'index'])->name('persyaratan');
 Route::get('/persyaratan/edit/{id}', [PersyaratanController::class, 'edit'])->name('persyaratan.edit');
 Route::post('/persyaratan/store', [PersyaratanController::class, 'store'])->name('persyaratan.store');
 Route::put('/persyaratan/update/{id}', [PersyaratanController::class, 'update'])->name('persyaratan.update');
 Route::get('/persyaratan/delete/{id}', [PersyaratanController::class, 'delete'])->name('persyaratan.delete');
-Route::get('/persyaratan', [PersyaratanController::class, 'index'])->name('persyaratan');
+
+
+Route::get('/masyarakat', [MasyarakatController::class, 'index'])->name('masyarakat');
+Route::get('/masyarakat/edit/{id}', [MasyarakatController::class, 'edit'])->name('masyarakat.edit');
+Route::post('/masyarakat/store', [MasyarakatController::class, 'store'])->name('masyarakat.store');
+Route::put('/masyarakat/update/{id}', [MasyarakatController::class, 'update'])->name('masyarakat.update');
+Route::get('/masyarakat/delete/{id}', [MasyarakatController::class, 'delete'])->name('masyarakat.delete');
 
 Route::get('/pelayanan', [PelayananController::class, 'index'])->name('pelayanan');
 Route::get('/pelayanan/edit/{id}', [PelayananController::class, 'edit'])->name('pelayanan.edit');
@@ -77,6 +87,3 @@ Route::get('/pengajuan/{id}', [PengajuanController::class, 'index'])->name('peng
 Route::post('/pengajuan/cek/{id}', [PengajuanController::class, 'cek'])->name('pengajuan.cek');
 Route::post('/pengajuan/store/{id}', [PengajuanController::class, 'store'])->name('pengajuan.store');
 Route::get('/pengajuan/detail/{id}/{nik}', [PengajuanController::class, 'detail'])->name('pengajuan.detail');
-
-Route::get('/masyarakat/{id?}/{nik?}', [MasyarakatController::class, 'index'])->name('masyarakat');
-Route::post('/masyarakat/store/{id?}', [MasyarakatController::class, 'store'])->name('masyarakat.store');

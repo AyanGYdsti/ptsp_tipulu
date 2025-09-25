@@ -6,13 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\DokumenPersyaratan;
 use App\Models\Masyarakat;
 use App\Models\Pelayanan;
+use App\Models\Pengajuan;
 use Illuminate\Http\Request;
 
 class PengajuanController extends Controller
 {
     public function index($id)
     {
-        $title = "Pengajuan";
+        $title = "Form Cek NIK";
 
         return view('frontend.pengajuan.index', compact('title', 'id'));
     }
@@ -21,15 +22,15 @@ class PengajuanController extends Controller
     {
         $nik = Masyarakat::where('nik', $request->nik)->value('nik');
         if (!$nik) {
-            return redirect()->route('masyarakat', ['id' => $id, 'nik' => $request->nik]);
+            return back()->with('error', 'Nik tida ditemukan, Silahkan daftar ke kelurahan tipulu');
         }
 
-        return redirect()->route('pengajuan.detail', compact('id', 'nik'));
+        return redirect()->route('pengajuan.detail', ['id' => $id, 'nik' => $nik]);
     }
 
     public function detail($id, $nik)
     {
-        $title = "Pengajuan Detail";
+        $title = "Pengajuan";
 
         $masyarakat = Masyarakat::where('nik', $nik)->first();
 
@@ -70,9 +71,14 @@ class PengajuanController extends Controller
                 }
             }
 
-            return back()->with('success', 'Berhasil menambah data.');
+            Pengajuan::create([
+                'nik' => $data['nik'],
+                'pelayanan_id' => $data['pelayanan_id'],
+            ]);
+
+            return redirect()->route('pengajuan.detail', ['id' => $data['pelayanan_id'], 'nik' => $data['nik']])->with('success', 'Berhasil menambah data.');
         } catch (\Exception $e) {
-            return back()->with('error', 'Terjadi kesalahan saat menyimpan dokumen.');
+            return redirect()->route('pengajuan.detail', ['id' => $data['pelayanan_id'], 'nik' => $data['nik']])->with('error', 'Terjadi kesalahan saat menyimpan dokumen.');
         }
     }
 }
