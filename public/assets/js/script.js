@@ -179,7 +179,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // --- Gemini API Integration ---
 
     const callGeminiAPI = async (userPrompt, systemInstruction) => {
-        const apiKey = ""; // API Key will be provided by the environment
+        const apiKey = "AIzaSyC3YaUmxG_eGFX2SRzk_-sV5ZI00jnUO8A"; // API Key will be provided by the environment
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
         const payload = {
