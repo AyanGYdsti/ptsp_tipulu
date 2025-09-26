@@ -58,7 +58,8 @@
                             <label class="block text-sm font-medium text-gray-700 mb-1">
                                 {{ $item->persyaratan->nama }}
                             </label>
-                            <input type="file" name="dokumen[{{ $item->id }}]" required accept=".pdf,application/pdf"
+                            <input type="file" name="dokumen[{{ $item->persyaratan_id }}]" required
+                                accept=".pdf,application/pdf"
                                 class="block w-full border border-gray-300 rounded-lg shadow-sm text-sm p-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         </div>
                     @endforeach

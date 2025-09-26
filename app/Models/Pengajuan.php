@@ -18,6 +18,11 @@ class Pengajuan extends Model
         return $this->belongsTo(Pelayanan::class, 'pelayanan_id');
     }
 
+    public function dokumenPersyaratan()
+    {
+        return $this->hasMany(DokumenPersyaratan::class, 'pengajuan_id');
+    }
+
     public function verifikasiByAparatur($aparaturId)
     {
         return $this->hasMany(Verifikasi::class, 'pengajuan_id')

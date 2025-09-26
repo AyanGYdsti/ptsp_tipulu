@@ -49,6 +49,11 @@ class PengajuanController extends Controller
         ]);
 
         try {
+            $pengajuan = Pengajuan::create([
+                'nik' => $data['nik'],
+                'pelayanan_id' => $data['pelayanan_id'],
+            ]);
+
             foreach ($data['dokumen'] as $persyaratanId => $file) {
                 if ($request->hasFile("dokumen.$persyaratanId")) {
                     $file = $request->file("dokumen.$persyaratanId");
@@ -63,6 +68,7 @@ class PengajuanController extends Controller
                     $path = 'storage/dokumen/' . $filename;
 
                     DokumenPersyaratan::create([
+                        'pengajuan_id'   => $pengajuan->id,
                         'nik'            => $data['nik'],
                         'pelayanan_id'   => $data['pelayanan_id'],
                         'persyaratan_id' => $persyaratanId,
@@ -70,11 +76,6 @@ class PengajuanController extends Controller
                     ]);
                 }
             }
-
-            Pengajuan::create([
-                'nik' => $data['nik'],
-                'pelayanan_id' => $data['pelayanan_id'],
-            ]);
 
             return redirect()->route('pengajuan.detail', ['id' => $data['pelayanan_id'], 'nik' => $data['nik']])->with('success', 'Berhasil menambah data.');
         } catch (\Exception $e) {
