@@ -45,7 +45,9 @@ Route::get('/pengajuan-surat', [PermohonanController::class, 'index'])->name('pe
 
 
 Route::get('/list-pengajuan', [ListPengajuanController::class, 'index'])->name('list-pengajuan');
+Route::post('/list-pengajuan/cetak/{id}', [ListPengajuanController::class, 'cetak'])->name('list-pengajuan.cetak');
 Route::put('/list-pengajuan/verifikasi/{id}', [ListPengajuanController::class, 'verifikasi'])->name('list-pengajuan.verifikasi');
+Route::get('/list-pengajuan/stream/{persyaratan_id}/{pengajuan_id}', [ListPengajuanController::class, 'stream'])->name('list-pengajuan.stream');
 
 Route::get('/persyaratan', [PersyaratanController::class, 'index'])->name('persyaratan');
 Route::get('/persyaratan/edit/{id}', [PersyaratanController::class, 'edit'])->name('persyaratan.edit');
