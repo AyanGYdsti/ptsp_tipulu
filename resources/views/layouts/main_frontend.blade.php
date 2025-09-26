@@ -78,9 +78,6 @@
                     class="text-gray-600 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">Pengaduan</a>
                 <a href="{{ $prefix }}#kontak"
                     class="text-gray-600 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">Kontak</a>
-                <a href="{{ $prefix }}#"
-                    class="bg-blue-600 text-white mt-2 w-full text-center block px-3 py-3 rounded-md text-base font-medium hover:bg-blue-700">Ajukan
-                    Layanan Online</a>
             </div>
         </div>
     </header>
