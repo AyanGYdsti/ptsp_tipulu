@@ -53,10 +53,6 @@
                     </nav>
                 </div>
                 <div class="flex items-center">
-                    <a href="#"
-                        class="hidden sm:block bg-blue-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
-                        Ajukan Layanan Online
-                    </a>
                     <button id="mobile-menu-button"
                         class="md:hidden ml-4 p-2 rounded-md text-gray-500 hover:text-gray-800 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
                         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
