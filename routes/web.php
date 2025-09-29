@@ -28,6 +28,7 @@ Route::get('/surat', function () {
         'judul' => 'Surat Keterangan',
         'tahun' => now()->format('-Y'),
         'tanggal' => now()->format('d-m-Y'),
+        
     ]);
 
 
