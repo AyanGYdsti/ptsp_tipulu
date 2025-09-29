@@ -47,7 +47,8 @@ class MasyarakatController extends Controller
             'pekerjaan' => 'required',
             'agama' => 'required',
             'jk' => 'required',
-            'no_hp' => 'required',
+            'no_hp' => 'nullable'
+            
         ], [
             'nik.unique' => 'NIK sudah terdaftar.',
         ]);
@@ -57,6 +58,7 @@ class MasyarakatController extends Controller
 
             return back()->with('success', 'Berhasil menambah data');
         } catch (\Exception $e) {
+            return "gagal"; 
             back()->with('error', 'Gagal menambah data');
         }
     }
@@ -73,7 +75,7 @@ class MasyarakatController extends Controller
             'pekerjaan' => 'required',
             'agama' => 'required',
             'jk' => 'required',
-            'no_hp' => 'required',
+            'no_hp' => 'nullable',
         ], [
             'nik.unique' => 'NIK sudah terdaftar.',
         ]);

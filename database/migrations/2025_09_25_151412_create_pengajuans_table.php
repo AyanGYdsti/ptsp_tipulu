@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('nik');
             $table->unsignedBigInteger('pelayanan_id');
-            $table->string('no_hp');
+            $table->string('no_hp')->nullable();
             $table->unsignedBigInteger('ttd')->nullable();
             $table->timestamps();
         });

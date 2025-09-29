@@ -8,6 +8,7 @@ use App\Models\Masyarakat;
 use App\Models\Pelayanan;
 use App\Models\Pengajuan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PengajuanController extends Controller
 {
@@ -39,19 +40,30 @@ class PengajuanController extends Controller
         return view('frontend.pengajuan.detail', compact('title', 'masyarakat', 'pelayanan'));
     }
 
+    // File: app/Http/Controllers/Frontend/PengajuanController.php
+
     public function store(Request $request)
     {
+        // 1. TAMBAHKAN VALIDASI UNTUK 'no_wa'
         $data = $request->validate([
             'pelayanan_id' => 'required',
-            'nik'          => 'required',
+            'nik'          => 'required|exists:masyarakats,nik',
+            'no_hp'        => 'required|string|digits_between:10,15', // Wajib diisi, harus angka, 10-15 digit
             'dokumen'      => 'required|array',
             'dokumen.*'    => 'file|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);
 
         try {
+            // 2. CARI DAN UPDATE DATA MASYARAKAT DENGAN NO WA BARU
+            // Logika ini dijalankan sebelum membuat pengajuan
+            $masyarakat = Masyarakat::where('nik', $data['nik'])->first();
+
+
+            // --- Sisa logika di bawah ini sama seperti sebelumnya ---
             $pengajuan = Pengajuan::create([
                 'nik' => $data['nik'],
                 'pelayanan_id' => $data['pelayanan_id'],
+                'no_hp' => $data['no_hp']
             ]);
 
             foreach ($data['dokumen'] as $persyaratanId => $file) {
@@ -77,9 +89,16 @@ class PengajuanController extends Controller
                 }
             }
 
-            return redirect()->route('pengajuan.detail', ['id' => $data['pelayanan_id'], 'nik' => $data['nik']])->with('success', 'Berhasil menambah data.');
+            return redirect()->back()->with('success', 'Berhasil mengajukan permohonan.');
+
         } catch (\Exception $e) {
-            return redirect()->route('pengajuan.detail', ['id' => $data['pelayanan_id'], 'nik' => $data['nik']])->with('error', 'Terjadi kesalahan saat menyimpan dokumen.');
+            // Baris ini berguna untuk debugging jika terjadi error
+            Log::error('Error saat pengajuan: ' . $e->getMessage()); 
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan data.');
         }
     }
+
+
 }
+
+

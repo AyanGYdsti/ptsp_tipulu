@@ -39,15 +39,26 @@
                     @csrf
 
                     <input type="hidden" name="nik" value="{{ $masyarakat->nik }}">
-
                     <input type="hidden" name="pelayanan_id" value="{{ $pelayanan->id }}">
 
+                    {{-- Nama Pengaju --}}
                     <div>
                         <label for="nama" class="block text-sm font-medium text-gray-600">Nama Pengaju</label>
                         <input type="text" name="nama" id="nama" value="{{ old('nama', $masyarakat->nama) }}"
                             class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('nama') border-red-500 @enderror"
                             placeholder="Masukkan Nama" disabled>
                         @error('nama')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Nomor WhatsApp --}}
+                    <div>
+                        <label for="no_hp" class="block text-sm font-medium text-gray-600">Nomor WhatsApp</label>
+                        <input type="text" name="no_hp" id="no_hp" value="{{ old('no_hp') }}"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('no_hp') border-red-500 @enderror"
+                            placeholder="contoh: 081234567890" required>
+                        @error('no_hp')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
