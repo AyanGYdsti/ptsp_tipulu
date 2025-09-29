@@ -8,14 +8,24 @@ use Illuminate\Http\Request;
 
 class MasyarakatController extends Controller
 {
-    public function index()
-    {
-        $title = "Masyarakat";
+    public function index(Request $request)
+{
+    $title = "Masyarakat";
 
-        $masyarakat = Masyarakat::get();
+    $query = Masyarakat::query();
 
-        return view('backend.masyarakat.index', compact('title', 'masyarakat'));
+    if ($request->filled('q')) {
+        $query->where('nama', 'like', '%' . $request->q . '%')
+              ->orWhere('nik', 'like', '%' . $request->q . '%')
+              ->orWhere('alamat', 'like', '%' . $request->q . '%');
     }
+
+    $masyarakat = $query->get();
+
+    return view('backend.masyarakat.index', compact('title', 'masyarakat'))
+           ->with('q', $request->q);
+}
+
 
     public function edit($id)
     {
