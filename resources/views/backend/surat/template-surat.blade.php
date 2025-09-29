@@ -60,56 +60,47 @@
         Yang bertanda tangan di bawah ini, Lurah Tipulu Kecamatan Kendari Barat Kota Kendari, dengan ini menerangkan
         bahwa :
     </p>
-
+    <br>
     <table>
         <tr>
-            <td style="width: 5%">a.</td>
+            <td style="width: 20%">NIK</td>
+            <td style="width: 5%">:</td>
+            <td>{{ $nik }}</td>
+        </tr>
+
+        <tr>
             <td style="width: 20%">Nama</td>
-            <td>:</td>
-            <td></td>
+            <td style="width: 5%">:</td>
+            <td>{{ $nama_pengaju }}</td>
         </tr>
         <tr>
-            <td>b.</td>
-            <td>Tempat / Tgl Lahir</td>
-            <td>:</td>
-            <td></td>
+            <td style="width: 20%">Tempat / Tanggal Lahir</td>
+            <td style="width: 5%">:</td>
+            <td>{{ $tempat_lahir }}, {{ $tanggal_lahir }}</td>
         </tr>
         <tr>
-            <td>c.</td>
-            <td>Bangsa/Suku</td>
-            <td>:</td>
-            <td></td>
+            <td style="width: 20%">Agama</td>
+            <td style="width: 5%">:</td>
+            <td>{{ $agama }}</td>
         </tr>
         <tr>
-            <td>d.</td>
-            <td>Kebangsaan</td>
-            <td>:</td>
-            <td></td>
+            <td style="width: 20%">Pekerjaan</td>
+            <td style="width: 5%">:</td>
+            <td>{{ $pekerjaan }}</td>
         </tr>
         <tr>
-            <td>e.</td>
-            <td>Agama</td>
-            <td>:</td>
-            <td></td>
+            <td style="width: 20%">Alamat</td>
+            <td style="width: 5%">:</td>
+            <td>{{ $alamat }}</td>
         </tr>
+
         <tr>
-            <td>f.</td>
-            <td>Pekerjaan</td>
-            <td>:</td>
-            <td></td>
+            <td style="width: 20%">Jenis Kelamin</td>
+            <td style="width: 5%">:</td>
+            <td>{{ $jenis_kelamin }}</td>
         </tr>
-        <tr>
-            <td>g.</td>
-            <td>No. KTP / Tanggal</td>
-            <td>:</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>h.</td>
-            <td>Alamat</td>
-            <td>:</td>
-            <td></td>
-        </tr>
+
+        
     </table>
     <br>
     <p>

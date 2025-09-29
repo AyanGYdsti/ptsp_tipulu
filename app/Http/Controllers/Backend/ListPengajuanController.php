@@ -50,6 +50,14 @@ class ListPengajuanController extends Controller
             'judul' => $pengajuan->pelayanan->nama,
             'tahun' => Carbon::parse($request->tgl_cetak)->format('Y'),
             'tanggal' => Carbon::parse($request->tgl_cetak)->format('d-m-Y'),
+            'nama_pengaju' => $pengajuan->masyarakat->nama,
+            'tempat_lahir' => $pengajuan->masyarakat->tempat_lahir,
+            'tanggal_lahir' => Carbon::parse($pengajuan->masyarakat->tgl_lahir)->format('d-m-Y'),
+            'jenis_kelamin' => $pengajuan->masyarakat->jk,
+            'agama' => $pengajuan->masyarakat->agama,
+            'pekerjaan' => $pengajuan->masyarakat->pekerjaan,
+            'alamat' => $pengajuan->masyarakat->alamat,
+            'nik' => $pengajuan->masyarakat->nik,
         ]);
 
 
