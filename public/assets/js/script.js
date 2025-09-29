@@ -346,4 +346,5 @@ document.addEventListener("DOMContentLoaded", function () {
             geminiStatus.innerText = "";
         }, 4000);
     });
+    
 });
