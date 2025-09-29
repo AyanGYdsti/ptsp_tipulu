@@ -8,9 +8,15 @@
     <title>Surat</title>
 
     <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            margin: 30px
+        @page {
+            font-family: 'Times New Roman', Times, serif, Helvetica, sans-serif;
+            margin-left: 2.86cm;
+            margin-right: 1.59cm;
+            margin-top: 0.75cm;
+            margin-bottom: 2.54cm;
+            line-height: 1.5;
+            width:21.59cm;
+            height:35.56cm;
         }
 
         p {
@@ -53,58 +59,56 @@
 
     <div style="text-align:center;margin:20px 0">
         <p><span style="border-bottom:2px solid black">{{ $judul }}</span></p>
-        <p>Nomor : 302 / / I /{{ $tahun }}</p>
+        <p>Nomor : 302 / / I /{{ $tahun }}</p>{{-- Masih mau di ganti  --}}
     </div>
 
-    <p>
+    <p style="text-align: justify; text-indent: 27px;">
         Yang bertanda tangan di bawah ini, Lurah Tipulu Kecamatan Kendari Barat Kota Kendari, dengan ini menerangkan
         bahwa :
     </p>
     <br>
-    <table>
+    <table style = "margin-left:27px">
         <tr>
-            <td style="width: 20%">NIK</td>
-            <td style="width: 5%">:</td>
+            <td style="width: 27%">NIK</td>
+            <td style="width: 2%">:</td>
             <td>{{ $nik }}</td>
         </tr>
 
         <tr>
-            <td style="width: 20%">Nama</td>
-            <td style="width: 5%">:</td>
+            <td>Nama</td>
+            <td>:</td>
             <td>{{ $nama_pengaju }}</td>
         </tr>
         <tr>
-            <td style="width: 20%">Tempat / Tanggal Lahir</td>
-            <td style="width: 5%">:</td>
+            <td>Tempat / Tanggal Lahir</td>
+            <td>:</td>
             <td>{{ $tempat_lahir }}, {{ $tanggal_lahir }}</td>
         </tr>
+                <tr>
+            <td>Jenis Kelamin</td>
+            <td>:</td>
+            <td>{{ $jenis_kelamin }}</td>
+        </tr>
         <tr>
-            <td style="width: 20%">Agama</td>
-            <td style="width: 5%">:</td>
+            <td>Agama</td>
+            <td>:</td>
             <td>{{ $agama }}</td>
         </tr>
         <tr>
-            <td style="width: 20%">Pekerjaan</td>
-            <td style="width: 5%">:</td>
+            <td>Pekerjaan</td>
+            <td>:</td>
             <td>{{ $pekerjaan }}</td>
         </tr>
         <tr>
-            <td style="width: 20%">Alamat</td>
-            <td style="width: 5%">:</td>
+            <td>Alamat</td>
+            <td>:</td>
             <td>{{ $alamat }}</td>
         </tr>
-
-        <tr>
-            <td style="width: 20%">Jenis Kelamin</td>
-            <td style="width: 5%">:</td>
-            <td>{{ $jenis_kelamin }}</td>
-        </tr>
-
         
     </table>
     <br>
     <p>
-        Adalah benar-benar warga Kelurahan Tipulu untuk membuat Surat Kelakuan Baik.
+        Nama yang tersebut diatas adalah benar - benar penduduk  di RT ??/ RW ??  Kelurahan Tipulu Kecamatan Kendari Barat dan sepanjang  pengetahuan kami (variable deskripsi)
     </p>
     <br>
     <p>
