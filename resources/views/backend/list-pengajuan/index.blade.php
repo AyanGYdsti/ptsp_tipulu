@@ -26,7 +26,7 @@
                             <tr class="hover:bg-blue-50 transition">
                                 <td class="px-4 py-3 text-center font-semibold text-blue-600">{{ $loop->iteration }}</td>
                                 <td class="px-4 py-3">{{ $data->masyarakat->nama }}</td>
-                                <td class="px-4 py-3">{{ $data->masyarakat->no_hp }}</td>
+                                <td class="px-4 py-3">{{ $data->no_hp }}</td>
                                 <td class="px-4 py-3">{{ $data->pelayanan->nama }}</td>
                                 <td class="px-4 py-3 text-center flex justify-center gap-3">
                                     @if (!$data->verifikasiByAparatur(4)->first())
