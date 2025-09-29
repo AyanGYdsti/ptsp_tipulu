@@ -15,11 +15,6 @@
             class="sidebar-link flex items-center gap-3 px-3 py-2 hover:bg-blue-600 rounded-md {{ $title == 'Dashboard' ? 'active' : '' }}"><i
                 class="fa fa-home"></i>
             Dashboard</a>
-
-        <a href="{{ route('permohonan.index') }}"
-            class="sidebar-link flex items-center gap-3 px-3 py-2 hover:bg-blue-600 rounded-md {{ $title == 'Pengajuan Surat' ? 'active' : '' }}"><i
-                class="fa fa-inbox"></i>
-            Pengajuan Surat</a>
         <div class="space-y-1">
             <button type="button"
                 class="w-full flex items-center justify-between px-3 py-2 rounded-md hover:bg-blue-600 focus:outline-none transition"

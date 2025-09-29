@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('dokumen_persyaratans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('nik');
-            $table->unsignedBigInteger('pengajuan_id');
+            $table->unsignedBigInteger('persyaratan_id');
+            $table->unsignedBigInteger('pelayanan_id');
             $table->text('dokumen');
             $table->timestamps();
         });
