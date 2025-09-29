@@ -4,14 +4,27 @@
     <div class="mx-auto">
         <!-- Card -->
         <div class="bg-gradient-to-br from-blue-50 to-blue-100 shadow-xl rounded-2xl p-3 sm:p-6 border border-blue-200">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-3">
+           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-3">
                 <h2 class="text-lg sm:text-xl lg:text-2xl font-extrabold text-blue-800 tracking-wide flex items-center gap-2">
                     <i class="fa fa-list-alt text-blue-600"></i> Daftar {{ $title }}
                 </h2>
-                <button id="openModalBtn"
-                    class="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-3 py-2 rounded-lg flex items-center gap-2 hover:from-blue-700 hover:to-blue-600 shadow-md transition text-xs sm:text-sm w-full sm:w-auto justify-center">
-                    <i class="fa fa-plus"></i> Persyaratan
-                </button>
+
+                <div class="flex items-center gap-2 w-full sm:w-auto">
+                    <!-- Form Search -->
+                    <form method="GET" action="{{ url('/persyaratan') }}" class="flex items-center border rounded-lg overflow-hidden w-full sm:w-auto">
+                        <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari nama / keterangan..."
+                            class="px-3 py-2 text-sm focus:outline-none w-full sm:w-48">
+                        <button type="submit" class="bg-blue-600 text-white px-3 py-2">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+
+                    <!-- Tombol Tambah -->
+                    <button id="openModalBtn"
+                        class="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-3 py-2 rounded-lg flex items-center gap-2 hover:from-blue-700 hover:to-blue-600 shadow-md transition text-xs sm:text-sm w-full sm:w-auto justify-center">
+                        <i class="fa fa-plus"></i> <span class="hidden sm:inline">Persyaratan</span>
+                    </button>
+                </div>
             </div>
 
             <!-- Tabel Desktop -->

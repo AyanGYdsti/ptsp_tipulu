@@ -8,14 +8,21 @@ use Illuminate\Http\Request;
 
 class PersyaratanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $title = "Persyaratan";
 
+        $query = Persyaratan::query();
 
-        $persyaratan = Persyaratan::get();
+        if ($request->filled('q')) {
+            $query->where('nama', 'like', '%' . $request->q . '%')
+                ->orWhere('keterangan', 'like', '%' . $request->q . '%');
+        }
 
-        return view('backend.persyaratan.index', compact('title', 'persyaratan'));
+        $persyaratan = $query->get();
+
+        return view('backend.persyaratan.index', compact('title', 'persyaratan'))
+            ->with('q', $request->q);
     }
 
     public function edit($id)

@@ -122,14 +122,29 @@
         <!-- Card -->
         <div class="bg-gradient-to-br from-blue-50 to-blue-100 shadow-xl rounded-2xl p-3 sm:p-6 border border-blue-200">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 gap-3 sm:gap-0">
-                <h2 class="text-lg sm:text-xl lg:text-2xl font-extrabold text-blue-800 tracking-wide flex items-center gap-2">
-                    <i class="fa fa-list-alt text-blue-600"></i> Daftar {{ $title }}
-                </h2>
+            <h2 class="text-lg sm:text-xl lg:text-2xl font-extrabold text-blue-800 tracking-wide flex items-center gap-2">
+                <i class="fa fa-list-alt text-blue-600"></i> Daftar {{ $title }}
+            </h2>
+            <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                <!-- Search form -->
+                <form method="GET" action="{{ route('pelayanan') }}" class="flex w-full sm:w-auto">
+                    <input type="text" name="q" value="{{ request('q') }}"
+                        placeholder="Cari pelayanan / persyaratan..."
+                        class="border border-blue-300 rounded-l-lg px-3 py-2 text-sm w-full sm:w-64 focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
+                    <button type="submit"
+                        class="bg-blue-600 text-white px-3 py-2 rounded-r-lg hover:bg-blue-700 transition">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </form>
+
+                <!-- Tombol tambah -->
                 <button id="openModalBtn"
                     class="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-3 sm:px-4 py-2 rounded-lg flex items-center gap-2 hover:from-blue-700 hover:to-blue-600 shadow-md transition text-xs sm:text-sm w-full sm:w-auto justify-center">
                     <i class="fa fa-plus"></i> Pelayanan
                 </button>
             </div>
+        </div>
+
 
             <!-- Desktop Table View -->
             <div class="desktop-table-view overflow-x-auto rounded-xl border border-blue-200">

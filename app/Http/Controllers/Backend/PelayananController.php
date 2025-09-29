@@ -10,17 +10,28 @@ use Illuminate\Http\Request;
 
 class PelayananController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $title = "Pelayanan";
 
+        $query = Pelayanan::with('pelayananPersyaratan.persyaratan');
 
-        $pelayanan = Pelayanan::with('pelayananPersyaratan.persyaratan')->get();
+        if ($request->filled('q')) {
+            $q = $request->q;
+            $query->where('nama', 'like', "%{$q}%")
+                ->orWhereHas('pelayananPersyaratan.persyaratan', function ($subQuery) use ($q) {
+                    $subQuery->where('nama', 'like', "%{$q}%");
+                });
+        }
+
+        $pelayanan = $query->get();
 
         $persyaratan = Persyaratan::get(['id', 'nama']);
 
         return view('backend.pelayanan.index', compact('title', 'pelayanan', 'persyaratan'));
     }
+
+
 
     public function edit($id)
     {
