@@ -37,6 +37,14 @@
                                             <i class="fa-solid fa-hand-pointer text-lg"></i>
                                         </button>
                                     @else
+                                        <!-- Tombol Notifikasi WA -->
+                                        <a href="{{ 'https://wa.me/' . preg_replace('/^0/', '62', preg_replace('/[^0-9]/', '', $data->no_hp)) . '?text=' . urlencode('Assalamualikum Bapak/Ibu ' . $data->masyarakat->nama . ',' . "\n\n" .'Dengan hormat, kami informasikan bahwa pengajuan layanan '. $data->pelayanan->nama . ' Anda telah diproses dan sudah bisa diambil.'. "\n\n".'Silahkan datang pada jam kerja untuk mengambil dokumen.' . "\n" . 'Terima kasih atas perhatiannya.'."\n\n" . 'Hormat Kami,'. "\n". 'Staf Pelayanan Kantor Lurah') }}"
+                                            target="_blank"
+                                            class="text-green-500 hover:text-green-600 transition transform hover:scale-110"
+                                            title="Kirim Notifikasi WA">
+                                            <i class="fa-brands fa-whatsapp text-lg"></i>
+                                        </a>
+
                                         <!-- Tombol Cetak -->
                                         <button type="button" onclick="openCetakModal('{{ $data->id }}')"
                                             class="text-yellow-500 hover:text-yellow-600 transition transform hover:scale-110"
