@@ -75,22 +75,22 @@
             <tr>
                 <td style="width: 27%">Nama</td>
                 <td style="width: 2%">:</td>
-                <td>{{ $nama_md }}</td>
+                {{-- <td>{{ $nama_md }}</td> --}}
             </tr>
             <tr>
                 <td>Jenis Kelamin</td>
                 <td>:</td>
-                <td>{{ $jenis_kelamin }}</td>
+                {{-- <td>{{ $jenis_kelamin_md }}</td> --}}
             </tr>
             <tr>
                 <td>Umur</td>
                 <td>:</td>
-                <td>{{ $umur }} Tahun</td>
+                {{-- <td>{{ $umur }} Tahun</td> --}}
             </tr>
             <tr>
                 <td>Alamat</td>
                 <td>:</td>
-                <td>{{ $alamat }}</td>
+                {{-- <td>{{ $alamat_md }}</td> --}}
             </tr>
 
             <tr>
@@ -103,31 +103,31 @@
             <tr>
                 <td style="padding-left: 15px;">Hari</td>
                 <td>:</td>
-                <td>{{ $hari_meninggal }}</td>
+                {{-- <td>{{ $hari_meninggal }}</td> --}}
             </tr>
 
             <tr>
                 <td style="padding-left: 15px;">Tanggal</td>
                 <td>:</td>
-                <td>{{ $tanggal_meninggal }}</td>
+                {{-- <td>{{ $tanggal_meninggal }}</td> --}}
             </tr>
 
             <tr>
                 <td style="padding-left: 15px;">Di</td>
                 <td>:</td>
-                <td>{{ $tempat_meninggal }}</td>
+                {{-- <td>{{ $tempat_meninggal }}</td> --}}
             </tr>
 
             <tr>
                 <td>Disebabkan Karena</td>
                 <td>:</td>
-                <td>{{ $sebab_meninggal }}</td>
+                {{-- <td>{{ $sebab_meninggal }}</td> --}}
             </tr>
 
             <tr>
                 <td>Yang Melaporkan</td>
                 <td>:</td>
-                <td>{{ $yang_melaporkan }}</td>
+                <td>{{ $nama_pengaju }}</td>
             </tr>
         </table>
 
@@ -258,7 +258,7 @@
                 <td>Jenis Kelamin</td>
                 <td>:</td>
                 <td>{{ $jenis_kelamin }}</td>
-            </tr>
+            </tr>       
             <tr>
                 <td>Agama</td>
                 <td>:</td>

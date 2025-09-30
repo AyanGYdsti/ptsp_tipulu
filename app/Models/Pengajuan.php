@@ -28,4 +28,10 @@ class Pengajuan extends Model
         return $this->hasMany(Verifikasi::class, 'pengajuan_id')
             ->where('aparatur_id', $aparaturId);
     }
+
+    public function kematian()
+    {
+        return $this->hasOne(Kematian::class);
+    }
+
 }

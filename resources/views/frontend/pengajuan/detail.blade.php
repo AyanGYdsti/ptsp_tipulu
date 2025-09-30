@@ -86,19 +86,98 @@
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
+              @if ($pelayanan->nama == "Surat Keterangan Kematian")
+                    {{-- Nama Meninggal --}}
+                    <div>
+                        <label for="nama" class="block text-sm font-medium text-gray-600">Nama Meninggal</label>
+                        <input type="text" name="nama" id="nama" value="{{ old('nama') }}"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('nama') border-red-500 @enderror"
+                            placeholder="Masukkan Nama Yang Meninggal" required>
+                        @error('nama')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
 
-                    @if ($pelayanan->nama == "Surat Keterangan Kematian")
-                        <div>
-                            <label for="nama_md" class="block text-sm font-medium text-gray-600">Nama Meninggal</label>
-                            <input type="text" name="nama_md" id="nama_md"
-                             value=""
-                                class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('nama_md') border-red-500 @enderror"
-                                placeholder="Masukkan Nama Yang Meninggal" required>
-                            @error('nama_md')
-                                <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                            @enderror
-                        </div>
-                    @endif
+                    {{-- Jenis Kelamin --}}
+                    <div>
+                        <label for="jenis_kelamin" class="block text-sm font-medium text-gray-600">Jenis Kelamin</label>
+                        <select name="jenis_kelamin" id="jenis_kelamin"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('jenis_kelamin') border-red-500 @enderror" required>
+                            <option value="">-- Pilih Jenis Kelamin --</option>
+                            <option value="Laki-laki" {{ old('jenis_kelamin')=='Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                            <option value="Perempuan" {{ old('jenis_kelamin')=='Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                        </select>
+                        @error('jenis_kelamin')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Umur --}}
+                    <div>
+                        <label for="umur" class="block text-sm font-medium text-gray-600">Umur</label>
+                        <input type="number" name="umur" id="umur" value="{{ old('umur') }}"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('umur') border-red-500 @enderror"
+                            placeholder="Masukkan Umur" required>
+                        @error('umur')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Alamat --}}
+                    <div>
+                        <label for="alamat" class="block text-sm font-medium text-gray-600">Alamat</label>
+                        <textarea name="alamat" id="alamat" rows="3"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('alamat') border-red-500 @enderror"
+                            placeholder="Masukkan Alamat Lengkap" required>{{ old('alamat') }}</textarea>
+                        @error('alamat')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Hari --}}
+                    <div>
+                        <label for="hari" class="block text-sm font-medium text-gray-600">Hari</label>
+                        <input type="text" name="hari" id="hari" value="{{ old('hari') }}"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('hari') border-red-500 @enderror"
+                            placeholder="Masukkan Hari Meninggal" required>
+                        @error('hari')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Tanggal Meninggal --}}
+                    <div>
+                        <label for="tanggal" class="block text-sm font-medium text-gray-600">Tanggal Meninggal</label>
+                        <input type="date" name="tanggal" id="tanggal" value="{{ old('tanggal') }}"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('tanggal') border-red-500 @enderror" required>
+                        @error('tanggal')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Tempat Meninggal --}}
+                    <div>
+                        <label for="tempat" class="block text-sm font-medium text-gray-600">Tempat Meninggal</label>
+                        <input type="text" name="tempat" id="tempat" value="{{ old('tempat') }}"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('tempat') border-red-500 @enderror"
+                            placeholder="Masukkan Tempat Meninggal" required>
+                        @error('tempat')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Penyebab --}}
+                    <div>
+                        <label for="sebab_kematian" class="block text-sm font-medium text-gray-600">Penyebab</label>
+                        <input type="text" name="sebab_kematian" id="sebab_kematian" value="{{ old('sebab_kematian') }}"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('sebab_kematian') border-red-500 @enderror"
+                            placeholder="Masukkan Penyebab Kematian" required>
+                        @error('sebab_kematian')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+                @endif
+
 
                     {{-- Nomor WhatsApp --}}
                     <div>

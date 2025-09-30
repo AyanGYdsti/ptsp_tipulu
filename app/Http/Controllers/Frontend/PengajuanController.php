@@ -10,6 +10,7 @@ use App\Models\Pelayanan;
 use App\Models\Pengajuan;
 use App\Services\FcmService; // ✅ TAMBAHKAN INI
 use Illuminate\Http\Request;
+use App\Models\Kematian;
 use Illuminate\Support\Facades\Log;
 
 class PengajuanController extends Controller
@@ -45,9 +46,9 @@ class PengajuanController extends Controller
         return view('frontend.pengajuan.detail', compact('title', 'masyarakat', 'pelayanan'));
     }
 
-    public function store(Request $request)
+   public function store(Request $request)
     {
-        // Validasi
+        // Validasi dasar
         $data = $request->validate([
             'pelayanan_id' => 'required',
             'nik' => 'required|exists:masyarakats,nik',
@@ -57,7 +58,6 @@ class PengajuanController extends Controller
         ]);
 
         try {
-            // Cari data masyarakat dan pelayanan
             $masyarakat = Masyarakat::where('nik', $data['nik'])->first();
             $pelayanan = Pelayanan::find($data['pelayanan_id']);
 
@@ -68,7 +68,7 @@ class PengajuanController extends Controller
                 'no_hp' => $data['no_hp']
             ]);
 
-            // Upload dokumen
+            // Upload dokumen persyaratan
             foreach ($data['dokumen'] as $persyaratanId => $file) {
                 if ($request->hasFile("dokumen.$persyaratanId")) {
                     $file = $request->file("dokumen.$persyaratanId");
@@ -86,7 +86,33 @@ class PengajuanController extends Controller
                 }
             }
 
-            // ✅ KIRIM NOTIFIKASI KE SEMUA ADMIN
+            // ✅ SIMPAN DATA KE TABEL KEMATIANS JIKA PELAYANAN SURAT KEMATIAN
+            if ($pelayanan && $pelayanan->nama === "Surat Keterangan Kematian") {
+                $request->validate([
+                    'nama'           => 'required|string',
+                    'jenis_kelamin'  => 'required|string',
+                    'umur'           => 'required|integer',
+                    'alamat'         => 'required|string',
+                    'hari'           => 'required|string',
+                    'tanggal'        => 'required|date',
+                    'tempat'         => 'required|string',
+                    'sebab_kematian' => 'required|string',
+                ]);
+
+                Kematian::create([
+                    'pengajuan_id'   => $pengajuan->id,
+                    'nama'           => $request->nama,
+                    'jenis_kelamin'  => $request->jenis_kelamin,
+                    'umur'           => $request->umur,
+                    'alamat'         => $request->alamat,
+                    'hari'           => $request->hari,
+                    'tanggal'        => $request->tanggal,
+                    'tempat'         => $request->tempat,
+                    'sebab_kematian' => $request->sebab_kematian,
+                ]);
+            }
+
+            // ✅ KIRIM NOTIFIKASI KE ADMIN
             $this->fcmService->sendToAllAdmins(
                 '📝 Pengajuan Baru!',
                 "Pengajuan {$pelayanan->nama} dari {$masyarakat->nama}",
