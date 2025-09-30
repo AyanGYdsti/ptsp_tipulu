@@ -1,4 +1,4 @@
-@extends('layouts.main_frontend', ['landingPage' => ''])
+@extends('layouts.main_frontend', ['landingPage' => $landingPage])
 
 @section('content')
     <main>
@@ -34,17 +34,14 @@
                         dengan mudah dan cepat langsung dari genggaman Anda.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {{-- Mengambil data pelayanan yang dikirim dari controller --}}
                     @foreach ($pelayanan as $item)
                         <div
                             class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-2 transition-all duration-300 fade-in-up">
                             <div
                                 class="bg-blue-100 text-blue-600 rounded-full h-16 w-16 flex items-center justify-center mb-6 text-3xl">
-                                {{-- PERBAIKAN: Menempatkan kelas ikon ke dalam tag <i> --}}
                                 <i class="{{ $item->icon }}"></i>
                             </div>
                             <h3 class="text-2xl font-bold mb-3">{{ $item->nama }}</h3>
-                            {{-- Menggunakan {{ }} untuk keamanan --}}
                             <p class="text-gray-600 mb-6">{{ $item->deskripsi }}</p>
                             <a href="{{ route('pengajuan', $item->id) }}"
                                 class="font-semibold text-blue-600 hover:text-blue-800 transition-colors">Ajukan Sekarang
@@ -110,54 +107,7 @@
             </div>
         </section>
 
-        <section id="data-penduduk" class="py-20 bg-white">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12 fade-in-up">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Sekilas Data Kependudukan Kelurahan Tipulu
-                    </h2>
-                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Data demografi terbaru sebagai bentuk
-                        transparansi informasi publik.</p>
-                </div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-                    <div class="grid grid-cols-2 gap-6 fade-in-up">
-                        <div class="bg-blue-50 p-6 rounded-lg text-center">
-                            <p class="text-lg text-blue-800 font-medium">Total Penduduk</p>
-                            <p id="total-penduduk" class="text-4xl font-bold text-blue-600 mt-2" data-target="8750">0
-                            </p>
-                            <p class="text-sm text-blue-700">Jiwa</p>
-                        </div>
-                        <div class="bg-green-50 p-6 rounded-lg text-center">
-                            <p class="text-lg text-green-800 font-medium">Jumlah KK</p>
-                            <p id="jumlah-kk" class="text-4xl font-bold text-green-600 mt-2" data-target="2180">0</p>
-                            <p class="text-sm text-green-700">Kepala Keluarga</p>
-                        </div>
-                        <div class="bg-indigo-50 p-6 rounded-lg text-center">
-                            <p class="text-lg text-indigo-800 font-medium">Laki-laki</p>
-                            <p id="laki-laki" class="text-4xl font-bold text-indigo-600 mt-2" data-target="4420">0
-                            </p>
-                            <p class="text-sm text-indigo-700">Jiwa</p>
-                        </div>
-                        <div class="bg-pink-50 p-6 rounded-lg text-center">
-                            <p class="text-lg text-pink-800 font-medium">Perempuan</p>
-                            <p id="perempuan" class="text-4xl font-bold text-pink-600 mt-2" data-target="4330">0</p>
-                            <p class="text-sm text-pink-700">Jiwa</p>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 fade-in-up">
-                        <div class="text-center">
-                            <h3 class="text-xl font-bold mb-4">Komposisi Jenis Kelamin</h3>
-                            <canvas id="genderChart"></canvas>
-                        </div>
-                        <div class="text-center">
-                            <h3 class="text-xl font-bold mb-4">Kelompok Usia</h3>
-                            <canvas id="ageChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="profil" class="py-20 bg-gray-50">
+        <section id="profil" class="py-20 bg-white">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12 fade-in-up">
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Aparatur Kelurahan Tipulu</h2>
@@ -182,6 +132,45 @@
             </div>
         </section>
 
+        <section id="data-penduduk" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12 fade-in-up">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Sekilas Data Kependudukan Kelurahan Tipulu
+                    </h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Data demografi terbaru sebagai bentuk
+                        transparansi informasi publik.</p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                    <div class="grid grid-cols-2 gap-6 fade-in-up">
+                        <div class="bg-blue-50 p-6 rounded-lg text-center col-span-2">
+                            <p class="text-lg text-blue-800 font-medium">Total Penduduk</p>
+                            <p id="total-penduduk" class="text-4xl font-bold text-blue-600 mt-2" data-target="{{ $totalPenduduk }}">0
+                            </p>
+                            <p class="text-sm text-blue-700">Jiwa</p>
+                        </div>
+                        <div class="bg-indigo-50 p-6 rounded-lg text-center">
+                            <p class="text-lg text-indigo-800 font-medium">Laki-laki</p>
+                            <p id="laki-laki" class="text-4xl font-bold text-indigo-600 mt-2" data-target="{{ $totalLakiLaki }}">0
+                            </p>
+                            <p class="text-sm text-indigo-700">Jiwa</p>
+                        </div>
+                        <div class="bg-pink-50 p-6 rounded-lg text-center">
+                            <p class="text-lg text-pink-800 font-medium">Perempuan</p>
+                            <p id="perempuan" class="text-4xl font-bold text-pink-600 mt-2" data-target="{{ $totalPerempuan }}">0</p>
+                            <p class="text-sm text-pink-700">Jiwa</p>
+                        </div>
+                    </div>
+                    <!-- Grafik komposisi jenis kelamin - ELEMEN BARU -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm fade-in-up">
+                        <h3 class="text-xl font-bold mb-4 text-center text-gray-800">Komposisi Jenis Kelamin</h3>
+                        <div class="h-64">
+                            <canvas id="genderChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="tentang" class="py-20 bg-white">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -197,15 +186,13 @@
                     </div>
                     <div class="h-96 rounded-lg overflow-hidden shadow-lg fade-in-up">
                         @php
-                            // pastikan koordinat di DB formatnya: "lat,lng"
                             $coords = explode(',', $landingPage->koordinat ?? '');
-                            $lat = $coords[0] ?? '-3.9877478'; // fallback default
-                            $lng = $coords[1] ?? '122.5029891'; // fallback default
+                            $lat = $coords[0] ?? '-3.9877478';
+                            $lng = $coords[1] ?? '122.5029891';
                         @endphp
-
                         <div class="w-full h-[400px] rounded-xl overflow-hidden border border-blue-200">
                             <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d5000!2d{{ $lng }}!3d{{ $lat }}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sid!2sid!4v{{ time() }}"
+                                src="https://maps.google.com/maps?q={{ $lat }},{{ $lng }}&z=15&output=embed"
                                 width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
                                 referrerpolicy="no-referrer-when-downgrade">
                             </iframe>
@@ -214,55 +201,6 @@
                 </div>
             </div>
         </section>
-
-        {{-- <section id="pengaduan" class="py-20 bg-gray-50">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12 fade-in-up">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Layanan Pengaduan Online</h2>
-                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Sampaikan aspirasi atau keluhan Anda. Kami
-                        siap mendengarkan.</p>
-                </div>
-                <div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-md fade-in-up">
-                    <form id="complaint-form"
-                        onsubmit="event.preventDefault(); alert('Fitur pengiriman pengaduan sedang dalam pengembangan.');">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-                            <div>
-                                <label for="complaint-name" class="block text-sm font-medium text-gray-700 mb-1">Nama
-                                    Lengkap</label>
-                                <input type="text" id="complaint-name"
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                                    required>
-                            </div>
-                            <div>
-                                <label for="complaint-contact" class="block text-sm font-medium text-gray-700 mb-1">No.
-                                    Telepon / Email</label>
-                                <input type="text" id="complaint-contact"
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                                    required>
-                            </div>
-                        </div>
-                        <div class="mb-4">
-                            <label for="complaint-details" class="block text-lg font-medium text-gray-800 mb-2">Detail
-                                Pengaduan</label>
-                            <textarea id="complaint-details" rows="6"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                                placeholder="Jelaskan pengaduan atau aspirasi Anda di sini..."></textarea>
-                        </div>
-                        <div class="flex flex-col sm:flex-row gap-4">
-                            <button type="button" id="gemini-assist-btn"
-                                class="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-wait">
-                                ✨ Bantu Saya Tulis Pengaduan
-                            </button>
-                            <button type="submit"
-                                class="flex-1 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
-                                Kirim Pengaduan
-                            </button>
-                        </div>
-                        <div id="gemini-status" class="text-sm text-center mt-4 text-gray-500 h-5"></div>
-                    </form>
-                </div>
-            </div>
-        </section> --}}
 
         <section id="kontak" class="py-20 bg-blue-50">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -302,7 +240,7 @@
                                         d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                 </svg>
                                 <a href="mailto:info@kelurahantipulu.go.id"
-                                    class="hover:text-blue-600">info@kelurahantipulu.go.id</a>
+                                    class="hover:text-blue-600">{{ $landingPage->email ?? '-' }}</a>
                             </li>
                         </ul>
                     </div>
@@ -325,3 +263,7 @@
         </section>
     </main>
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+@endpush

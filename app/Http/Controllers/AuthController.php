@@ -15,22 +15,36 @@ class AuthController extends Controller
     }
 
     public function authLogin(Request $request)
-    {
-        $credentials = $request->validate([
-            'username' => ['required'],
-            'password' => ['required'],
+{
+    $credentials = $request->validate([
+        'username' => ['required'],
+        'password' => ['required'],
+    ]);
+
+    // Coba lakukan proses login
+    if (Auth::attempt($credentials)) {
+        // Jika berhasil, jangan redirect. Tapi kirim respons JSON.
+        $request->session()->regenerate();
+        
+        $user = Auth::user(); // Ambil data user yang sedang login
+
+        // Kirim jawaban JSON yang menandakan sukses, beserta ID user
+        return response()->json([
+            'success' => true,
+            'user' => [
+                'id' => $user->id,
+                'username' => $user->username,
+                'email' => $user->email,
+            ]
         ]);
-
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-
-            return redirect()->intended('dashboard');
-        }
-
-        return back()->withErrors([
-            'username' => 'The provided credentials do not match our records.',
-        ])->onlyInput('username');
     }
+
+    // Jika gagal, kirim jawaban JSON yang menandakan error
+    return response()->json([
+        'success' => false,
+        'message' => 'Username atau password yang Anda masukkan salah.'
+    ], 401); // Kode 401 berarti "Unauthorized"
+}
 
     public function authLogout(Request $request)
     {

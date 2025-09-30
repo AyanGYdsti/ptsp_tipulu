@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Resmi Kelurahan Tipulu</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -173,6 +174,129 @@
     </div>
 
     <script src="/assets/js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animasi counter untuk statistik penduduk
+            function animateCounter(element) {
+                const target = parseInt(element.getAttribute('data-target'));
+                const duration = 2000; // 2 detik
+                const step = target / (duration / 16); // 60fps
+                let current = 0;
+
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        element.textContent = target.toLocaleString();
+                        clearInterval(timer);
+                    } else {
+                        element.textContent = Math.floor(current).toLocaleString();
+                    }
+                }, 16);
+            }
+
+            // Jalankan animasi counter
+            animateCounter(document.getElementById('total-penduduk'));
+            animateCounter(document.getElementById('laki-laki'));
+            animateCounter(document.getElementById('perempuan'));
+
+            // Data untuk Komposisi Jenis Kelamin
+            const genderData = {
+                labels: ['Laki-laki', 'Perempuan'],
+                datasets: [{
+                    label: 'Jumlah Jiwa',
+                    data: [{{ $totalLakiLaki }}, {{ $totalPerempuan }}],
+                    backgroundColor: [
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(236, 72, 153, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(59, 130, 246, 1)',
+                        'rgba(236, 72, 153, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            const genderConfig = {
+                type: 'doughnut',
+                data: genderData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return tooltipItem.label + ': ' + tooltipItem.raw.toLocaleString() +
+                                        ' jiwa';
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            // Inisialisasi grafik
+            const genderChart = new Chart(
+                document.getElementById('genderChart'),
+                genderConfig
+            );
+
+            // Carousel untuk berita
+            const carouselInner = document.getElementById('carousel-inner');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+
+            if (carouselInner && prevBtn && nextBtn) {
+                let currentIndex = 0;
+                const items = document.querySelectorAll('#carousel-inner > div');
+                const totalItems = items.length;
+
+                function updateCarousel() {
+                    const itemWidth = items[0].offsetWidth;
+                    carouselInner.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+                }
+
+                nextBtn.addEventListener('click', () => {
+                    if (currentIndex < totalItems - 1) {
+                        currentIndex++;
+                        updateCarousel();
+                    }
+                });
+
+                prevBtn.addEventListener('click', () => {
+                    if (currentIndex > 0) {
+                        currentIndex--;
+                        updateCarousel();
+                    }
+                });
+
+                window.addEventListener('resize', updateCarousel);
+            }
+
+            // Animasi scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fade-in-up');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe semua elemen dengan class fade-in-up
+            document.querySelectorAll('.fade-in-up').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
 </body>
 
 </html>

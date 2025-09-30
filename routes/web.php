@@ -17,6 +17,7 @@ use App\Http\Controllers\ListpelayananController;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\PermohonanController;
+use App\Http\Controllers\Api\FcmController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -95,3 +96,8 @@ Route::get('/pengajuan/{id}', [PengajuanController::class, 'index'])->name('peng
 Route::post('/pengajuan/cek/{id}', [PengajuanController::class, 'cek'])->name('pengajuan.cek');
 Route::post('/pengajuan/store/{id}', [PengajuanController::class, 'store'])->name('pengajuan.store');
 Route::get('/pengajuan/detail/{id}/{nik}', [PengajuanController::class, 'detail'])->name('pengajuan.detail');
+
+// Route ini khusus untuk menerima laporan FCM token dari aplikasi Flutter
+// Route::post('/api/save-fcm-token', [FcmController::class, 'saveToken'])->name('api.save_token');
+
+Route::post('/fcm/save-token', [FcmController::class, 'saveToken']);

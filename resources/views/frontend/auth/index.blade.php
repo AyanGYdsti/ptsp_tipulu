@@ -38,11 +38,12 @@
             </div>
 
             {{-- Form akan di-handle oleh route login Laravel --}}
-            <form method="POST" action="{{ route('auth.login') }}">
+            <form id="loginForm" method="POST" action="{{ route('auth.login') }}">
                 @csrf
-                @error('username')
+                {{-- Pesan error akan kita handle via JavaScript (alert) --}}
+                {{-- @error('username')
                     <p class="bg-red-500 py-2 px-3 text-center text-white mb-2">{{ $message }}</p>
-                @enderror
+                @enderror --}}
                 <div class="space-y-4">
                     <div>
                         <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
@@ -64,6 +65,57 @@
 
         </div>
     </div>
+
+    <script>
+        // Fungsi ini akan memproses jawaban dari server dan mengirim sinyal ke Flutter
+        function handleLoginResponse(dataFromServer) {
+            if (dataFromServer.success) {
+                // Cek apakah 'jembatan' bernama 'flutterApp' ada
+                if (window.flutterApp) {
+                    // Kirim pesan berisi ID user ke Flutter
+                    window.flutterApp.postMessage(dataFromServer.user.id.toString());
+                }
+                
+                // Arahkan ke halaman dashboard setelah sukses
+                window.location.href = '/dashboard';
+            } else {
+                // Tampilkan pesan error jika login gagal
+                alert(dataFromServer.message || 'Terjadi kesalahan saat login.');
+            }
+        }
+
+        // Kode ini berjalan saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', function () {
+            const loginForm = document.getElementById('loginForm');
+
+            loginForm.addEventListener('submit', function (event) {
+                // 1. Cegah form dari me-refresh halaman
+                event.preventDefault(); 
+
+                const formData = new FormData(loginForm);
+
+                // 2. Kirim data ke server Laravel menggunakan Fetch API
+                fetch("{{ route('auth.login') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        // Kita tidak set Content-Type, biarkan browser menentukannya untuk FormData
+                        'X-CSRF-TOKEN': formData.get('_token'), 
+                    },
+                    body: formData,
+                })
+                .then(response => response.json()) // Ubah jawaban server menjadi JSON
+                .then(dataFromServer => {
+                    // 3. Setelah dapat jawaban, panggil fungsi handleLoginResponse
+                    handleLoginResponse(dataFromServer); 
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan koneksi. Silakan coba lagi.');
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
