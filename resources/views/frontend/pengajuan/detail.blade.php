@@ -87,6 +87,19 @@
                         @enderror
                     </div>
 
+                    @if ($pelayanan->nama == "Surat Keterangan Kematian")
+                        <div>
+                            <label for="nama_md" class="block text-sm font-medium text-gray-600">Nama Meninggal</label>
+                            <input type="text" name="nama_md" id="nama_md"
+                             value=""
+                                class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('nama_md') border-red-500 @enderror"
+                                placeholder="Masukkan Nama Yang Meninggal" required>
+                            @error('nama_md')
+                                <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    @endif
+
                     {{-- Nomor WhatsApp --}}
                     <div>
                         <label for="no_hp" class="block text-sm font-medium text-gray-600">Nomor WhatsApp</label>
