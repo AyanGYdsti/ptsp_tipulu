@@ -49,7 +49,8 @@ class PelayananController extends Controller
             'nama' => 'required',
             'icon' => 'required',
             'deskripsi' => 'required',
-            'persyaratan_id' => 'required'
+            'persyaratan_id' => 'required',
+            'keterangan_surat' => 'required',
         ]);
         try {
             $pelayanan_id = Pelayanan::create($data)->id;
@@ -75,7 +76,8 @@ class PelayananController extends Controller
             'nama' => 'required',
             'icon' => 'required',
             'deskripsi' => 'required',
-            'persyaratan_id' => 'required'
+            'persyaratan_id' => 'required',
+            'keterangan-surat' => 'required',
         ]);
 
         try {

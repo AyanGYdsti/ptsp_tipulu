@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nama');
             $table->string('icon');
             $table->text('deskripsi');
+            $table->text('keterangan_surat');
             $table->timestamps();
         });
     }

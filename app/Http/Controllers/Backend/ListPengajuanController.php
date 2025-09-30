@@ -58,6 +58,7 @@ class ListPengajuanController extends Controller
             'pekerjaan' => $pengajuan->masyarakat->pekerjaan,
             'alamat' => $pengajuan->masyarakat->alamat,
             'nik' => $pengajuan->masyarakat->nik,
+            'keterangan_surat' => $pengajuan->pelayanan->keterangan_surat,
         ]);
 
 

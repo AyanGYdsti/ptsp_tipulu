@@ -104,12 +104,15 @@
             <td>:</td>
             <td>{{ $alamat }}</td>
         </tr>
-        
+
+
+
     </table>
     <br>
     <p>
-        Nama yang tersebut diatas adalah benar - benar penduduk  di RT ??/ RW ??  Kelurahan Tipulu Kecamatan Kendari Barat dan sepanjang  pengetahuan kami (variable deskripsi)
+        Nama yang tersebut diatas adalah benar - benar penduduk  di RT ??/ RW ??  Kelurahan Tipulu Kecamatan Kendari Barat dan sepanjang  pengetahuan kami {{ $keterangan_surat }}
     </p>
+
     <br>
     <p>
         Demikian Surat Keterangan ini dibuat dengan sebenar-benarnya untuk dipergunakan seperlunya.
