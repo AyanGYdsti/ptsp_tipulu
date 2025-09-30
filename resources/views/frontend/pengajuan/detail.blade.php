@@ -11,13 +11,48 @@
 
                 {{-- Flash success --}}
                 @if (session('success'))
+                    {{-- Latar Belakang Gelap (Overlay) --}}
                     <div
-                        class="auto-hide mb-6 p-4 bg-green-50 border border-green-200 text-green-700 rounded-lg flex items-start justify-between">
-                        <div class="flex-1">
-                            <p class="font-medium">{{ session('success') }}</p>
+                        x-data="{ show: true }"
+                        x-show="show"
+                        x-transition
+                        class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60"
+                        aria-labelledby="modal-title"
+                        role="dialog"
+                        aria-modal="true"
+                    >
+                        {{-- Kotak Popup --}}
+                        <div
+                            @click.away="show = false"
+                            class="mx-4 w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
+                        >
+                            <div class="text-center">
+                                {{-- Ikon Centang --}}
+                                <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+                                    <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                </div>
+
+                                {{-- Judul dan Pesan --}}
+                                <h3 class="mt-4 text-lg font-medium leading-6 text-gray-900" id="modal-title">
+                                    Berhasil!
+                                </h3>
+                                <div class="mt-2">
+                                    <p class="text-sm text-gray-500">
+                                        {{ session('success') }}
+                                    </p>
+                                </div>
+                            </div>
+
+                            {{-- Tombol Aksi --}}
+                            <div class="mt-5 sm:mt-6">
+                                <a href="{{ route('beranda') }}" {{-- Ganti 'beranda' dengan nama route homepage Anda --}}
+                                    class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:text-sm">
+                                    Oke, Kembali ke Beranda
+                                </a>
+                            </div>
                         </div>
-                        <button type="button" onclick="this.closest('.auto-hide').remove()"
-                            class="ml-4 text-green-700">✕</button>
                     </div>
                 @endif
 
