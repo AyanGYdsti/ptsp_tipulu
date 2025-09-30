@@ -127,7 +127,7 @@
             <td style="width: 50%"></td>
             <td style="width: 50%">
                 <p>AN. LURAH TIPULU</p><br>
-                <p>KASI. TRANTIB</p>
+                <p>{{ $jabatan }}</p>
             </td>
         </tr>
         <tr>
@@ -137,7 +137,7 @@
                 <br>
                 <br>
                 <br>
-                Andika
+                {{ $aparatur }} {{-- Nama Aparatur --}}
             </td>
         </tr>
         <tr>

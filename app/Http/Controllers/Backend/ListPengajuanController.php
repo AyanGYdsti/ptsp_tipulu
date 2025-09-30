@@ -45,7 +45,9 @@ class ListPengajuanController extends Controller
     public function cetak(Request $request, $id)
     {
         $pengajuan = Pengajuan::with(['pelayanan', 'dokumenPersyaratan.persyaratan'])->find($id);
-
+        $aparatur = Aparatur::where('id', $request->aparatur_id)->value('nama');
+        $aparatur_jabatan = Aparatur::where('id', $request->aparatur_id)->value('jabatan');
+        // $aparatur_nip = Aparatur::where('id', $request->aparatur_id)->value('nip');
         $pdf = Pdf::loadView('backend.surat.template-surat', [
             'judul' => $pengajuan->pelayanan->nama,
             'tahun' => Carbon::parse($request->tgl_cetak)->format('Y'),
@@ -59,6 +61,8 @@ class ListPengajuanController extends Controller
             'alamat' => $pengajuan->masyarakat->alamat,
             'nik' => $pengajuan->masyarakat->nik,
             'keterangan_surat' => $pengajuan->pelayanan->keterangan_surat,
+            'jabatan' => $aparatur_jabatan,
+            'aparatur' => $aparatur,
         ]);
 
 
