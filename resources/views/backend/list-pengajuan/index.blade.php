@@ -38,7 +38,7 @@
                                         </button>
                                     @else
                                         <!-- Tombol Notifikasi WA -->
-                                        <a href="{{ 'https://wa.me/' . preg_replace('/^0/', '62', preg_replace('/[^0-9]/', '', $data->no_hp)) . '?text=' . urlencode('Halo ' . $data->masyarakat->nama . ',' . "\n\n" . 'Pengajuan ' . $data->pelayanan->nama . ' Anda telah diverifikasi.' . "\n\n" . 'Terima kasih.') }}"
+                                        <a href="{{ 'https://wa.me/' . preg_replace('/^0/', '62', preg_replace('/[^0-9]/', '', $data->no_hp)) . '?text=' . urlencode('Assalamualikum Bapak/Ibu ' . $data->masyarakat->nama . ',' . "\n\n" .'Dengan hormat, kami informasikan bahwa pengajuan layanan '. $data->pelayanan->nama . ' Anda telah diproses dan sudah bisa diambil.'. "\n\n".'Silahkan datang pada jam kerja untuk mengambil dokumen.' . "\n" . 'Terima kasih atas perhatiannya.'."\n\n" . 'Hormat Kami,'. "\n". 'Staf Pelayanan Kantor Lurah') }}"
                                             target="_blank"
                                             class="text-green-500 hover:text-green-600 transition transform hover:scale-110"
                                             title="Kirim Notifikasi WA">
