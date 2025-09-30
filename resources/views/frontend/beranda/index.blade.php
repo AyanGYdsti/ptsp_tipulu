@@ -1,4 +1,4 @@
-@extends('layouts.main_frontend', ['landingPage' => $landingPage])
+@extends('layouts.main_frontend ', ['landingPage' => $landingPage])
 
 @section('content')
     <main>
@@ -266,4 +266,55 @@
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+     animateCounter(document.getElementById('total-penduduk'));
+            animateCounter(document.getElementById('laki-laki'));
+            animateCounter(document.getElementById('perempuan'));
+
+            // Data untuk Komposisi Jenis Kelamin
+            const genderData = {
+                labels: ['Laki-laki', 'Perempuan'],
+                datasets: [{
+                    label: 'Jumlah Jiwa',
+                    data: [{{ $totalLakiLaki }}, {{ $totalPerempuan }}],
+                    backgroundColor: [
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(236, 72, 153, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(59, 130, 246, 1)',
+                        'rgba(236, 72, 153, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            const genderConfig = {
+                type: 'doughnut',
+                data: genderData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return tooltipItem.label + ': ' + tooltipItem.raw.toLocaleString() +
+                                        ' jiwa';
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            // Inisialisasi grafik
+            const genderChart = new Chart(
+                document.getElementById('genderChart'),
+                genderConfig
+            );
+</script>
 @endpush
