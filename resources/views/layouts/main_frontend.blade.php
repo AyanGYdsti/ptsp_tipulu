@@ -15,7 +15,6 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
         rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="/assets/css/styles.css">
 </head>
 
@@ -178,6 +177,8 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Animasi counter untuk statistik penduduk
             function animateCounter(element) {
+                if (!element) return;
+
                 const target = parseInt(element.getAttribute('data-target'));
                 const duration = 2000; // 2 detik
                 const step = target / (duration / 16); // 60fps
@@ -194,56 +195,61 @@
                 }, 16);
             }
 
-            Jalankan animasi counter
-            animateCounter(document.getElementById('total-penduduk'));
-            animateCounter(document.getElementById('laki-laki'));
-            animateCounter(document.getElementById('perempuan'));
+            // Jalankan animasi counter
+            const totalPendudukEl = document.getElementById('total-penduduk');
+            const lakiLakiEl = document.getElementById('laki-laki');
+            const perempuanEl = document.getElementById('perempuan');
 
-            Data untuk Komposisi Jenis Kelamin
-            const genderData = {
-                labels: ['Laki-laki', 'Perempuan'],
-                datasets: [{
-                    label: 'Jumlah Jiwa',
-                    data: [30, 25],
-                    backgroundColor: [
-                        'rgba(59, 130, 246, 0.8)',
-                        'rgba(236, 72, 153, 0.8)'
-                    ],
-                    borderColor: [
-                        'rgba(59, 130, 246, 1)',
-                        'rgba(236, 72, 153, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            };
+            if (totalPendudukEl) animateCounter(totalPendudukEl);
+            if (lakiLakiEl) animateCounter(lakiLakiEl);
+            if (perempuanEl) animateCounter(perempuanEl);
 
-            const genderConfig = {
-                type: 'doughnut',
-                data: genderData,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(tooltipItem) {
-                                    return tooltipItem.label + ': ' + tooltipItem.raw.toLocaleString() +
-                                        ' jiwa';
+            // Data untuk Komposisi Jenis Kelamin
+            const genderChartEl = document.getElementById('genderChart');
+
+            if (genderChartEl) {
+                const genderData = {
+                    labels: ['Laki-laki', 'Perempuan'],
+                    datasets: [{
+                        label: 'Jumlah Jiwa',
+                        data: [{{ $totalLakiLaki ?? 30 }}, {{ $totalPerempuan ?? 25 }}],
+                        backgroundColor: [
+                            'rgba(59, 130, 246, 0.8)',
+                            'rgba(236, 72, 153, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(59, 130, 246, 1)',
+                            'rgba(236, 72, 153, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                };
+
+                const genderConfig = {
+                    type: 'doughnut',
+                    data: genderData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(tooltipItem) {
+                                        return tooltipItem.label + ': ' + tooltipItem.raw.toLocaleString() +
+                                            ' jiwa';
+                                    }
                                 }
                             }
                         }
                     }
-                }
-            };
+                };
 
-            // Inisialisasi grafik
-            const genderChart = new Chart(
-                document.getElementById('genderChart'),
-                genderConfig
-            );
+                // Inisialisasi grafik
+                const genderChart = new Chart(genderChartEl, genderConfig);
+            }
 
             // Carousel untuk berita
             const carouselInner = document.getElementById('carousel-inner');
@@ -295,6 +301,12 @@
             document.querySelectorAll('.fade-in-up').forEach(el => {
                 observer.observe(el);
             });
+
+            // Update tahun di footer
+            const yearEl = document.getElementById('year');
+            if (yearEl) {
+                yearEl.textContent = new Date().getFullYear();
+            }
         });
     </script>
 </body>
