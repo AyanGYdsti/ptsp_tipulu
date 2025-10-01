@@ -297,15 +297,9 @@
                 </tr>
 
                 <tr>
-                    <td>Jenis Pekerjaan</td>
-                    <td>:</td>
-                    <td>{{ $jenis_pekerjaan }}</td>
-                </tr>
-
-                <tr>
                     <td>Golongan Darah</td>
                     <td>:</td>
-                    <td>{{ $golongan_darah }}</td>
+                    <td>{{ $golongan_darah ?? -}}</td>
                 </tr>
             @endif
         </table>
