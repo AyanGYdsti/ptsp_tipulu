@@ -34,4 +34,9 @@ class Pengajuan extends Model
         return $this->hasOne(Kematian::class);
     }
 
+    public function pindahPenduduk()
+    {
+        return $this->hasOne(PindahPenduduk::class);
+    }
+
 }
