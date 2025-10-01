@@ -72,6 +72,7 @@
         .animate-slide-in-top {
             animation: slideInFromTop 0.6s ease-out forwards;
         }
+        
     </style>
     @stack('styles')
 </head>

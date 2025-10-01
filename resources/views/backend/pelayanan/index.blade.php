@@ -114,6 +114,18 @@
         .mobile-card-view {
             display: none;
         }
+
+        #openModalBtn {
+            position: relative;
+            z-index: 50;
+            pointer-events: auto;
+        }
+        .desktop-table-view {
+            position: relative;
+            z-index: 0;
+        }
+
+
     </style>
 @endpush
 
@@ -125,7 +137,9 @@
             <h2 class="text-lg sm:text-xl lg:text-2xl font-extrabold text-blue-800 tracking-wide flex items-center gap-2">
                 <i class="fa fa-list-alt text-blue-600"></i> Daftar {{ $title }}
             </h2>
-            <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+            <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto relative z-50">
+
+
                 <!-- Search form -->
                 <form method="GET" action="{{ route('pelayanan') }}" class="flex w-full sm:w-auto">
                     <input type="text" name="q" value="{{ request('q') }}"
@@ -138,8 +152,8 @@
                 </form>
 
                 <!-- Tombol tambah -->
-                <button id="openModalBtn"
-                    class="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-3 sm:px-4 py-2 rounded-lg flex items-center gap-2 hover:from-blue-700 hover:to-blue-600 shadow-md transition text-xs sm:text-sm w-full sm:w-auto justify-center">
+               <button id="openModalBtn"
+                    class="relative z-50 bg-gradient-to-r from-blue-600 to-blue-500 text-white px-3 sm:px-4 py-2 rounded-lg flex items-center gap-2 hover:from-blue-700 hover:to-blue-600 shadow-md transition text-xs sm:text-sm w-full sm:w-auto justify-center">
                     <i class="fa fa-plus"></i> Pelayanan
                 </button>
             </div>
@@ -258,9 +272,10 @@
             </div>
         </div>
     </div>
+@endsection
 
     <!-- Modal Tambah Data -->
-    <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-4">
         <div class="bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-2xl w-full max-w-md p-4 sm:p-6 relative transform scale-95 opacity-0 transition-all duration-300 max-h-[90vh] overflow-y-auto"
             id="modalContent">
             <!-- Tombol Close -->
@@ -308,6 +323,8 @@
                     @error('keterangan_surat')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
+                </div>
+
 
                 <div class="mb-4 sm:mb-4">
                     <label class="block text-sm font-semibold text-gray-700 mb-1">Persyaratan</label>
@@ -337,7 +354,7 @@
             </form>
         </div>
     </div>
-@endsection
+
 
 @push('scripts')
     <!-- Tom Select JS -->
