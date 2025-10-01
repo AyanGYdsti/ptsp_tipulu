@@ -95,8 +95,8 @@ class PengajuanController extends Controller
                     'alamat'         => 'required|string',
                     'hari'           => 'required|string',
                     'tanggal'        => 'required|date',
-                    'tempat'         => 'required|string',
-                    'sebab_kematian' => 'required|string',
+                    'tempat_meninggal'=> 'required|string',
+                    'penyebab'       => 'required|string',
                 ]);
 
                 Kematian::create([
@@ -107,8 +107,8 @@ class PengajuanController extends Controller
                     'alamat'         => $request->alamat,
                     'hari'           => $request->hari,
                     'tanggal'        => $request->tanggal,
-                    'tempat'         => $request->tempat,
-                    'sebab_kematian' => $request->sebab_kematian,
+                    'tempat_meninggal'         => $request->tempat_meninggal,
+                    'penyebab' => $request->penyebab,
                 ]);
             }
 

@@ -12,6 +12,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Kematian;
 use Illuminate\Support\Facades\Response;
 
 class ListPengajuanController extends Controller
@@ -45,6 +46,7 @@ class ListPengajuanController extends Controller
     public function cetak(Request $request, $id)
     {
         $pengajuan = Pengajuan::with(['pelayanan', 'dokumenPersyaratan.persyaratan'])->find($id);
+        $pengajuan->load('kematian'); // Memuat relasi kematian
         $aparatur = Aparatur::where('id', $request->aparatur_id)->value('nama');
         $aparatur_jabatan = Aparatur::where('id', $request->aparatur_id)->value('jabatan');
         // $aparatur_nip = Aparatur::where('id', $request->aparatur_id)->value('nip');
@@ -63,6 +65,14 @@ class ListPengajuanController extends Controller
             'keterangan_surat' => $pengajuan->pelayanan->keterangan_surat,
             'jabatan' => $aparatur_jabatan,
             'aparatur' => $aparatur,
+            'nama_md' => $pengajuan->kematian->nama,
+            'jenis_kelamin_md' => $pengajuan->kematian->jenis_kelamin,
+            'umur' => $pengajuan->kematian->umur,
+            'alamat_md' => $pengajuan->kematian->alamat,
+            'tanggal_meninggal' => Carbon::parse($pengajuan->kematian->tanggal_meninggal)->format('d-m-Y'),
+            'hari_meninggal' => $pengajuan->kematian->hari,
+            'tempat_meninggal' => $pengajuan->kematian->tempat_meninggal,
+            'penyebab_md' => $pengajuan->kematian->penyebab,
         ]);
 
 

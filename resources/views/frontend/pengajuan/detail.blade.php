@@ -157,22 +157,22 @@
 
                     {{-- Tempat Meninggal --}}
                     <div>
-                        <label for="tempat" class="block text-sm font-medium text-gray-600">Tempat Meninggal</label>
-                        <input type="text" name="tempat" id="tempat" value="{{ old('tempat') }}"
-                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('tempat') border-red-500 @enderror"
+                        <label for="tempat_meninggal" class="block text-sm font-medium text-gray-600">Tempat Meninggal</label>
+                        <input type="text" name="tempat_meninggal" id="tempat_meninggal" value="{{ old('tempat_meninggal') }}"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('tempat_meninggal') border-red-500 @enderror"
                             placeholder="Masukkan Tempat Meninggal" required>
-                        @error('tempat')
+                        @error('tempat_meninggal')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
 
                     {{-- Penyebab --}}
                     <div>
-                        <label for="sebab_kematian" class="block text-sm font-medium text-gray-600">Penyebab</label>
-                        <input type="text" name="sebab_kematian" id="sebab_kematian" value="{{ old('sebab_kematian') }}"
-                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('sebab_kematian') border-red-500 @enderror"
+                        <label for="penyebab" class="block text-sm font-medium text-gray-600">Penyebab</label>
+                        <input type="text" name="penyebab" id="penyebab" value="{{ old('penyebab') }}"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('penyebab') border-red-500 @enderror"
                             placeholder="Masukkan Penyebab Kematian" required>
-                        @error('sebab_kematian')
+                        @error('penyebab')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
