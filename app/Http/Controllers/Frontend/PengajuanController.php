@@ -56,7 +56,7 @@ class PengajuanController extends Controller
             'pelayanan_id' => 'required',
             'nik' => 'required|exists:masyarakats,nik',
             'no_hp' => 'required|string|digits_between:10,15',
-            'keperluan' => 'required|string',
+            'keperluan' => 'nullable|string',
             'dokumen' => 'required|array',
             'dokumen.*' => 'file|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);

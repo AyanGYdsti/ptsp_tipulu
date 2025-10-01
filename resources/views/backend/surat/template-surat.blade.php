@@ -59,7 +59,10 @@
 
     <div style="text-align:center;margin:20px 0">
         <p><span style="border-bottom:2px solid black">{{ $judul }}</span></p>
-        <p>Nomor : 302 / / I /{{ $tahun }}</p>{{-- Masih mau di ganti --}}
+        <p>Nomor : <span style="padding-left:25px">/</span>
+            <span style="padding-left:25px">/</span>
+            <span style="padding-left:25px">/ {{ $tahun }}</span>
+        </p>
     </div>
 
     <p style="text-align: justify; text-indent: 27px;">
