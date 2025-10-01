@@ -59,7 +59,7 @@
 
     <div style="text-align:center;margin:20px 0">
         <p><span style="border-bottom:2px solid black">{{ $judul }}</span></p>
-        <p>Nomor : 302 / / I /{{ $tahun }}</p>{{-- Masih mau di ganti  --}}
+        <p>Nomor : 302 / / I /{{ $tahun }}</p>{{-- Masih mau di ganti --}}
     </div>
 
     <p style="text-align: justify; text-indent: 27px;">
@@ -135,11 +135,7 @@
         <p style="text-align: justify; text-indent: 27px;">
             Demikian Surat Keterangan ini diberikan kepada keluarga Almarhum untuk dipergunakan seperlunya.
         </p>
-
-
-
     @elseif ($judul == 'Surat Keterangan Pindah Penduduk')
-
         {{-- FIXED: Restructured this entire table to be valid HTML --}}
         <table style="margin-left:27px">
             <tr>
@@ -175,7 +171,7 @@
             <tr>
                 <td>Status Perkawinan</td>
                 <td>:</td>
-                <td>{{ $status }}</td>
+                {{-- <td>{{ $status }}</td> --}}
             </tr>
             <tr>
                 <td>Alamat Asal</td>
@@ -223,11 +219,7 @@
                 <td>{{ $pengikut }} Orang</td>
             </tr>
         </table>
-
-
     @else
-
-
         <table style="margin-left:27px">
 
             @if ($judul == 'Pengurusan Kartu Keluarga (KK)')
@@ -275,7 +267,10 @@
                 <td>{{ $alamat }}</td>
             </tr>
 
-            @if ($judul == 'Surat Keterangan Domisili Usaha dan Yayasan' || $judul == 'Surat Keterangan Memiliki Usaha (SKU)' || $judul == 'Surat Keterangan Domisili Usaha')
+            @if (
+                $judul == 'Surat Keterangan Domisili Usaha dan Yayasan' ||
+                    $judul == 'Surat Keterangan Memiliki Usaha (SKU)' ||
+                    $judul == 'Surat Keterangan Domisili Usaha')
                 <tr>
                     <td>Nama Usaha / Yayasan</td>
                     <td>:</td>
@@ -287,8 +282,6 @@
                     <td>:</td>
                     <td>{{ $nama_kegiatan }}</td>
                 </tr>
-
-
             @elseif ($judul == 'Pengurusan Kartu Keluarga (KK)')
                 <tr>
                     <td>Kode Pos</td>
@@ -299,99 +292,105 @@
                 <tr>
                     <td>Golongan Darah</td>
                     <td>:</td>
-                    <td>{{ $golongan_darah ?? -}}</td>
+                    <td>{{ $golongan_darah }}</td>
                 </tr>
             @endif
         </table>
-        <br>
-        @if ($judul == "Surat Izin Keramaian")
-              <p style="text-align: justify; text-indent: 27px;">
+
+    @endif
+
+    <br>
+
+    @if ($judul == 'Surat Izin Keramaian')
+        <p style="text-align: justify; text-indent: 27px;">
             {{ $keterangan_surat }}
         </p>
+    @else
+        <p style="text-align: justify; text-indent: 27px;">
+            Nama yang tersebut diatas adalah benar - benar penduduk di RT ??/ RW ?? Kelurahan Tipulu Kecamatan
+            Kendari
+            Barat {{ $keterangan_surat }}
 
-
-        @else
-            <p style="text-align: justify; text-indent: 27px;">
-                Nama yang tersebut diatas adalah benar - benar penduduk di RT ??/ RW ?? Kelurahan Tipulu Kecamatan Kendari
-                Barat {{ $keterangan_surat }}
-
-                {{-- @if ($judul == 'Surat Keterangan Domisili Usaha dan Yayasan' || $judul == 'Surat Keterangan Domisili Usaha')
-                    {{ $tahun_berdiri }} sampai dengan sekarang.
+            {{-- @if ($judul == 'Surat Keterangan Domisili Usaha dan Yayasan' ||
+    $judul ==
+        'Surat Keterangan Domisili
+                Usaha')
+                {{ $tahun_berdiri }} sampai dengan sekarang.
                 @endif --}}
 
-            </p>
+        </p>
 
-            @if ($judul == 'Surat Keterangan Domisili Usaha dan Yayasan')
-                <table style="margin-left:27px; margin-top:10px">
-                    <tr>
-                        <td style="width: 27%">Nama Usaha / Yayasan</td>
-                        <td style="width: 2%">:</td>
-                        <td>{{ $nama_usaha }}</td>
-                    </tr>
+        @if ($judul == 'Surat Keterangan Domisili Usaha dan Yayasan')
+            <table style="margin-left:27px; margin-top:10px">
+                <tr>
+                    <td style="width: 27%">Nama Usaha / Yayasan</td>
+                    <td style="width: 2%">:</td>
+                    <td>{{ $nama_usaha }}</td>
+                </tr>
 
-                    <tr>
-                        <td>Penanggung Jawab</td>
-                        <td>:</td>
-                        <td>{{ $penanggung_jawab }}</td>
-                    </tr>
+                <tr>
+                    <td>Penanggung Jawab</td>
+                    <td>:</td>
+                    <td>{{ $penanggung_jawab }}</td>
+                </tr>
 
-                    <tr>
-                        <td>Jenis Kegiatan</td>
-                        <td>:</td>
-                        <td>{{ $jenis_kegiatan_usaha }}</td>
-                    </tr>
+                <tr>
+                    <td>Jenis Kegiatan</td>
+                    <td>:</td>
+                    <td>{{ $jenis_kegiatan_usaha }}</td>
+                </tr>
 
-                    <tr>
-                        <td>Alamat Usaha / Yayasan</td>
-                        <td>:</td>
-                        <td>{{ $alamat_usaha }}</td>
-                    </tr>
-                @endif
-            @endif
-
-            <br>
-                @if ($judul == 'Surat Keterangan Tempat Tinggal Sementara')
-                    <p style="text-align: justify; text-indent: 27px;">
-                        Demikian Surat Keterangan ini dibuat untuk dapat dipergunakan sebagaimana mestinya dan berlaku selama 3 (tiga) bulan sejak tanggal dikeluarkan.
-                    </p>
-                @else
-                    <p style="text-align: justify; text-indent: 27px;">
-                        Demikian Surat Keterangan ini dibuat dengan sebenar-benarnya untuk dipergunakan seperlunya.
-                    </p>
-
-                @endif
+                <tr>
+                    <td>Alamat Usaha / Yayasan</td>
+                    <td>:</td>
+                    <td>{{ $alamat_usaha }}</td>
+                </tr>
         @endif
 
-        <table style="text-align: center;margin-top:30px">
-            <tr>
-                <td style="width: 50%"></td>
-                <td style="width: 50%">Kendari, {{ $tanggal }}</td>
-            </tr>
-            <tr>
-                <td style="width: 50%"></td>
-                <td style="width: 50%">
-                    <p>AN. LURAH TIPULU</p>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <p>{{ $aparatur }}</p>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <p style="border-bottom: 1px solid black; display: inline-block; padding-bottom: 1px;">
-                        NIP. 19681027 199008 2 002
-                    </p>
-                </td>
-            </tr>
-        </table>
+
+        <br>
+        @if ($judul == 'Surat Keterangan Tempat Tinggal Sementara')
+            <p style="text-align: justify; text-indent: 27px;">
+                Demikian Surat Keterangan ini dibuat untuk dapat dipergunakan sebagaimana mestinya dan berlaku selama 3
+                (tiga) bulan sejak tanggal dikeluarkan.
+            </p>
+        @else
+            <p style="text-align: justify; text-indent: 27px;">
+                Demikian Surat Keterangan ini dibuat dengan sebenar-benarnya untuk dipergunakan seperlunya.
+            </p>
+        @endif
+    @endif
+
+    <table style="text-align: center;margin-top:30px">
+        <tr>
+            <td style="width: 50%"></td>
+            <td style="width: 50%">Kendari, {{ $tanggal }}</td>
+        </tr>
+        <tr>
+            <td style="width: 50%"></td>
+            <td style="width: 50%">
+                <p>AN. LURAH TIPULU</p>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <br>
+                <br>
+                <br>
+                <br>
+                <p>{{ $aparatur }}</p>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <p style="border-bottom: 1px solid black; display: inline-block; padding-bottom: 1px;">
+                    NIP. 19681027 199008 2 002
+                </p>
+            </td>
+        </tr>
+    </table>
 </body>
 
 </html>

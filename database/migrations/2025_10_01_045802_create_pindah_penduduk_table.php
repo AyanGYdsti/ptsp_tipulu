@@ -14,12 +14,16 @@ return new class extends Migration
     Schema::create('pindah_penduduk', function (Blueprint $table) {
         $table->id();
 
+         $table->foreignId('pengajuan_id')
+                  ->constrained('pengajuans')
+                  ->onDelete('cascade');
+
         $table->string('desa_kelurahan', 100);
         $table->string('kecamatan', 100);
         $table->string('kab_kota', 100);
         $table->string('provinsi', 100);
 
-        $table->date('tanggal_pindah'); 
+        $table->date('tanggal_pindah');
         $table->string('alasan_pindah', 255)->nullable(); // alasan bisa kosong/null
 
         $table->integer('pengikut')->default(0); // jumlah pengikut, default 0

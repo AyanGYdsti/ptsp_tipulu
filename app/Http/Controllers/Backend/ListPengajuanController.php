@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Kematian;
+use App\Models\PindahPenduduk;
 use Illuminate\Support\Facades\Response;
 
 class ListPengajuanController extends Controller
@@ -47,6 +48,7 @@ class ListPengajuanController extends Controller
     {
         $pengajuan = Pengajuan::with(['pelayanan', 'dokumenPersyaratan.persyaratan'])->find($id);
         $pengajuan->load('kematian'); // Memuat relasi kematian
+        $pengajuan->load('pindahPenduduk'); // Memuat relasi pindah penduduk
         $aparatur = Aparatur::where('id', $request->aparatur_id)->value('nama');
         $aparatur_jabatan = Aparatur::where('id', $request->aparatur_id)->value('jabatan');
         // $aparatur_nip = Aparatur::where('id', $request->aparatur_id)->value('nip');
@@ -65,14 +67,25 @@ class ListPengajuanController extends Controller
             'keterangan_surat' => $pengajuan->pelayanan->keterangan_surat,
             'jabatan' => $aparatur_jabatan,
             'aparatur' => $aparatur,
-            'nama_md' => $pengajuan->kematian->nama,
-            'jenis_kelamin_md' => $pengajuan->kematian->jenis_kelamin,
-            'umur' => $pengajuan->kematian->umur,
-            'alamat_md' => $pengajuan->kematian->alamat,
-            'tanggal_meninggal' => Carbon::parse($pengajuan->kematian->tanggal_meninggal)->format('d-m-Y'),
-            'hari_meninggal' => $pengajuan->kematian->hari,
-            'tempat_meninggal' => $pengajuan->kematian->tempat_meninggal,
-            'penyebab_md' => $pengajuan->kematian->penyebab,
+            'nama_md'         => optional($pengajuan->kematian)->nama,
+            'jenis_kelamin_md'=> optional($pengajuan->kematian)->jenis_kelamin,
+            'umur'            => optional($pengajuan->kematian)->umur,
+            'alamat_md'       => optional($pengajuan->kematian)->alamat,
+            'tanggal_meninggal' => optional($pengajuan->kematian)->tanggal_meninggal
+                                    ? Carbon::parse($pengajuan->kematian->tanggal_meninggal)->format('d-m-Y')
+                                    : null,
+            'hari_meninggal'  => optional($pengajuan->kematian)->hari,
+            'tempat_meninggal'=> optional($pengajuan->kematian)->tempat_meninggal,
+            'penyebab_md'     => optional($pengajuan->kematian)->penyebab,
+
+            'desa_kelurahan'  => optional($pengajuan->pindahPenduduk)->desa_kelurahan,
+            'kecamatan'       => optional($pengajuan->pindahPenduduk)->kecamatan,
+            'kab_kota'        => optional($pengajuan->pindahPenduduk)->kab_kota,
+            'provinsi'        => optional($pengajuan->pindahPenduduk)->provinsi,
+
+            'tgl_pindah' =>  optional($pengajuan->pindahPenduduk)->tanggal_pindah,
+            'alasan_pindah' => optional($pengajuan->pindahPenduduk)->alasan_pindah,
+            'pengikut' => optional($pengajuan->pindahPenduduk)->pengikut,
         ]);
 
 

@@ -183,7 +183,7 @@
                         <label for="desa_kelurahan" class="block text-sm font-medium text-gray-600">Desa / Kelurahan</label>
                         <input type="text" name="desa_kelurahan" id="desa_kelurahan" value="{{ old('desa_kelurahan') }}"
                             class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('desa_kelurahan') border-red-500 @enderror"
-                            placeholder="Masukkan Desa / Kelurahan" required>
+                            placeholder="Masukkan Desa / Kelurahan Pindah" required>
                         @error('desa_kelurahan')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -194,7 +194,7 @@
                         <label for="kecamatan" class="block text-sm font-medium text-gray-600">Kecamatan</label>
                         <input type="text" name="kecamatan" id="kecamatan" value="{{ old('kecamatan') }}"
                             class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('kecamatan') border-red-500 @enderror"
-                            placeholder="Masukkan Kecamatan" required>
+                            placeholder="Masukkan Kecamatan Pindah" required>
                         @error('kecamatan')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -203,9 +203,9 @@
                     {{-- Kabupaten / Kodya --}}
                     <div>
                         <label for="kab_kota" class="block text-sm font-medium text-gray-600">Kabupaten / Kota</label>
-                        <input type="text" name="kab_kodya" id="kab_kota" value="{{ old('kab_kota') }}"
+                        <input type="text" name="kab_kota" id="kab_kota" value="{{ old('kab_kota') }}"
                             class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('kab_kota') border-red-500 @enderror"
-                            placeholder="Masukkan Kabupaten / Kota" required>
+                            placeholder="Masukkan Kabupaten / Kota Pindah" required>
                         @error('kab_kotaa')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -216,7 +216,7 @@
                         <label for="provinsi" class="block text-sm font-medium text-gray-600">Provinsi</label>
                         <input type="text" name="provinsi" id="provinsi" value="{{ old('provinsi') }}"
                             class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('provinsi') border-red-500 @enderror"
-                            placeholder="Masukkan Provinsi" required>
+                            placeholder="Masukkan Provinsi Pindah" required>
                         @error('provinsi')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror

@@ -114,7 +114,7 @@ class PengajuanController extends Controller
             }
 
             // ✅ SIMPAN DATA KE TABEL PINDAH_PENDUDUK JIKA PELAYANAN SURAT PINDAH
-            if ($pelayanan && $pelayanan->nama === "Surat Pindah") {
+            elseif ($pelayanan && $pelayanan->nama === "Surat Keterangan Pindah Penduduk") {
                 $request->validate([
                     'desa_kelurahan' => 'required|string',
                     'kecamatan'      => 'required|string',
@@ -129,7 +129,7 @@ class PengajuanController extends Controller
                     'pengajuan_id'   => $pengajuan->id,
                     'desa_kelurahan' => $request->desa_kelurahan,
                     'kecamatan'      => $request->kecamatan,
-                    'kab_kota'      => $request->kab_kota,
+                    'kab_kota'       => $request->kab_kota,
                     'provinsi'       => $request->provinsi,
                     'tanggal_pindah' => $request->tanggal_pindah,
                     'alasan_pindah'  => $request->alasan_pindah,
