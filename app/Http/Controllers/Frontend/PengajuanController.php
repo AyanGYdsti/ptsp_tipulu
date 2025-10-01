@@ -11,6 +11,7 @@ use App\Models\Pengajuan;
 use App\Services\FcmService; // ✅ TAMBAHKAN INI
 use Illuminate\Http\Request;
 use App\Models\Kematian;
+use App\Models\PindahPenduduk;
 use Illuminate\Support\Facades\Log;
 
 class PengajuanController extends Controller
@@ -107,10 +108,35 @@ class PengajuanController extends Controller
                     'alamat'         => $request->alamat,
                     'hari'           => $request->hari,
                     'tanggal'        => $request->tanggal,
-                    'tempat_meninggal'         => $request->tempat_meninggal,
-                    'penyebab' => $request->penyebab,
+                    'tempat_meninggal' => $request->tempat_meninggal,
+                    'penyebab'       => $request->penyebab,
                 ]);
             }
+
+            // ✅ SIMPAN DATA KE TABEL PINDAH_PENDUDUK JIKA PELAYANAN SURAT PINDAH
+            if ($pelayanan && $pelayanan->nama === "Surat Pindah") {
+                $request->validate([
+                    'desa_kelurahan' => 'required|string',
+                    'kecamatan'      => 'required|string',
+                    'kab_kota'      => 'required|string',
+                    'provinsi'       => 'required|string',
+                    'tanggal_pindah' => 'required|date',
+                    'alasan_pindah'  => 'nullable|string',
+                    'pengikut'       => 'nullable|integer', // kalau jumlah orang
+                ]);
+
+                PindahPenduduk::create([
+                    'pengajuan_id'   => $pengajuan->id,
+                    'desa_kelurahan' => $request->desa_kelurahan,
+                    'kecamatan'      => $request->kecamatan,
+                    'kab_kota'      => $request->kab_kota,
+                    'provinsi'       => $request->provinsi,
+                    'tanggal_pindah' => $request->tanggal_pindah,
+                    'alasan_pindah'  => $request->alasan_pindah,
+                    'pengikut'       => $request->pengikut,
+                ]);
+            }
+
 
             // ✅ KIRIM NOTIFIKASI KE ADMIN
             $this->fcmService->sendToAllAdmins(
