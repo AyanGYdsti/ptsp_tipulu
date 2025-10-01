@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('aparaturs', function (Blueprint $table) {
             $table->id();
+            $table->string('nip')->unique();
             $table->string('nama');
             $table->string('jabatan');
             $table->text('foto');
