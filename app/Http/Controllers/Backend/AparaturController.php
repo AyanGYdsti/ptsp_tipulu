@@ -29,6 +29,7 @@ class AparaturController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
+            'nip' => 'nullable|unique:aparaturs,nip',
             'nama' => 'required',
             'jabatan' => 'required',
             'posisi' => 'required',
@@ -62,6 +63,7 @@ class AparaturController extends Controller
         $aparatur = Aparatur::findOrFail($id);
 
         $data = $request->validate([
+            'nip' => 'nullable|unique:aparaturs,nip,',
             'nama' => 'required',
             'jabatan' => 'required',
             'posisi' => 'required',

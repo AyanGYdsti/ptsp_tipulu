@@ -22,6 +22,7 @@
                     <thead class="bg-blue-600 text-white uppercase text-xs font-semibold tracking-wider">
                         <tr>
                             <th class="px-4 py-3 text-center">Posisi</th>
+                            <th class="px-4 py-3 text-left">NIP</th>
                             <th class="px-4 py-3 text-left">Nama</th>
                             <th class="px-4 py-3 text-left">Jabatan</th>
                             <th class="px-4 py-3 text-center">Foto</th>
@@ -32,6 +33,7 @@
                         @forelse ($aparatur as $data)
                             <tr class="hover:bg-blue-50 transition">
                                 <td class="px-4 py-3 text-center font-semibold text-blue-600">{{ $data->posisi }}</td>
+                                <td class="px-4 py-3">{{ $data->nip }}</td>
                                 <td class="px-4 py-3">{{ $data->nama }}</td>
                                 <td class="px-4 py-3">{{ $data->jabatan }}</td>
                                 <td class="px-4 py-3 text-center">
@@ -106,6 +108,7 @@
                                     </div>
                                 </div>
                                 <h3 class="font-semibold text-gray-900 text-lg truncate">{{ $data->nama }}</h3>
+                                <p class="text-gray-600 text-sm mt-1 break-words">{{ $data->nip }}</p>
                                 <p class="text-gray-600 text-sm mt-1 break-words">{{ $data->jabatan }}</p>
                             </div>
                         </div>
@@ -138,6 +141,16 @@
             <form method="POST" action="{{ route('aparatur.store') }}" enctype="multipart/form-data" class="space-y-4">
                 @csrf
                 <div class="space-y-4">
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-600 mb-2">NIP</label>
+                        <input type="text" name="nip" value="{{ old('nip') }}"
+                            class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-sm">
+                        @error('nip')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                     <div>
                         <label class="block text-sm font-semibold text-gray-600 mb-2">Nama <span class="text-red-500">*</span></label>
                         <input type="text" name="nama" value="{{ old('nama') }}" required

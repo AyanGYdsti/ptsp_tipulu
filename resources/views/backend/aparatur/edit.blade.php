@@ -9,6 +9,15 @@
                 @csrf
                 @method('PUT')
 
+                    <div class="mb-4">
+                    <label class="block text-sm font-semibold text-gray-600 mb-1">NIP</label>
+                    <input type="text" name="nip" value="{{ old('NIP', $aparatur->nip) }}"
+                        class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
+                    @error('nip')
+                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                    @enderror
+                </div>
+
                 <div class="mb-4">
                     <label class="block text-sm font-semibold text-gray-600 mb-1">Nama</label>
                     <input type="text" name="nama" value="{{ old('nama', $aparatur->nama) }}"
@@ -50,7 +59,7 @@
                     @endif
 
                     <input type="file" name="foto" accept="image/*"
-                        class="w-full border border-blue-300 rounded-lg px-3 py-2 
+                        class="w-full border border-blue-300 rounded-lg px-3 py-2
                                focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
                     @error('foto')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
@@ -64,7 +73,7 @@
                         Back
                     </a>
                     <button type="submit"
-                        class="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-4 py-2 rounded-lg 
+                        class="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-4 py-2 rounded-lg
                                hover:from-blue-700 hover:to-blue-600 shadow-md transition">
                         <i class="fa fa-save"></i> Update
                     </button>
