@@ -138,7 +138,7 @@
 
 
 
-    @elseif ($judul == 'Surat Keterangan Pindah')
+    @elseif ($judul == 'Surat Keterangan Pindah Penduduk')
 
         {{-- FIXED: Restructured this entire table to be valid HTML --}}
         <table style="margin-left:27px">
@@ -230,7 +230,7 @@
 
         <table style="margin-left:27px">
 
-            @if ($judul == 'Kartu Keluarga')
+            @if ($judul == 'Pengurusan Kartu Keluarga (KK)')
                 <tr>
                     <td style="width: 27%">Nama Kepala Keluarga</td>
                     <td style="width: 2%">:</td>
@@ -275,7 +275,7 @@
                 <td>{{ $alamat }}</td>
             </tr>
 
-            @if ($judul == 'Domisili Usaha dan Yayasan' || $judul == 'Surat Keterangan Memiliki Usaha' || $judul == 'Surat Keterangan Domisili Usaha')
+            @if ($judul == 'Surat Keterangan Domisili Usaha dan Yayasan' || $judul == 'Surat Keterangan Memiliki Usaha (SKU)' || $judul == 'Surat Keterangan Domisili Usaha')
                 <tr>
                     <td>Nama Usaha / Yayasan</td>
                     <td>:</td>
@@ -289,7 +289,7 @@
                 </tr>
 
 
-            @elseif ($judul == 'Kartu Keluarga')
+            @elseif ($judul == 'Pengurusan Kartu Keluarga (KK)')
                 <tr>
                     <td>Kode Pos</td>
                     <td>:</td>

@@ -167,7 +167,7 @@
                                 <td class="px-2 sm:px-4 py-3 font-medium">{{ $data->nama }}</td>
                                 <td class="px-2 sm:px-4 py-3 text-center">{!! $data->icon !!}</td>
                                 <td class="px-2 sm:px-4 py-3 description-col" title="{{ $data->deskripsi }}">{{ $data->deskripsi }}</td>
-                                <td class="px-2 sm:px-4 py-3 description-col" title="{{ $data->keterangan_surat }}">{{ $data->keterangan_surat }}</td>
+                                <td class="px-2 sm:px-4 py-3 description-col" title="{{ $data->keterangan_surat }}">{{ $data->keterangan_surat ?? '-' }}</td>
                                 <td class="px-2 sm:px-4 py-3 requirements-col">
                                     @foreach ($data->pelayananPersyaratan as $item)
                                         <span class="px-1 sm:px-2 py-1 bg-blue-500 text-white rounded text-xs mr-1 mb-1 inline-block">{{ $item->persyaratan->nama }}</span>
