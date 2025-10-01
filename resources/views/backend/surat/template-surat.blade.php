@@ -124,7 +124,7 @@
             <tr>
                 <td>Disebabkan Karena</td>
                 <td>:</td>
-                <td>{{ $penyebab_md }}</td>
+                <td>{{ $sebab_meninggal }}</td>
             </tr>
 
             <tr>
