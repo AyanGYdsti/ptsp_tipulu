@@ -1,6 +1,11 @@
 @extends('layouts.main')
 
 @section('content')
+    @if(session('success'))
+                <div class="bg-green-100 text-green-700 p-3 rounded-lg">
+                    {{ session('success') }}
+                </div>
+            @endif
     <div class="mx-auto">
         <!-- Card -->
         <div class="bg-gradient-to-br from-blue-50 to-blue-100 shadow-xl rounded-2xl p-6 border border-blue-200">
@@ -211,20 +216,31 @@
                             </select>
                         </div>
 
+                        <input type="hidden" name="aksi" id="aksiInput">
                         <!-- Footer -->
                         <div class="flex justify-end gap-3 mt-6 border-t pt-4">
                             <button type="button" onclick="closeCetakModal()"
                                 class="px-4 py-2 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100">
                                 Batal
                             </button>
-                            <button type="submit"
+                            <!-- Tombol Simpan -->
+                            <button type="submit" onclick="document.getElementById('aksiInput').value='save'"
+                                class="px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 shadow-md">
+                                <i class="fa fa-download mr-1"></i> Simpan
+                            </button>
+                            <!-- Tombol Cetak (Stream) -->
+                            <button type="submit" onclick="document.getElementById('aksiInput').value='stream'"
                                 class="px-4 py-2 rounded-lg bg-yellow-500 text-white hover:bg-yellow-600 shadow-md">
                                 <i class="fa fa-print mr-1"></i> Cetak
                             </button>
                         </div>
+
+
                     </form>
                 </div>
             </div>
+
+
 
 
             <!-- Animasi -->
@@ -247,6 +263,13 @@
             </style>
 
             <script>
+
+
+                function setAksi(val) {
+                        document.getElementById('aksiInput').value = val;
+                }
+
+
                 // === CETAK MODAL ===
                 function openCetakModal(id) {
                     document.getElementById("formCetak").action = "/list-pengajuan/cetak/" + id;

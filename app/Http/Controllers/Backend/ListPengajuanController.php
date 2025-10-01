@@ -117,6 +117,19 @@ class ListPengajuanController extends Controller
 
 
         // atau tampilkan di browser
+        if ($request->aksi === 'save') {
+            $fileName = 'surat_' . $id . '_' . time() . '.pdf';
+            $filePath = storage_path('app/surat/' . $fileName);
+
+            if (!file_exists(dirname($filePath))) {
+                mkdir(dirname($filePath), 0777, true);
+            }
+
+            $pdf->save($filePath);
+            return response()->download($filePath);
+        }
+
+        // Default tampilkan di browser
         return $pdf->stream('surat.pdf');
     }
 
