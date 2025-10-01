@@ -169,7 +169,6 @@
                             <th class="px-2 sm:px-4 py-3 text-left min-w-32">Nama Pelayanan</th>
                             <th class="px-2 sm:px-4 py-3 text-left w-16">Icon</th>
                             <th class="px-2 sm:px-4 py-3 text-left min-w-40">Deskripsi</th>
-                            <th class="px-2 sm:px-4 py-3 text-left min-w-32">Keterangan Surat</th>
                             <th class="px-2 sm:px-4 py-3 text-left min-w-32">Persyaratan</th>
                             <th class="px-2 sm:px-4 py-3 text-center w-20">Aksi</th>
                         </tr>
@@ -181,7 +180,6 @@
                                 <td class="px-2 sm:px-4 py-3 font-medium">{{ $data->nama }}</td>
                                 <td class="px-2 sm:px-4 py-3 text-center">{!! $data->icon !!}</td>
                                 <td class="px-2 sm:px-4 py-3 description-col" title="{{ $data->deskripsi }}">{{ $data->deskripsi }}</td>
-                                <td class="px-2 sm:px-4 py-3 description-col" title="{{ $data->keterangan_surat }}">{{ $data->keterangan_surat ?? '-' }}</td>
                                 <td class="px-2 sm:px-4 py-3 requirements-col">
                                     @foreach ($data->pelayananPersyaratan as $item)
                                         <span class="px-1 sm:px-2 py-1 bg-blue-500 text-white rounded text-xs mr-1 mb-1 inline-block">{{ $item->persyaratan->nama }}</span>
@@ -240,13 +238,6 @@
                                     @foreach ($data->pelayananPersyaratan as $item)
                                         <span class="px-2 py-1 bg-blue-500 text-white rounded text-xs mr-1 mb-1 inline-block">{{ $item->persyaratan->nama }}</span>
                                     @endforeach
-                                </div>
-                            </div>
-
-                            <div class="service-card-row">
-                                <div class="service-card-label">Keterangan Surat:</div>
-                                <div class="service-card-value">
-                                    {{ $data->keterangan_surat }}
                                 </div>
                             </div>
 
@@ -315,16 +306,6 @@
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
                 </div>
-
-                <div class="mb-3 sm:mb-4">
-                    <label class="block text-sm font-semibold text-gray-600 mb-1">Keterangan Surat</label>
-                    <textarea name="keterangan_surat" rows="3"
-                        class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-sm resize-vertical">{{ old('keterangan_surat') }}</textarea>
-                    @error('keterangan_surat')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
 
                 <div class="mb-4 sm:mb-4">
                     <label class="block text-sm font-semibold text-gray-700 mb-1">Persyaratan</label>

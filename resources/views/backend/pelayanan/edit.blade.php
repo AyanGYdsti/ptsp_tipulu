@@ -36,16 +36,7 @@
                         <p class="text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
-
-                <div class="mb-4">
-                    <label class="block text-sm font-semibold text-gray-600 mb-1">Keterangan Surat</label>
-                    <textarea name="keterangan_surat"
-                        class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400">{{ old('keterangan_surat', $pelayanan->keterangan_surat) }}</textarea>
-                    @error('keterangan_surat')
-                        <p class="text-red-500">{{ $message }}</p>
-                    @enderror
-                </div>
-
+                
                 <div class="mb-4">
                     <label class="block text-sm font-semibold text-gray-700 mb-1">Persyaratan</label>
                     <select id="persyaratanSelect" name="persyaratan_id[]" multiple>
