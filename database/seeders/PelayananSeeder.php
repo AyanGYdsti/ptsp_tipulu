@@ -143,6 +143,7 @@ class PelayananSeeder extends Seeder
                 'nama' => 'Surat Keterangan Lainnya',
                 'icon' => 'fa-solid fa-file-lines',
                 'deskripsi' => 'Layanan untuk pengurusan surat keterangan lain yang tidak tercantum dalam daftar.',
+                'kereterangan_surat' => '',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
