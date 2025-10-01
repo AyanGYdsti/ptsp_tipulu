@@ -13,6 +13,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Kematian;
+use App\Models\domisiliUsahaYayasan;
+use App\Models\Usaha;
 use App\Models\PindahPenduduk;
 use Illuminate\Support\Facades\Response;
 
@@ -50,6 +52,7 @@ class ListPengajuanController extends Controller
         $pengajuan->load('kematian'); // Memuat relasi kematian
         $pengajuan->load('pindahPenduduk'); // Memuat relasi pindah penduduk
         $aparatur = Aparatur::where('id', $request->aparatur_id)->value('nama');
+        $aparatur_nip = Aparatur::where('id',$request->aparatur_id)->value('nip');
         $aparatur_jabatan = Aparatur::where('id', $request->aparatur_id)->value('jabatan');
         // $aparatur_nip = Aparatur::where('id', $request->aparatur_id)->value('nip');
         $pdf = Pdf::loadView('backend.surat.template-surat', [
@@ -64,9 +67,27 @@ class ListPengajuanController extends Controller
             'pekerjaan' => $pengajuan->masyarakat->pekerjaan,
             'alamat' => $pengajuan->masyarakat->alamat,
             'nik' => $pengajuan->masyarakat->nik,
-            'keterangan_surat' => $pengajuan->pelayanan->keterangan_surat,
+            'keterangan_surat' => str_replace(
+                [
+                    '{{ $tahun_berdiri }}',
+                    '{{ $keperluan }}',
+                    '{{ $alamat_sementara }}',
+                    '{{ $rt }}',
+                    '{{ $rw }}',
+                ],
+                [
+                    $pengajuan->usaha->tahun_berdiri ?? '....',
+                   '<b>' . ($pengajuan->keperluan ?? '....') . '</b>',
+                    optional($pengajuan->tempat_tinggal_sementara)->alamat_sementara ?? '....',
+                    $pengajuan->masyarakat->rt ?? '....',
+                    $pengajuan->masyarakat->rw ?? '....',
+                ],
+                $pengajuan->pelayanan->keterangan_surat
+            ),
             'jabatan' => $aparatur_jabatan,
+            'status' => $pengajuan->status,
             'aparatur' => $aparatur,
+            'aparatur_nip' => $aparatur_nip,
             'nama_md'         => optional($pengajuan->kematian)->nama,
             'jenis_kelamin_md'=> optional($pengajuan->kematian)->jenis_kelamin,
             'umur'            => optional($pengajuan->kematian)->umur,
@@ -77,15 +98,21 @@ class ListPengajuanController extends Controller
             'hari_meninggal'  => optional($pengajuan->kematian)->hari,
             'tempat_meninggal'=> optional($pengajuan->kematian)->tempat_meninggal,
             'penyebab_md'     => optional($pengajuan->kematian)->penyebab,
-
             'desa_kelurahan'  => optional($pengajuan->pindahPenduduk)->desa_kelurahan,
             'kecamatan'       => optional($pengajuan->pindahPenduduk)->kecamatan,
             'kab_kota'        => optional($pengajuan->pindahPenduduk)->kab_kota,
             'provinsi'        => optional($pengajuan->pindahPenduduk)->provinsi,
-
             'tgl_pindah' =>  optional($pengajuan->pindahPenduduk)->tanggal_pindah,
             'alasan_pindah' => optional($pengajuan->pindahPenduduk)->alasan_pindah,
             'pengikut' => optional($pengajuan->pindahPenduduk)->pengikut,
+            'nama_usaha' => optional($pengajuan->domisiliUsahaYayasan)->nama_usaha,
+            'jenis_kegiatan_usaha' => optional($pengajuan->domisiliUsahaYayasan)->jenis_kegiatan_usaha,
+            'alamat_usaha' => optional($pengajuan->domisiliUsahaYayasan)->alamat_usaha,
+            'penanggung_jawab' => optional($pengajuan->domisiliUsahaYayasan)->penanggung_jawab,
+            'tahun_berdiri' => optional($pengajuan->usaha)->tahun_berdiri,
+            'nama_usaha_pengaju' => optional($pengajuan->usaha)->nama_usaha,
+
+
         ]);
 
 

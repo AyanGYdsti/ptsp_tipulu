@@ -253,8 +253,84 @@
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
+
+                @elseif($pelayanan->nama == "Surat Keterangan Domisili Usaha dan Yayasan")
+                    {{-- Nama Usaha / Yayasan --}}
+                    <div>
+                        <label for="nama_usaha" class="block text-sm font-medium text-gray-600">Nama Usaha / Yayasan</label>
+                        <input type="text" name="nama_usaha" id="nama_usaha" value="{{ old('nama_usaha') }}"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('nama_usaha') border-red-500 @enderror"
+                            placeholder="Masukkan Nama Usaha / Yayasan" required>
+                        @error('nama_usaha')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="alamat_usaha" class="block text-sm font-medium text-gray-600">Alamat Usaha / Yayasan</label>
+                        <textarea name="alamat_usaha" id="alamat_usaha" rows="3"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('alamat_usaha') border-red-500 @enderror"
+                            placeholder="Masukkan Alamat Usaha / Yayasan" required>{{ old('alamat_usaha') }}</textarea>
+                        @error('alamat_usaha')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="jenis_kegiatan_usaha" class="block text-sm font-medium text-gray-600">Jenis Kegiatan Usaha</label>
+                        <input type="text" name="jenis_kegiatan_usaha" id="jenis_kegiatan_usaha" value="{{ old('jenis_kegiatan_usaha') }}"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('jenis_kegiatan_usaha') border-red-500 @enderror"
+                            placeholder="Masukkan Jenis Kegiatan Usaha" required>
+                        @error('jenis_kegiatan_usaha')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="penanggung_jawab" class="block text-sm font-medium text-gray-600">Penanggung Jawab</label>
+                        <input type="text" name="penanggung_jawab" id="penanggung_jawab" value="{{ old('penanggung_jawab') }}"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('penanggung_jawab') border-red-500 @enderror"
+                            placeholder="Masukkan Penanggung Jawab" required>
+                        @error('penanggung_jawab')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                @elseif($pelayanan->nama == "Surat Keterangan Memiliki Usaha (SKU)")
+                    {{-- Nama Usaha --}}
+                    <div>
+                        <label for="nama_usaha" class="block text-sm font-medium text-gray-600">Nama Usaha</label>
+                        <input type="text" name="nama_usaha" id="nama_usaha" value="{{ old('nama_usaha') }}"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('nama_usaha') border-red-500 @enderror"
+                            placeholder="Masukkan Nama Usaha" required>
+                        @error('nama_usaha')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Tahun Berdiri --}}
+                    <div>
+                        <label for="tahun_berdiri" class="block text-sm font-medium text-gray-600">Tahun Berdiri</label>
+                        <input type="number" name="tahun_berdiri" id="tahun_berdiri" value="{{ old('tahun_berdiri') }}"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('tahun_berdiri') border-red-500 @enderror"
+                            placeholder="Masukkan Tahun Berdiri Usaha (contoh: 2020)" required>
+                        @error('tahun_berdiri')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                 @endif
 
+                    {{-- Keperluan --}}
+                    <div>
+                        <label for="keperluan" class="block text-sm font-medium text-gray-600">Keperluan</label>
+                        <input type="text" name="keperluan" id="keperluan" value="{{ old('keperluan') }}"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('keperluan') border-red-500 @enderror"
+                            placeholder="Masukkan Keperluan" required>
+                        @error('keperluan')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
 
                     {{-- Nomor WhatsApp --}}
                     <div>

@@ -11,6 +11,8 @@ use App\Models\Pengajuan;
 use App\Services\FcmService; // ✅ TAMBAHKAN INI
 use Illuminate\Http\Request;
 use App\Models\Kematian;
+use App\Models\Usaha;
+use App\Models\domisiliUsahaYayasan;
 use App\Models\PindahPenduduk;
 use Illuminate\Support\Facades\Log;
 
@@ -54,6 +56,7 @@ class PengajuanController extends Controller
             'pelayanan_id' => 'required',
             'nik' => 'required|exists:masyarakats,nik',
             'no_hp' => 'required|string|digits_between:10,15',
+            'keperluan' => 'required|string',
             'dokumen' => 'required|array',
             'dokumen.*' => 'file|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);
@@ -66,7 +69,8 @@ class PengajuanController extends Controller
             $pengajuan = Pengajuan::create([
                 'nik' => $data['nik'],
                 'pelayanan_id' => $data['pelayanan_id'],
-                'no_hp' => $data['no_hp']
+                'no_hp' => $data['no_hp'],
+                'keperluan' => $data['keperluan'],
             ]);
 
             // Upload dokumen persyaratan
@@ -137,6 +141,40 @@ class PengajuanController extends Controller
                 ]);
             }
 
+            elseif ($pelayanan && $pelayanan->nama === "Surat Keterangan Domisili Usaha dan Yayasan"){
+                $request->validate([
+                    'nama_usaha' => 'required|string',
+                    'alamat_usaha' => 'required|string',
+                    'jenis_kegiatan_usaha' => 'required|string',
+                    'penanggung_jawab' => 'required|string',
+                    'tanggal_berdiri' => 'required|date',
+                ]);
+
+                // Simpan nama usaha di tabel pengajuans
+                domisiliUsahaYayasan::create([
+                    'pengajuan_id' => $pengajuan->id,
+                    'nama_usaha' => $request->nama_usaha,
+                    'jenis_kegiatan_usaha' => $request->jenis_kegiatan_usaha,
+                    'alamat_usaha' => $request->alamat_usaha,
+                    'penanggung_jawab' => $request->penanggung_jawab,
+                    'tanggal_berdiri' => $request->tanggal_berdiri,
+                ]);
+            }
+
+            elseif ($pelayanan && $pelayanan->nama === "Surat Keterangan Memiliki Usaha (SKU)") {
+                $request->validate([
+                    'nama_usaha' => 'required|string',
+                    'tahun_berdiri' => 'required|date_format:Y',
+                ]);
+
+                // Simpan nama usaha di tabel pengajuans
+                Usaha::create([
+                    'pengajuan_id' => $pengajuan->id,
+                    'nama_usaha' => $request->nama_usaha,
+                    'tahun_berdiri' => $request->tahun_berdiri,
+                ]);
+            }
+
 
             // ✅ KIRIM NOTIFIKASI KE ADMIN
             $this->fcmService->sendToAllAdmins(
@@ -161,9 +199,8 @@ class PengajuanController extends Controller
             return redirect()->back()->with('success', 'Berhasil mengajukan permohonan.');
 
         } catch (\Exception $e) {
-            Log::error('Error saat pengajuan: ' . $e->getMessage());
-            Log::error('Stack trace: ' . $e->getTraceAsString());
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan data.');
-        }
+    return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
+}
+
     }
 }

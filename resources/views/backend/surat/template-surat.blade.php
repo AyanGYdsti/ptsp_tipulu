@@ -131,10 +131,7 @@
             </tr>
         </table>
 
-        <br>
-        <p style="text-align: justify; text-indent: 27px;">
-            Demikian Surat Keterangan ini diberikan kepada keluarga Almarhum untuk dipergunakan seperlunya.
-        </p>
+
     @elseif ($judul == 'Surat Keterangan Pindah Penduduk')
         {{-- FIXED: Restructured this entire table to be valid HTML --}}
         <table style="margin-left:27px">
@@ -171,7 +168,7 @@
             <tr>
                 <td>Status Perkawinan</td>
                 <td>:</td>
-                {{-- <td>{{ $status }}</td> --}}
+                <td>{{ $status }}</td>
             </tr>
             <tr>
                 <td>Alamat Asal</td>
@@ -226,7 +223,7 @@
                 <tr>
                     <td style="width: 27%">Nama Kepala Keluarga</td>
                     <td style="width: 2%">:</td>
-                    <td>{{ $nama_kepala_keluarga }}</td>
+                    {{-- <td>{{ $nama_kepala_keluarga }}</td> --}}
                 </tr>
             @endif
 
@@ -267,14 +264,11 @@
                 <td>{{ $alamat }}</td>
             </tr>
 
-            @if (
-                $judul == 'Surat Keterangan Domisili Usaha dan Yayasan' ||
-                    $judul == 'Surat Keterangan Memiliki Usaha (SKU)' ||
-                    $judul == 'Surat Keterangan Domisili Usaha')
+            @if ($judul == 'Surat Keterangan Memiliki Usaha (SKU)')
                 <tr>
                     <td>Nama Usaha / Yayasan</td>
                     <td>:</td>
-                    <td>{{ $nama_usaha }}</td>
+                    <td>{{ $nama_usaha_pengaju }}</td>
                 </tr>
             @elseif ($judul == 'Surat Izin Keramaian')
                 <tr>
@@ -292,7 +286,7 @@
                 <tr>
                     <td>Golongan Darah</td>
                     <td>:</td>
-                    <td>{{ $golongan_darah }}</td>
+                    {{-- <td>{{ $golongan_darah }}</td> --}}
                 </tr>
             @endif
         </table>
@@ -309,7 +303,7 @@
         <p style="text-align: justify; text-indent: 27px;">
             Nama yang tersebut diatas adalah benar - benar penduduk di RT ??/ RW ?? Kelurahan Tipulu Kecamatan
             Kendari
-            Barat {{ $keterangan_surat }}
+            Barat {!!$keterangan_surat !!}
 
             {{-- @if ($judul == 'Surat Keterangan Domisili Usaha dan Yayasan' ||
     $judul ==
@@ -320,7 +314,7 @@
 
         </p>
 
-        @if ($judul == 'Surat Keterangan Domisili Usaha dan Yayasan')
+        @if ($judul == "Surat Keterangan Domisili Usaha dan Yayasan")
             <table style="margin-left:27px; margin-top:10px">
                 <tr>
                     <td style="width: 27%">Nama Usaha / Yayasan</td>
@@ -354,6 +348,11 @@
                 Demikian Surat Keterangan ini dibuat untuk dapat dipergunakan sebagaimana mestinya dan berlaku selama 3
                 (tiga) bulan sejak tanggal dikeluarkan.
             </p>
+
+        @elseif($judul == 'Surat Keterangan Kematian')
+            <p style="text-align: justify; text-indent: 27px;">
+                Demikian Surat Keterangan ini diberikan kepada keluarga Almarhum untuk dipergunakan seperlunya.
+            </p>
         @else
             <p style="text-align: justify; text-indent: 27px;">
                 Demikian Surat Keterangan ini dibuat dengan sebenar-benarnya untuk dipergunakan seperlunya.
@@ -386,7 +385,7 @@
             <td></td>
             <td>
                 <p style="border-bottom: 1px solid black; display: inline-block; padding-bottom: 1px;">
-                    NIP. 19681027 199008 2 002
+                    {{ $aparatur_nip }}
                 </p>
             </td>
         </tr>
