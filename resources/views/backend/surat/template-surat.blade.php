@@ -344,20 +344,18 @@
                 </tr>
         @endif
 
-
-        <br>
+        
         @if ($judul == 'Surat Keterangan Tempat Tinggal Sementara')
-            <p style="text-align: justify; text-indent: 27px;">
+            <p style="text-align: justify; text-indent: 27px; padding : 20px">
                 Demikian Surat Keterangan ini dibuat untuk dapat dipergunakan sebagaimana mestinya dan berlaku selama 3
                 (tiga) bulan sejak tanggal dikeluarkan.
             </p>
-
         @elseif($judul == 'Surat Keterangan Kematian')
             <p style="text-align: justify; text-indent: 27px;">
                 Demikian Surat Keterangan ini diberikan kepada keluarga Almarhum untuk dipergunakan seperlunya.
             </p>
         @else
-            <p style="text-align: justify; text-indent: 27px;">
+            <p style="text-align: justify; text-indent: 27px; padding : 5px">
                 Demikian Surat Keterangan ini dibuat dengan sebenar-benarnya untuk dipergunakan seperlunya.
             </p>
         @endif
