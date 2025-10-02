@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pengajuans', function (Blueprint $table) {
+        Schema::create('usaha', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('nik');
-            $table->unsignedBigInteger('pelayanan_id');
-            $table->string('no_hp')->nullable();
-            $table->unsignedBigInteger('ttd')->nullable();
-            $table->string('keperluan')->nullable();
+            // relasi ke pengajuans
+            $table->foreignId('pengajuan_id')
+                  ->constrained('pengajuans')
+                  ->onDelete('cascade');
+
+            $table->string('nama_usaha')->nullable();
+            $table->year('tahun_berdiri')->nullable();
+
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pengajuans');
+        //
     }
 };

@@ -12,85 +12,145 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Kematian;
-use App\Models\PindahPenduduk;
-use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Log;
 
 class ListPengajuanController extends Controller
 {
     public function index()
     {
         $title = "List Pengajuan";
-
-        $pengajuan = Pengajuan::with(['pelayanan', 'dokumenPersyaratan.persyaratan'])->orderByDesc('id')->get();
-
+        $pengajuan = Pengajuan::with(['pelayanan', 'masyarakat', 'dokumenPersyaratan.persyaratan'])->orderByDesc('id')->get();
         $aparaturs = Aparatur::get(['id', 'nama']);
-
         return view('backend.list-pengajuan.index', compact('title', 'pengajuan', 'aparaturs'));
     }
 
-    public function verifikasi($id)
+    public function verifikasi(Request $request, $id)
     {
         try {
+            $status = $request->input('status', 'Ditolak');
+
             Verifikasi::create([
                 'pengajuan_id' => $id,
-                'status' => 'Diverifikasi oleh ' . Auth::user()->username,
-                'aparatur_id' => 4,
+                'status' => $status . ' oleh ' . Auth::user()->username,
+                'aparatur_id' => 4, // Harap pastikan ID ini sesuai atau dinamis
             ]);
 
-            return back()->with('success', 'Berhasil verifikasi data');
+            return back()->with('success', 'Berhasil ' . strtolower($status) . ' data');
         } catch (\Throwable $th) {
+            Log::error('Gagal verifikasi data: ' . $th->getMessage());
             return back()->with('error', 'Gagal verifikasi data');
         }
     }
 
-    public function cetak(Request $request, $id)
+    // Method publik untuk STREAM (tampilkan PDF di viewer)
+    public function handleCetakStream(Request $request, $id)
     {
-        $pengajuan = Pengajuan::with(['pelayanan', 'dokumenPersyaratan.persyaratan'])->find($id);
-        $pengajuan->load('kematian'); // Memuat relasi kematian
-        $pengajuan->load('pindahPenduduk'); // Memuat relasi pindah penduduk
-        $aparatur = Aparatur::where('id', $request->aparatur_id)->value('nama');
-        $aparatur_jabatan = Aparatur::where('id', $request->aparatur_id)->value('jabatan');
-        // $aparatur_nip = Aparatur::where('id', $request->aparatur_id)->value('nip');
-        $pdf = Pdf::loadView('backend.surat.template-surat', [
-            'judul' => $pengajuan->pelayanan->nama,
-            'tahun' => Carbon::parse($request->tgl_cetak)->format('Y'),
-            'tanggal' => Carbon::parse($request->tgl_cetak)->format('d-m-Y'),
-            'nama_pengaju' => $pengajuan->masyarakat->nama,
-            'tempat_lahir' => $pengajuan->masyarakat->tempat_lahir,
-            'tanggal_lahir' => Carbon::parse($pengajuan->masyarakat->tgl_lahir)->format('d-m-Y'),
-            'jenis_kelamin' => $pengajuan->masyarakat->jk,
-            'agama' => $pengajuan->masyarakat->agama,
-            'pekerjaan' => $pengajuan->masyarakat->pekerjaan,
-            'alamat' => $pengajuan->masyarakat->alamat,
-            'nik' => $pengajuan->masyarakat->nik,
-            'keterangan_surat' => $pengajuan->pelayanan->keterangan_surat,
-            'jabatan' => $aparatur_jabatan,
-            'aparatur' => $aparatur,
-            'nama_md'         => optional($pengajuan->kematian)->nama,
-            'jenis_kelamin_md'=> optional($pengajuan->kematian)->jenis_kelamin,
-            'umur'            => optional($pengajuan->kematian)->umur,
-            'alamat_md'       => optional($pengajuan->kematian)->alamat,
-            'tanggal_meninggal' => optional($pengajuan->kematian)->tanggal_meninggal
-                                    ? Carbon::parse($pengajuan->kematian->tanggal_meninggal)->format('d-m-Y')
-                                    : null,
-            'hari_meninggal'  => optional($pengajuan->kematian)->hari,
-            'tempat_meninggal'=> optional($pengajuan->kematian)->tempat_meninggal,
-            'penyebab_md'     => optional($pengajuan->kematian)->penyebab,
+        return $this->generatePdf($request, $id, 'stream');
+    }
 
-            'desa_kelurahan'  => optional($pengajuan->pindahPenduduk)->desa_kelurahan,
-            'kecamatan'       => optional($pengajuan->pindahPenduduk)->kecamatan,
-            'kab_kota'        => optional($pengajuan->pindahPenduduk)->kab_kota,
-            'provinsi'        => optional($pengajuan->pindahPenduduk)->provinsi,
+    // Method publik untuk DOWNLOAD (unduh PDF)
+    public function handleCetakDownload(Request $request, $id)
+    {
+        return $this->generatePdf($request, $id, 'download');
+    }
 
-            'tgl_pindah' =>  optional($pengajuan->pindahPenduduk)->tanggal_pindah,
-            'alasan_pindah' => optional($pengajuan->pindahPenduduk)->alasan_pindah,
-            'pengikut' => optional($pengajuan->pindahPenduduk)->pengikut,
-        ]);
+    /**
+     * Method private terpusat untuk men-generate PDF.
+     * Menggabungkan semua logika persiapan data dan pembuatan PDF.
+     */
+    private function generatePdf(Request $request, $id, $action)
+    {
+        try {
+            Log::info("Memulai proses generate PDF", [
+                'id' => $id,
+                'action' => $action,
+                'request_data' => $request->all()
+            ]);
 
+            // Validasi input dari form
+            $request->validate([
+                'tgl_cetak' => 'required|date',
+                'aparatur_id' => 'required|exists:aparaturs,id',
+            ]);
 
-        // atau tampilkan di browser
-        return $pdf->stream('surat.pdf');
+            // Ambil semua data yang mungkin dibutuhkan dengan Eager Loading
+            $pengajuan = Pengajuan::with([
+                'pelayanan', 'masyarakat', 'kematian', 'pindahPenduduk', 
+                'domisiliUsahaYayasan', 'usaha', 'tempatTinggalSementara'
+            ])->findOrFail($id);
+
+            $aparatur = Aparatur::findOrFail($request->aparatur_id);
+
+            // Siapkan semua data yang akan dikirim ke view PDF
+            $dataForView = [
+                'judul' => $pengajuan->pelayanan->nama,
+                'tahun' => Carbon::parse($request->tgl_cetak)->format('Y'),
+                'tanggal' => Carbon::parse($request->tgl_cetak)->isoFormat('D MMMM Y'),
+                'nama_pengaju' => optional($pengajuan->masyarakat)->nama,
+                'tempat_lahir' => optional($pengajuan->masyarakat)->tempat_lahir,
+                'tanggal_lahir' => optional($pengajuan->masyarakat)->tgl_lahir ? Carbon::parse($pengajuan->masyarakat->tgl_lahir)->isoFormat('D MMMM Y') : null,
+                'jenis_kelamin' => optional($pengajuan->masyarakat)->jk,
+                'agama' => optional($pengajuan->masyarakat)->agama,
+                'pekerjaan' => optional($pengajuan->masyarakat)->pekerjaan,
+                'alamat' => optional($pengajuan->masyarakat)->alamat,
+                'nik' => optional($pengajuan->masyarakat)->nik,
+                'keterangan_surat' => str_replace(
+                    ['{{ $tahun_berdiri }}', '{{ $keperluan }}', '{{ $alamat_sementara }}', '{{ $rt }}', '{{ $rw }}'],
+                    [
+                        optional($pengajuan->usaha)->tahun_berdiri ?? '....',
+                        '<b>' . ($pengajuan->keperluan ?? '....') . '</b>',
+                        optional($pengajuan->tempat_tinggal_sementara)->alamat_sementara ?? '....',
+                        optional($pengajuan->masyarakat)->rt ?? '..',
+                        optional($pengajuan->masyarakat)->rw ?? '..',
+                    ],
+                    optional($pengajuan->pelayanan)->keterangan_surat ?? ''
+                ),
+                'jabatan' => $aparatur->jabatan,
+                'aparatur' => $aparatur->nama,
+                'aparatur_nip' => $aparatur->nip,
+                'nama_md' => optional($pengajuan->kematian)->nama,
+                'jenis_kelamin_md'=> optional($pengajuan->kematian)->jenis_kelamin,
+                'umur' => optional($pengajuan->kematian)->umur,
+                'alamat_md' => optional($pengajuan->kematian)->alamat,
+                'tanggal_meninggal' => optional($pengajuan->kematian)->tanggal ? Carbon::parse($pengajuan->kematian->tanggal)->isoFormat('D MMMM Y') : null,
+                'hari_meninggal' => optional($pengajuan->kematian)->hari,
+                'tempat_meninggal'=> optional($pengajuan->kematian)->tempat_meninggal,
+                'penyebab_md' => optional($pengajuan->kematian)->penyebab,
+                'desa_kelurahan' => optional($pengajuan->pindahPenduduk)->desa_kelurahan,
+                'kecamatan' => optional($pengajuan->pindahPenduduk)->kecamatan,
+                'kab_kota' => optional($pengajuan->pindahPenduduk)->kab_kota,
+                'provinsi' => optional($pengajuan->pindahPenduduk)->provinsi,
+                'tgl_pindah' => optional($pengajuan->pindahPenduduk)->tanggal_pindah ? Carbon::parse($pengajuan->pindahPenduduk)->tanggal_pindah->isoFormat('D MMMM Y') : null,
+                'alasan_pindah' => optional($pengajuan->pindahPenduduk)->alasan_pindah,
+                'pengikut' => optional($pengajuan->pindahPenduduk)->pengikut,
+                'nama_usaha' => optional($pengajuan->domisiliUsahaYayasan)->nama_usaha,
+                'jenis_kegiatan_usaha' => optional($pengajuan->domisiliUsahaYayasan)->jenis_kegiatan_usaha,
+                'alamat_usaha' => optional($pengajuan->domisiliUsahaYayasan)->alamat_usaha,
+                'penanggung_jawab' => optional($pengajuan->domisiliUsahaYayasan)->penanggung_jawab,
+                'tahun_berdiri' => optional($pengajuan->usaha)->tahun_berdiri,
+                'nama_usaha_pengaju' => optional($pengajuan->usaha)->nama_usaha,
+            ];
+
+            // Generate PDF dengan satu panggilan
+            $pdf = PDF::loadView('backend.surat.template-surat', $dataForView);
+            
+            Log::info("PDF berhasil di-generate untuk action: {$action}");
+
+            // Kembalikan respons berdasarkan action yang diminta
+            if ($action === 'download') {
+                return $pdf->download('surat_' . $pengajuan->id . '.pdf');
+            } else { // 'stream'
+                return $pdf->stream('surat_' . $pengajuan->id . '.pdf');
+            }
+
+        } catch (\Exception $e) {
+            Log::error('Gagal saat generate PDF', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            
+            return response('Terjadi kesalahan di server saat membuat dokumen.', 500);
+        }
     }
 
     public function stream($persyaratan_id, $pengajuan_id)
@@ -100,14 +160,13 @@ class ListPengajuanController extends Controller
             ->value('dokumen');
 
         $persyaratan = Persyaratan::find($persyaratan_id);
-
         $fullPath = public_path($path);
 
         if (!file_exists($fullPath)) {
             abort(404, 'File tidak ditemukan.');
         }
 
-        $filename = $persyaratan->nama . '.pdf'; // ✅ kasih nama tab
+        $filename = optional($persyaratan)->nama . '.pdf';
 
         return response()->file($fullPath, [
             'Content-Type' => 'application/pdf',
@@ -115,3 +174,4 @@ class ListPengajuanController extends Controller
         ]);
     }
 }
+

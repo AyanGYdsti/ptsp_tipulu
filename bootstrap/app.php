@@ -16,6 +16,8 @@ return Application::configure(basePath: dirname(__DIR__))
         // Tambahkan pengecualian CSRF di sini
         $middleware->validateCsrfTokens(except: [
             '/api/save-fcm-token', 
+            '/list-pengajuan/*/cetak-stream',
+            '/list-pengajuan/*/cetak-download',
         ]);
     })
     // ▲▲▲ PERUBAHAN SELESAI DI SINI ▲▲▲
