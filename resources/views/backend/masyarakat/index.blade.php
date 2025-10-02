@@ -48,6 +48,8 @@
                                 <td class="px-2 sm:px-4 py-3">
                                     <div class="d-flex flex-column">
                                         <p class="font-bold text-xs sm:text-sm">{{ $data->nama }}</p>
+                                        <p class="opacity-75 text-xs">{{ $data->RT }}</p>
+                                        <p class="opacity-75 text-xs">{{ $data->RW }}</p>
                                         <p class="opacity-75 text-xs">{{ $data->nik }}</p>
                                         <p class="opacity-75 text-xs break-words max-w-[200px]">{{ $data->alamat }}</p>
                                         <!-- Info mobile yang tersembunyi di desktop -->
@@ -127,6 +129,24 @@
                         <input type="text" name="nama" value="{{ old('nama') }}"
                             class="w-full border border-blue-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
                         @error('nama')
+                            <p class="text-red-500 text-sm">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-600 mb-1">RT</label>
+                        <input type="text" name="RT" value="{{ old('RT') }}"
+                            class="w-full border border-blue-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
+                        @error('RT')
+                            <p class="text-red-500 text-sm">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-600 mb-1">RW</label>
+                        <input type="text" name="RW" value="{{ old('RW') }}"
+                            class="w-full border border-blue-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
+                        @error('RW')
                             <p class="text-red-500 text-sm">{{ $message }}</p>
                         @enderror
                     </div>

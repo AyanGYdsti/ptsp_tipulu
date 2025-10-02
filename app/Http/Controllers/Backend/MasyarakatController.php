@@ -40,6 +40,8 @@ class MasyarakatController extends Controller
         $data = $request->validate([
             'nik' => 'required|unique:masyarakats,nik',
             'nama' => 'required',
+            'RT' => 'required',
+            'RW' => 'required',
             'alamat' => 'required',
             'tempat_lahir' => 'required',
             'tgl_lahir' => 'required|date',
@@ -48,7 +50,7 @@ class MasyarakatController extends Controller
             'agama' => 'required',
             'jk' => 'required',
             'no_hp' => 'nullable'
-            
+
         ], [
             'nik.unique' => 'NIK sudah terdaftar.',
         ]);
@@ -58,7 +60,7 @@ class MasyarakatController extends Controller
 
             return back()->with('success', 'Berhasil menambah data');
         } catch (\Exception $e) {
-            return "gagal"; 
+            return "gagal";
             back()->with('error', 'Gagal menambah data');
         }
     }
@@ -68,6 +70,8 @@ class MasyarakatController extends Controller
         $data = $request->validate([
             'nik' => 'required|unique:masyarakats,nik',
             'nama' => 'required',
+            'RT'=> 'required',
+            'RW'=> 'required',
             'alamat' => 'required',
             'tempat_lahir' => 'required',
             'tgl_lahir' => 'required|date',
