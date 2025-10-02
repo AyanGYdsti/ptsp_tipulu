@@ -125,7 +125,7 @@ class ListPengajuanController extends Controller
                 'jenis_kelamin_md'=> optional($pengajuan->kematian)->jenis_kelamin,
                 'umur' => optional($pengajuan->kematian)->umur,
                 'alamat_md' => optional($pengajuan->kematian)->alamat,
-                'tanggal_meninggal' => optional($pengajuan->kematian)->tanggal ? Carbon::parse($pengajuan->kematian->tanggal)->isoFormat('D MMMM Y') : null,
+                'tanggal_meninggal' => optional($pengajuan->kematian)->tanggal_meninggal ? Carbon::parse($pengajuan->kematian->tanggal_meninggal)->isoFormat('D MMMM Y') : null,
                 'hari_meninggal' => optional($pengajuan->kematian)->hari,
                 'tempat_meninggal'=> optional($pengajuan->kematian)->tempat_meninggal,
                 'penyebab_md' => optional($pengajuan->kematian)->penyebab,

@@ -100,7 +100,7 @@ class PengajuanController extends Controller
                     'umur'           => 'required|integer',
                     'alamat'         => 'required|string',
                     'hari'           => 'required|string',
-                    'tanggal'        => 'required|date',
+                    'tanggal_meninggal'        => 'required|date',
                     'tempat_meninggal'=> 'required|string',
                     'penyebab'       => 'required|string',
                 ]);
@@ -112,7 +112,7 @@ class PengajuanController extends Controller
                     'umur'           => $request->umur,
                     'alamat'         => $request->alamat,
                     'hari'           => $request->hari,
-                    'tanggal'        => $request->tanggal,
+                    'tanggal_meninggal'        => $request->tanggal_meninggal,
                     'tempat_meninggal' => $request->tempat_meninggal,
                     'penyebab'       => $request->penyebab,
                 ]);
@@ -148,7 +148,6 @@ class PengajuanController extends Controller
                     'alamat_usaha' => 'required|string',
                     'jenis_kegiatan_usaha' => 'required|string',
                     'penanggung_jawab' => 'required|string',
-                    'tanggal_berdiri' => 'required|date',
                 ]);
 
                 // Simpan nama usaha di tabel pengajuans
@@ -158,7 +157,6 @@ class PengajuanController extends Controller
                     'jenis_kegiatan_usaha' => $request->jenis_kegiatan_usaha,
                     'alamat_usaha' => $request->alamat_usaha,
                     'penanggung_jawab' => $request->penanggung_jawab,
-                    'tanggal_berdiri' => $request->tanggal_berdiri,
                 ]);
             }
 
@@ -196,6 +194,7 @@ class PengajuanController extends Controller
                     'pukul'          => $request->pukul,
                 ]);
             }
+            
 
 
 

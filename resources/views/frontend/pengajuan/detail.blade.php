@@ -86,7 +86,7 @@
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
-                    
+
                 @if ($pelayanan->nama == "Surat Izin Keramaian")
                     {{-- Nama Acara --}}
                     <div>
@@ -215,32 +215,32 @@
 
                     {{-- Tanggal Meninggal --}}
                     <div>
-                        <label for="tanggal" class="block text-sm font-medium text-gray-600">Tanggal Meninggal</label>
-                        <input type="date" name="tanggal" id="tanggal" value="{{ old('tanggal') }}"
-                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('tanggal') border-red-500 @enderror" required>
-                        @error('tanggal')
+                        <label for="tanggal_meninggal" class="block text-sm font-medium text-gray-600">Tanggal Meninggal</label>
+                        <input type="date" name="tanggal_meninggal" id="tanggal_meninggal" value="{{ old('tanggal_meninggal') }}"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('tanggal_meninggal') border-red-500 @enderror" required>
+                        @error('tanggal_meninggal')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
 
                     {{-- Tempat Meninggal --}}
                     <div>
-                        <label for="tempat" class="block text-sm font-medium text-gray-600">Tempat Meninggal</label>
-                        <input type="text" name="tempat" id="tempat" value="{{ old('tempat') }}"
-                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('tempat') border-red-500 @enderror"
+                        <label for="tempat_meninggal" class="block text-sm font-medium text-gray-600">Tempat Meninggal</label>
+                        <input type="text" name="tempat_meninggal" id="tempat_meninggal" value="{{ old('tempat_meninggal') }}"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('tempat_meninggal') border-red-500 @enderror"
                             placeholder="Masukkan Tempat Meninggal" required>
-                        @error('tempat')
+                        @error('tempat_meninggal')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
 
                     {{-- Penyebab --}}
                     <div>
-                        <label for="sebab_kematian" class="block text-sm font-medium text-gray-600">Penyebab</label>
-                        <input type="text" name="sebab_kematian" id="sebab_kematian" value="{{ old('sebab_kematian') }}"
-                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('sebab_kematian') border-red-500 @enderror"
+                        <label for="penyebab" class="block text-sm font-medium text-gray-600">Penyebab</label>
+                        <input type="text" name="penyebab" id="penyebab" value="{{ old('penyebab') }}"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('penyebab') border-red-500 @enderror"
                             placeholder="Masukkan Penyebab Kematian" required>
-                        @error('sebab_kematian')
+                        @error('penyebab')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
@@ -386,6 +386,7 @@
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
+                    
                 @elseif ($pelayanan->nama == "Surat Keterangan Tidak Mampu (SKTM)" || $pelayanan->nama == "Surat Keterangan Belum Bekerja")
                     <div>
                         <label for="keperluan" class="block text-sm font-medium text-gray-600">Keperluan</label>
@@ -393,6 +394,18 @@
                             class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('keperluan') border-red-500 @enderror"
                             placeholder="Masukkan Keperluan" required>
                         @error('keperluan')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                @elseif ($pelayanan->nama == "Surat Keterangan Tempat Tinggal Sementara")
+                    {{-- Alamat Tujuan --}}
+                    <div>
+                        <label for="alamat_sementara" class="block text-sm font-medium text-gray-600">Alamat Sementara</label>
+                        <input type="text" name="alamat_sementara" id="alamat_sementara" value="{{ old('alamat_sementara') }}"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('alamat_sementara') border-red-500 @enderror"
+                            placeholder="Masukkan Alamat Sementara" required>
+                        @error('alamat_sementara')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>

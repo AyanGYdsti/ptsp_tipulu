@@ -15,10 +15,18 @@ return new class extends Migration
             $table->id();
             // Kolom ini akan menghubungkan ke tabel 'pengajuans'
             $table->foreignId('pengajuan_id')->constrained()->onDelete('cascade');
-            
+
             // Tambahkan kolom lain yang relevan untuk surat ini
             $table->string('alamat_sementara');
-            
+            $table->string('nik');
+            $table->string('nama');
+            $table->string('jenis_kelamin');
+            $table->integer('RT');
+            $table->integer('RW');
+            $table->date('tgl_lahir');
+            $table->string('tempat_lahir');
+            $table->string('agama');
+
             $table->timestamps();
         });
     }

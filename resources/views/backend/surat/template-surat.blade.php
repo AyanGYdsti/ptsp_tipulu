@@ -124,7 +124,7 @@
             <tr>
                 <td>Disebabkan Karena</td>
                 <td>:</td>
-                <td>{{ $sebab_meninggal }}</td>
+                <td>{{ $penyebab_md }}</td>
             </tr>
 
             <tr>
@@ -324,9 +324,13 @@
                     <td>:</td>
                     <td>{{ $penyelenggara_acara }}</td>
             </table>
+    @elseif($judul == "Surat Keterangan Tempat Tinggal Sementara")
+        <p style="text-align: justify; text-indent: 27px;">
+             {!!$keterangan_surat !!}
+        </p>
     @else
         <p style="text-align: justify; text-indent: 27px;">
-            Nama yang tersebut diatas adalah benar - benar penduduk di RT {{ $rt }}/ RW {{ $rw }} Kelurahan Tipulu Kecamatan
+            Nama yang tersebut diatas adalah benar - benar penduduk di RT {{ $rt }} / RW {{ $rw }} Kelurahan Tipulu Kecamatan
             Kendari
             Barat {!!$keterangan_surat !!}
 
@@ -338,7 +342,7 @@
                 @endif --}}
 
         </p>
-
+    @endif
         @if ($judul == "Surat Keterangan Domisili Usaha dan Yayasan")
             <table style="margin-left:27px; margin-top:10px">
                 <tr>
@@ -364,6 +368,8 @@
                     <td>:</td>
                     <td>{{ $alamat_usaha }}</td>
                 </tr>
+            </table>
+            <br>
         @endif
 
 
@@ -381,7 +387,6 @@
                 Demikian Surat Keterangan ini dibuat dengan sebenar-benarnya untuk dipergunakan seperlunya.
             </p>
         @endif
-    @endif
 
     <table style="text-align: center;margin-top:30px">
         <tr>
