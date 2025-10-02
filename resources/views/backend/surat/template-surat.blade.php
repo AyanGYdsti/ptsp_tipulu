@@ -266,65 +266,6 @@
                 <td>:</td>
                 <td>{{ $alamat }}</td>
             </tr>
-            @elseif ($judul == 'Surat Izin Keramaian')
-                <table style="margin-left:27px">
-                    <tr>
-                        <td style="width: 27%">Nama</td>
-                        <td style="width: 2%">:</td>
-                        <td>{{ $nama_pengaju }}</td>
-                    </tr>
-                    <tr>
-                        <td>Tempat / Tanggal Lahir</td>
-                        <td>:</td>
-                        <td>{{ $tempat_lahir }}, {{ $tanggal_lahir }}</td>
-                    </tr>
-                    <tr>
-                        <td>Jenis Kelamin</td>
-                        <td>:</td>
-                        <td>{{ $jenis_kelamin }}</td>
-                    </tr>
-                    <tr>
-                        <td>Agama</td>
-                        <td>:</td>
-                        <td>{{ $agama }}</td>
-                    </tr>
-                    <tr>
-                        <td>Pekerjaan</td>
-                        <td>:</td>
-                        <td>{{ $pekerjaan }}</td>
-                    </tr>
-                    <tr>
-                        <td>Alamat</td>
-                        <td>:</td>
-                        <td>{{ $alamat }}</td>
-                    </tr>
-                </table>
-
-                <p style="text-align: justify; margin: 20px 27px;">
-                    Nama tersebut diatas adalah warga RT {{ $rt }}/ RW {{ $rw }}  
-                    Kelurahan {{ $kelurahan }} Kecamatan {{ $kecamatan }} Kota Kendari,  
-                    dan benar berencana mengadakan acara <b>{{ strtoupper($nama_acara) }}</b>  
-                    {{ $deskripsi_acara }} yang Insya Allah dilaksanakan pada:
-                </p>
-
-                <table style="margin-left:27px">
-                    <tr>
-                        <td style="width: 27%">Tanggal</td>
-                        <td style="width: 2%">:</td>
-                        <td>{{ $tanggal }}</td>
-                    </tr>
-                    <tr>
-                        <td>Tempat</td>
-                        <td>:</td>
-                        <td>{{ $tempat }}</td>
-                    </tr>
-                    <tr>
-                        <td>Pukul</td>
-                        <td>:</td>
-                        <td>{{ $pukul }}</td>
-                    </tr>
-                </table>
-            @endif
 
             @if ($judul == 'Surat Keterangan Memiliki Usaha (SKU)')
                 <tr>
@@ -336,7 +277,7 @@
                 <tr>
                     <td>Nama Kegiatan</td>
                     <td>:</td>
-                    <td>{{ $nama_kegiatan }}</td>
+                    <td>{{ $nama_acara }}</td>
                 </tr>
             @elseif ($judul == 'Pengurusan Kartu Keluarga (KK)')
                 <tr>
@@ -359,11 +300,33 @@
 
     @if ($judul == 'Surat Izin Keramaian')
         <p style="text-align: justify; text-indent: 27px;">
-            {{ $keterangan_surat }}
-        </p>
+                {!! $keterangan_surat !!}
+            </p>
+            <table style="margin-left:27px">
+                <tr>
+                    <td style="width: 27%">Tanggal</td>
+                    <td style="width: 2%">:</td>
+                    <td>{{ $tanggal_acara }}</td>
+                </tr>
+                    <tr>
+                    <td>Tempat</td>
+                    <td>:</td>
+                    <td>{{ $tempat_acara }}</td>
+                </tr>
+                <tr>
+                    <td>Pukul</td>
+                    <td>:</td>
+                    <td>{{ $waktu_acara }}</td>
+                </tr>
+
+                <tr>
+                    <td>Penyelenggara</td>
+                    <td>:</td>
+                    <td>{{ $penyelenggara_acara }}</td>
+            </table>
     @else
         <p style="text-align: justify; text-indent: 27px;">
-            Nama yang tersebut diatas adalah benar - benar penduduk di RT ??/ RW ?? Kelurahan Tipulu Kecamatan
+            Nama yang tersebut diatas adalah benar - benar penduduk di RT {{ $rt }}/ RW {{ $rw }} Kelurahan Tipulu Kecamatan
             Kendari
             Barat {!!$keterangan_surat !!}
 
@@ -376,7 +339,9 @@
 
         </p>
 
-        @if ($judul == "Surat Keterangan Domisili Usaha dan Yayasan")
+        @if($judul == 'Surat Izin Keramaian')
+
+        @elseif ($judul == "Surat Keterangan Domisili Usaha dan Yayasan")
             <table style="margin-left:27px; margin-top:10px">
                 <tr>
                     <td style="width: 27%">Nama Usaha / Yayasan</td>
@@ -403,7 +368,7 @@
                 </tr>
         @endif
 
-        
+
         @if ($judul == 'Surat Keterangan Tempat Tinggal Sementara')
             <p style="text-align: justify; text-indent: 27px; padding : 20px">
                 Demikian Surat Keterangan ini dibuat untuk dapat dipergunakan sebagaimana mestinya dan berlaku selama 3

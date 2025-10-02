@@ -15,8 +15,8 @@ return new class extends Migration
             $table->string('nik')->primary();
             $table->string('nama');
             $table->string('tempat_lahir');
-            $table->string('RT');
-            $table->string('RW');
+            $table->integer('RT');
+            $table->integer('RW');
             $table->date('tgl_lahir');
             $table->text('alamat');
             $table->string('status');

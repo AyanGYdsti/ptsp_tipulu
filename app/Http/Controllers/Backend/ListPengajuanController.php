@@ -96,16 +96,28 @@ class ListPengajuanController extends Controller
                 'nik' => optional($pengajuan->masyarakat)->nik,
                 'status' => $pengajuan->masyarakat->status,
                 'keterangan_surat' => str_replace(
-                    ['{{ $tahun_berdiri }}', '{{ $keperluan }}', '{{ $alamat_sementara }}', '{{ $rt }}', '{{ $rw }}'],
+                    [
+                        '{{ $tahun_berdiri }}',
+                        '{{ $keperluan }}',
+                        '{{ $alamat_sementara }}',
+                        '{{ $rt }}',
+                        '{{ $rw }}',
+                        '{{ $deskripsi_acara }}',
+                        '{{ $nama_acara }}',
+                    ],
                     [
                         optional($pengajuan->usaha)->tahun_berdiri ?? '....',
                         '<b>' . ($pengajuan->keperluan ?? '....') . '</b>',
                         optional($pengajuan->tempat_tinggal_sementara)->alamat_sementara ?? '....',
-                        optional($pengajuan->masyarakat)->rt ?? '..',
-                        optional($pengajuan->masyarakat)->rw ?? '..',
+                        str_pad($pengajuan->masyarakat->RT ?? 0, 3, '0', STR_PAD_LEFT), // ✅ RT selalu 3 digit
+                        str_pad($pengajuan->masyarakat->RW ?? 0, 3, '0', STR_PAD_LEFT),
+                        '<b>' . (optional($pengajuan->keramaian)->deskripsi_acara ?? '....') . '</b>',
+                        '<b>' . (optional($pengajuan->keramaian)->nama_acara ?? '....') . '</b>',
                     ],
-                    optional($pengajuan->pelayanan)->keterangan_surat ?? ''
+                    $pengajuan->pelayanan->keterangan_surat
                 ),
+                'rt' => str_pad($pengajuan->masyarakat->RT ?? 0, 3, '0', STR_PAD_LEFT), // ✅ RT selalu 3 digit
+                'rw' => str_pad($pengajuan->masyarakat->RW ?? 0, 3, '0', STR_PAD_LEFT),
                 'jabatan' => $aparatur->jabatan,
                 'aparatur' => $aparatur->nama,
                 'aparatur_nip' => $aparatur->nip,
@@ -133,6 +145,11 @@ class ListPengajuanController extends Controller
                 'penanggung_jawab' => optional($pengajuan->domisiliUsahaYayasan)->penanggung_jawab,
                 'tahun_berdiri' => optional($pengajuan->usaha)->tahun_berdiri,
                 'nama_usaha_pengaju' => optional($pengajuan->usaha)->nama_usaha,
+                'nama_acara' => optional($pengajuan->keramaian)->nama_acara,
+                'waktu_acara' => optional($pengajuan->keramaian)->pukul,
+                'tempat_acara' => optional($pengajuan->keramaian)->tempat,
+                'tanggal_acara' => optional($pengajuan->keramaian)->tanggal ? Carbon::parse($pengajuan->keramaian->tanggal)->isoFormat('D MMMM Y') : null,
+                'penyelenggara_acara' => optional($pengajuan->keramaian)->penyelenggara,
             ];
 
             // Generate PDF dengan satu panggilan

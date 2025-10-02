@@ -43,7 +43,10 @@ class MasyarakatSeeder extends Seeder
                 'status' => $faker->randomElement(['Kawin', 'Belum Kawin']),
                 'pekerjaan' => $faker->jobTitle(),
                 'agama' => $faker->randomElement(['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha']),
-                'jk' => $faker->randomElement(['Laki-laki', 'Perempuan']),                'created_at' => now(),
+                'jk' => $faker->randomElement(['Laki-laki', 'Perempuan']),
+                'created_at' => now(),
+                'RT' => $faker->numberBetween(1, 10), // Misal RT antara 1-10
+                'RW' => $faker->numberBetween(1, 5),  // Misal RW antara 1-5
                 'updated_at' => now(),
             ]);
         }
