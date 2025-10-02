@@ -266,7 +266,7 @@
                 <td>:</td>
                 <td>{{ $alamat }}</td>
             </tr>
-            @elseif ($judul == 'Surat Izin Keramaian')
+            @if ($judul == 'Surat Izin Keramaian')
                 <table style="margin-left:27px">
                     <tr>
                         <td style="width: 27%">Nama</td>
