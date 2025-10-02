@@ -553,7 +553,8 @@
                                     <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                                 @enderror
                             </div>
-                        @elseif ($pelayanan->nama == 'Surat Keterangan Tidak Mampu (SKTM)' || $pelayanan->nama == 'Surat Keterangan Belum Bekerja')
+                        @elseif ($pelayanan->nama == 'Surat Keterangan Tidak Mampu (SKTM)' || $pelayanan->nama == 'Surat Keterangan Belum Bekerja' || $pelayanan->nama == 'Surat Keterangan Belum Nikah')
+                            {{-- Keperluan --}}
                             <div>
                                 <label for="keperluan" class="block text-sm font-medium text-gray-600">Keperluan</label>
                                 <input type="text" name="keperluan" id="keperluan" value="{{ old('keperluan') }}"

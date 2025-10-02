@@ -47,8 +47,8 @@
             {{-- Kolom tengah: teks --}}
             <td style="width: 50%; text-align: center; vertical-align: middle;">
                 <p style="font-size: 20px; margin: 2px 0; font-weight: bold;">PEMERINTAH KOTA KENDARI</p>
-                <p style="font-size: 16px; margin: 2px 0;">KECAMATAN KENDARI BARAT</p>
-                <p style="font-size: 16px; margin: 2px 0;">KELURAHAN TIPULU</p>
+                <p style="font-size: 16px; margin: 2px 0;"><b>KECAMATAN KENDARI BARAT</b></p>
+                <p style="font-size: 16px; margin: 2px 0;"><b>KELURAHAN TIPULU</b></p>
                 <p style="margin: 2px 0;">JL. SERIGALA NO.2 TLP.(0401) 331891 KODE POS 93122</p>
             </td>
 
@@ -58,7 +58,12 @@
     </table>
 
     <div style="text-align:center;margin:20px 0">
-        <p><span style="border-bottom:2px solid black">{{ $judul }}</span></p>
+        @if($judul == "Surat Keterangan Kelakuan Baik (Pengantar SKCK)")
+
+            <p><span><b style="border-bottom:2px solid black">Surat Pengantar</b></span></p>
+        @else
+            <p><span><b style="border-bottom:2px solid black">{{ $judul }}</b></span></p>
+        @endif
         <p>Nomor : <span style="padding-left:25px">/</span>
             <span style="padding-left:25px">/</span>
             <span style="padding-left:25px">/ {{ $tahun }}</span>
@@ -178,28 +183,36 @@
                 <td>:</td>
                 <td>{{ $alamat }}</td>
             </tr>
+        </table>
+
+
+        <p style="text-align: justify; text-indent: 27px; margin-top:13px">
+            Nama yang tersebut diatas adalah benar - benar penduduk di RT {{ $rt }} / RW {{ $rw }} Kelurahan Tipulu Kecamatan
+            Kendari
+            Barat {!!$keterangan_surat !!}
+        </p>
+
+
+
+        <table style="margin-left:27px; margin-top:13px">
+
             <tr>
-                <td>Pindah Ke</td>
-                <td>:</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td style="padding-left: 15px;">Desa/Kelurahan</td>
-                <td>:</td>
+                <td style="width: 27%">Desa/Kelurahan</td>
+                <td style="width: 2%">:</td>
                 <td>{{ $desa_kelurahan }}</td>
             </tr>
             <tr>
-                <td style="padding-left: 15px;">Kecamatan</td>
+                <td style=>Kecamatan</td>
                 <td>:</td>
                 <td>{{ $kecamatan }}</td>
             </tr>
             <tr>
-                <td style="padding-left: 15px;">Kab/Kota</td>
+                <td >Kab/Kota</td>
                 <td>:</td>
                 <td>{{ $kab_kota }}</td>
             </tr>
             <tr>
-                <td style="padding-left: 15px;">Provinsi</td>
+                <td>Provinsi</td>
                 <td>:</td>
                 <td>{{ $provinsi }}</td>
             </tr>
@@ -340,6 +353,8 @@
         <p style="text-align: justify; text-indent: 27px;">
              {!!$keterangan_surat !!}
         </p>
+    @elseif($judul == "Surat Keterangan Pindah Penduduk")
+
     @else
         <p style="text-align: justify; text-indent: 27px;">
             Nama yang tersebut diatas adalah benar - benar penduduk di RT {{ $rt }} / RW {{ $rw }} Kelurahan Tipulu Kecamatan
@@ -386,7 +401,7 @@
 
 
         @if ($judul == 'Surat Keterangan Tempat Tinggal Sementara')
-            <p style="text-align: justify; text-indent: 27px; padding : 20px">
+            <p style="text-align: justify; text-indent: 27px;margin-top: 10px;">
                 Demikian Surat Keterangan ini dibuat untuk dapat dipergunakan sebagaimana mestinya dan berlaku selama 3
                 (tiga) bulan sejak tanggal dikeluarkan.
             </p>
@@ -418,14 +433,14 @@
                 <br>
                 <br>
                 <br>
-                <p>{{ $aparatur }}</p>
+                <p style="border-bottom: 1px solid black; display: inline-block; padding-bottom: 1px;">
+                   {{ $aparatur }}</p>
             </td>
         </tr>
         <tr>
             <td></td>
             <td>
-                <p style="border-bottom: 1px solid black; display: inline-block; padding-bottom: 1px;">
-                    {{ $aparatur_nip }}
+                <p>{{ $aparatur_nip }}
                 </p>
             </td>
         </tr>
