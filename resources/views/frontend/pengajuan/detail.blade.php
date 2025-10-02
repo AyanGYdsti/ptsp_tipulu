@@ -131,7 +131,7 @@
                             <label for="RT" class="block text-sm font-medium text-gray-600">RT</label>
                             <input type="number" name="RT" id="RT" value="{{ old('RT') }}"
                                 class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('RT') border-red-500 @enderror"
-                                placeholder="Contoh: 002" required>
+                                placeholder="Masukkan RT Berapa" required>
                             @error('RT')
                                 <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                             @enderror
@@ -142,7 +142,7 @@
                             <label for="RW" class="block text-sm font-medium text-gray-600">RW</label>
                             <input type="number" name="RW" id="RW" value="{{ old('RW') }}"
                                 class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('RW') border-red-500 @enderror"
-                                placeholder="Contoh: 001" required>
+                                placeholder="Masukkan RW Berapa" required>
                             @error('RW')
                                 <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                             @enderror
