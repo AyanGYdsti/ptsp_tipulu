@@ -33,6 +33,7 @@
 
                 <form action="{{ route('pengajuan.cek', $id) }}" method="POST" class="space-y-5">
                     @csrf
+
                     <div>
                         <label for="nik" class="block text-sm font-medium text-gray-600">
                             Nomor Induk Kependudukan (NIK)

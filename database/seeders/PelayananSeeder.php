@@ -23,7 +23,7 @@ class PelayananSeeder extends Seeder
                 'nama' => 'Surat Keterangan Tempat Tinggal Sementara',
                 'icon' => 'fa-solid fa-house-user',
                 'deskripsi' => 'Surat keterangan bagi penduduk yang berdomisili sementara di wilayah kelurahan.',
-                'keterangan_surat' => 'Nama yang tersebut diatas benar bertempat tinggal sementara pada alamat {{ $alamat_sementara }}  RT {{ $rt }} RW {{ $rw }} Kelurahan Tipulu Kecamatan Kendari Barat.',
+                'keterangan_surat' => 'Nama yang tersebut diatas benar bertempat tinggal sementara pada alamat {{ $alamat_sementara }}  RT {{ $rt }} / RW {{ $rw }} Kelurahan Tipulu Kecamatan Kendari Barat.',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],

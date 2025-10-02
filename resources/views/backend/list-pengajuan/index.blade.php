@@ -35,20 +35,35 @@
                         @forelse ($pengajuan as $data)
                             <tr class="hover:bg-blue-50 transition">
                                 <td class="px-4 py-3 text-center font-semibold text-blue-600">{{ $loop->iteration }}</td>
-                                <td class="px-4 py-3">{{ $data->masyarakat->nama }}</td>
+                                <td class="px-4 py-3">{{ optional($data->masyarakat)->nama ?? optional($data->tempatTinggalSementara)->nama }}</td>
                                 <td class="px-4 py-3">{{ $data->no_hp }}</td>
                                 <td class="px-4 py-3">{{ $data->pelayanan->nama }}</td>
                                 <td class="px-4 py-3 text-center flex justify-center gap-3">
                                     @if (!$data->verifikasiByAparatur(4)->first())
-                                        <button data-id="{{ $data->id }}" data-nama="{{ $data->masyarakat->nama }}"
+                                        <button data-id="{{ $data->id }}" data-nama="{{ optional($data->masyarakat)->nama ?? optional($data->tempatTinggalSementara)->nama }}"
                                             onclick="openVerifikasiModal(this)"
                                             class="text-blue-500 hover:text-blue-600 transition transform hover:scale-110"
                                             title="Verifikasi">
                                             <i class="fa-solid fa-hand-pointer text-lg"></i>
                                         </button>
                                     @else
-                                        <a href="{{ 'https://wa.me/' . preg_replace('/^0/', '62', preg_replace('/[^0-9]/', '', $data->no_hp)) . '?text=' . urlencode('Assalamualikum Bapak/Ibu ' . $data->masyarakat->nama . ',' . "\n\n" .'Dengan hormat, kami informasikan bahwa pengajuan layanan '. $data->pelayanan->nama . ' Anda telah diproses dan sudah bisa diambil.'. "\n\n".'Silahkan datang pada jam kerja untuk mengambil dokumen.' . "\n" . 'Terima kasih atas perhatiannya.'."\n\n" . 'Hormat Kami,'. "\n". 'Staf Pelayanan Kantor Lurah') }}"
-                                            target="_blank"
+                                        <a href="{{
+                                            'https://wa.me/'
+                                            . preg_replace('/^0/', '62', preg_replace('/[^0-9]/', '', $data->no_hp))
+                                            . '?text='
+                                            . urlencode(
+                                                'Assalamualaikum Bapak/Ibu '
+                                                . ($data->masyarakat?->nama ?: $data->tempatTinggalSementara?->nama)
+                                                . ',' . "\n\n" .
+                                                'Dengan hormat, kami informasikan bahwa pengajuan layanan '
+                                                . $data->pelayanan->nama
+                                                . ' Anda telah diproses dan sudah bisa diambil.' . "\n\n" .
+                                                'Silahkan datang pada jam kerja untuk mengambil dokumen.' . "\n" .
+                                                'Terima kasih atas perhatiannya.' . "\n\n" .
+                                                'Hormat Kami,' . "\n" .
+                                                'Staf Pelayanan Kantor Lurah'
+                                            )
+                                        }}" target="_blank"
                                             class="text-green-500 hover:text-green-600 transition transform hover:scale-110"
                                             title="Kirim Notifikasi WA">
                                             <i class="fa-brands fa-whatsapp text-lg"></i>
@@ -243,7 +258,7 @@
                 alert('Harap lengkapi Tanggal Cetak dan Penanda Tangan.');
                 return;
             }
-            
+
             const baseUrl = "{{ url('/') }}";
             const url = `${baseUrl}/list-pengajuan/${id}/cetak-${action}`;
 
@@ -268,7 +283,7 @@
             } else {
                 // --- JALUR UNTUK BROWSER WEB BIASA ---
                 console.log('Mode Web: Membuat form dinamis...');
-                
+
                 // Buat form sementara di dalam memori
                 const form = document.createElement('form');
                 form.method = 'POST';

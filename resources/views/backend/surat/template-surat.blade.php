@@ -256,16 +256,28 @@
                 <td>:</td>
                 <td>{{ $agama }}</td>
             </tr>
+
+            <tr>
+                <td>Status Perkawinan</td>
+                <td>:</td>
+                <td>{{ $status }}</td>
+            </tr>
             <tr>
                 <td>Pekerjaan</td>
                 <td>:</td>
                 <td>{{ $pekerjaan }}</td>
             </tr>
+
+
+
+            @if($judul != 'Surat Keterangan Tempat Tinggal Sementara')
+
             <tr>
                 <td>Alamat</td>
                 <td>:</td>
                 <td>{{ $alamat }}</td>
             </tr>
+            @endif
 
             @if ($judul == 'Surat Keterangan Memiliki Usaha (SKU)')
                 <tr>

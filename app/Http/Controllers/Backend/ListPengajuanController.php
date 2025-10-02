@@ -86,15 +86,15 @@ class ListPengajuanController extends Controller
                 'judul' => $pengajuan->pelayanan->nama,
                 'tahun' => Carbon::parse($request->tgl_cetak)->format('Y'),
                 'tanggal' => Carbon::parse($request->tgl_cetak)->isoFormat('D MMMM Y'),
-                'nama_pengaju' => optional($pengajuan->masyarakat)->nama,
-                'tempat_lahir' => optional($pengajuan->masyarakat)->tempat_lahir,
-                'tanggal_lahir' => optional($pengajuan->masyarakat)->tgl_lahir ? Carbon::parse($pengajuan->masyarakat->tgl_lahir)->isoFormat('D MMMM Y') : null,
-                'jenis_kelamin' => optional($pengajuan->masyarakat)->jk,
-                'agama' => optional($pengajuan->masyarakat)->agama,
-                'pekerjaan' => optional($pengajuan->masyarakat)->pekerjaan,
-                'alamat' => optional($pengajuan->masyarakat)->alamat,
-                'nik' => optional($pengajuan->masyarakat)->nik,
-                'status' => $pengajuan->masyarakat->status,
+                'nama_pengaju' => optional($pengajuan->masyarakat)->nama ?? optional($pengajuan->tempatTinggalSementara)->nama,
+                'tempat_lahir' => optional($pengajuan->masyarakat)->tempat_lahir ?? optional($pengajuan->tempatTinggalSementara)->tempat_lahir ,
+                'tanggal_lahir' => optional($pengajuan->masyarakat)->tgl_lahir ? Carbon::parse($pengajuan->masyarakat->tgl_lahir)->isoFormat('D MMMM Y') : null ?? (optional($pengajuan->tempatTinggalSementara)->tgl_lahir ? Carbon::parse($pengajuan->tempatTinggalSementara->tgl_lahir)->isoFormat('D MMMM Y') : null),
+                'jenis_kelamin' => optional($pengajuan->masyarakat)->jk ?? optional($pengajuan->tempatTinggalSementara)->jenis_kelamin,
+                'agama' => optional($pengajuan->masyarakat)->agama ?? optional($pengajuan->tempatTinggalSementara)->agama,
+                'pekerjaan' => optional($pengajuan->masyarakat)->pekerjaan ?? optional($pengajuan->tempatTinggalSementara)->pekerjaan,
+                'alamat' => optional($pengajuan->masyarakat)->alamat ?? optional($pengajuan->tempatTinggalSementara)->alamat,
+                'nik' => optional($pengajuan->masyarakat)->nik ?? optional($pengajuan->tempatTinggalSementara)->nik,
+                'status' => $pengajuan->masyarakat->status ?? $pengajuan->tempatTinggalSementara->status ?? '....',
                 'keterangan_surat' => str_replace(
                     [
                         '{{ $tahun_berdiri }}',
@@ -108,15 +108,15 @@ class ListPengajuanController extends Controller
                     [
                         optional($pengajuan->usaha)->tahun_berdiri ?? '....',
                         '<b>' . ($pengajuan->keperluan ?? '....') . '</b>',
-                        optional($pengajuan->tempat_tinggal_sementara)->alamat_sementara ?? '....',
-                        str_pad($pengajuan->masyarakat->RT ?? 0, 3, '0', STR_PAD_LEFT), // ✅ RT selalu 3 digit
-                        str_pad($pengajuan->masyarakat->RW ?? 0, 3, '0', STR_PAD_LEFT),
+                        optional($pengajuan->tempatTinggalSementara)->alamat_sementara ?? '....',
+                        str_pad($pengajuan->tempatTinggalSementara->RT ?? 0, 3, '0', STR_PAD_LEFT), // ✅ RT selalu 3 digit
+                        str_pad($pengajuan->tempatTinggalSementara->RW ?? 0, 3, '0', STR_PAD_LEFT),
                         '<b>' . (optional($pengajuan->keramaian)->deskripsi_acara ?? '....') . '</b>',
                         '<b>' . (optional($pengajuan->keramaian)->nama_acara ?? '....') . '</b>',
                     ],
                     $pengajuan->pelayanan->keterangan_surat
                 ),
-                'rt' => str_pad($pengajuan->masyarakat->RT ?? 0, 3, '0', STR_PAD_LEFT), // ✅ RT selalu 3 digit
+                'rt' => str_pad($pengajuan->masyarakat->RT ?? 0, 3, '0', STR_PAD_LEFT) , // ✅ RT selalu 3 digit
                 'rw' => str_pad($pengajuan->masyarakat->RW ?? 0, 3, '0', STR_PAD_LEFT),
                 'jabatan' => $aparatur->jabatan,
                 'aparatur' => $aparatur->nama,

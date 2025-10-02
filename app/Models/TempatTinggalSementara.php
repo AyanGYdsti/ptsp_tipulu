@@ -23,6 +23,18 @@ class TempatTinggalSementara extends Model
      */
     protected $table = 'tempat_tinggal_sementaras'; // Sesuaikan jika nama tabel Anda berbeda
 
+    protected $fileable = [
+        'pengajuan_id',
+        'alamat_sementara',
+        'nik',
+        'nama',
+        'jenis_kelamin',
+        'RT',
+        'RW',
+        'tgl_lahir',
+        'tempat_lahir',
+        'agama',
+    ];
     /**
      * Mendefinisikan relasi inverse one-to-one ke Pengajuan.
      */
