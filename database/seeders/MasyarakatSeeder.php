@@ -19,10 +19,10 @@ class MasyarakatSeeder extends Seeder
 
         // 1. Matikan aturan foreign key untuk sementara
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        
+
         // 2. Kosongkan tabel masyarakat
         Masyarakat::truncate();
-        
+
         // 3. Aktifkan kembali aturan foreign key (SANGAT PENTING)
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
@@ -35,7 +35,7 @@ class MasyarakatSeeder extends Seeder
         // Buat 20 data warga dummy
         for ($i = 0; $i < 20; $i++) {
             Masyarakat::create([
-                'nik' => $faker->unique()->nik(), 
+                'nik' => $faker->unique()->nik(),
                 'nama' => $faker->name(),
                 'tempat_lahir' => $faker->city(),
                 'tgl_lahir' => $faker->date($format = 'Y-m-d', $max = '2005-01-01'),
@@ -44,6 +44,8 @@ class MasyarakatSeeder extends Seeder
                 'pekerjaan' => $faker->jobTitle(),
                 'agama' => $faker->randomElement(['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha']),
                 'jk' => $faker->randomElement(['Laki-laki', 'Perempuan']),                'created_at' => now(),
+                'rt' => $faker->numberBetween(1, 10),
+                'rw' => $faker->numberBetween(1, 10),
                 'updated_at' => now(),
             ]);
         }
