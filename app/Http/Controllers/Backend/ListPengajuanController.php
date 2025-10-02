@@ -12,41 +12,50 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Kematian;
-use App\Models\domisiliUsahaYayasan;
-use App\Models\Usaha;
-use App\Models\PindahPenduduk;
-use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Log;
 
 class ListPengajuanController extends Controller
 {
     public function index()
     {
         $title = "List Pengajuan";
-
-        $pengajuan = Pengajuan::with(['pelayanan', 'dokumenPersyaratan.persyaratan'])->orderByDesc('id')->get();
-
+        $pengajuan = Pengajuan::with(['pelayanan', 'masyarakat', 'dokumenPersyaratan.persyaratan'])->orderByDesc('id')->get();
         $aparaturs = Aparatur::get(['id', 'nama']);
-
         return view('backend.list-pengajuan.index', compact('title', 'pengajuan', 'aparaturs'));
     }
 
-    public function verifikasi($id)
+    public function verifikasi(Request $request, $id)
     {
         try {
+            $status = $request->input('status', 'Ditolak');
+
             Verifikasi::create([
                 'pengajuan_id' => $id,
-                'status' => 'Diverifikasi oleh ' . Auth::user()->username,
+                'status' => $status . ' oleh ' . Auth::user()->username,
                 'aparatur_id' => 4,
             ]);
 
-            return back()->with('success', 'Berhasil verifikasi data');
+            return back()->with('success', 'Berhasil ' . strtolower($status) . ' data');
         } catch (\Throwable $th) {
+            Log::error('Gagal verifikasi data: ' . $th->getMessage());
             return back()->with('error', 'Gagal verifikasi data');
         }
     }
 
-    public function cetak(Request $request, $id)
+    // ✅ Method BARU untuk STREAM (tampilkan PDF di viewer)
+    public function handleCetakStream(Request $request, $id)
+    {
+        return $this->generatePdf($request, $id, 'stream');
+    }
+
+    // ✅ Method BARU untuk DOWNLOAD (download PDF)
+    public function handleCetakDownload(Request $request, $id)
+    {
+        return $this->generatePdf($request, $id, 'download');
+    }
+
+    // ✅ Method PRIVATE untuk generate PDF (digunakan oleh kedua method di atas)
+    private function generatePdf(Request $request, $id, $action)
     {
         $pengajuan = Pengajuan::with(['pelayanan', 'dokumenPersyaratan.persyaratan'])->find($id);
         $pengajuan->load('kematian'); // Memuat relasi kematian
@@ -85,7 +94,7 @@ class ListPengajuanController extends Controller
                 $pengajuan->pelayanan->keterangan_surat
             ),
             'jabatan' => $aparatur_jabatan,
-            'status' => $pengajuan->masyarakat->status,
+            'status' => $pengajuan->status,
             'aparatur' => $aparatur,
             'aparatur_nip' => $aparatur_nip,
             'nama_md'         => optional($pengajuan->kematian)->nama,
@@ -112,25 +121,29 @@ class ListPengajuanController extends Controller
             'tahun_berdiri' => optional($pengajuan->usaha)->tahun_berdiri,
             'nama_usaha_pengaju' => optional($pengajuan->usaha)->nama_usaha,
 
+            // Generate PDF
+            $pdf = PDF::loadView('backend.surat.template-surat', $dataForView);
+            
+            Log::info("PDF generated successfully", ['action' => $action]);
 
-        ]);
-
-
-        // atau tampilkan di browser
-        if ($request->aksi === 'save') {
-            $fileName = 'surat_' . $id . '_' . time() . '.pdf';
-            $filePath = storage_path('app/surat/' . $fileName);
-
-            if (!file_exists(dirname($filePath))) {
-                mkdir(dirname($filePath), 0777, true);
+            // Return berdasarkan action
+            if ($action === 'download') {
+                return $pdf->download('surat_' . $pengajuan->id . '.pdf');
+            } else {
+                return $pdf->stream('surat_' . $pengajuan->id . '.pdf');
             }
 
-            $pdf->save($filePath);
-            return response()->download($filePath);
+        } catch (\Exception $e) {
+            Log::error('Error generating PDF', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal generate PDF: ' . $e->getMessage()
+            ], 500);
         }
-
-        // Default tampilkan di browser
-        return $pdf->stream('surat.pdf');
     }
 
     public function stream($persyaratan_id, $pengajuan_id)
@@ -140,14 +153,13 @@ class ListPengajuanController extends Controller
             ->value('dokumen');
 
         $persyaratan = Persyaratan::find($persyaratan_id);
-
         $fullPath = public_path($path);
 
         if (!file_exists($fullPath)) {
             abort(404, 'File tidak ditemukan.');
         }
 
-        $filename = $persyaratan->nama . '.pdf'; // ✅ kasih nama tab
+        $filename = $persyaratan->nama . '.pdf';
 
         return response()->file($fullPath, [
             'Content-Type' => 'application/pdf',

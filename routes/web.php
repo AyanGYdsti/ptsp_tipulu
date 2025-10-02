@@ -47,7 +47,7 @@ Route::get('/pengajuan-surat', [PermohonanController::class, 'index'])->name('pe
 
 
 Route::get('/list-pengajuan', [ListPengajuanController::class, 'index'])->name('list-pengajuan');
-Route::post('/list-pengajuan/cetak/{id}', [ListPengajuanController::class, 'cetak'])->name('list-pengajuan.cetak');
+// Route::post('/list-pengajuan/cetak/{id}', [ListPengajuanController::class, 'cetak'])->name('list-pengajuan.cetak');
 Route::put('/list-pengajuan/verifikasi/{id}', [ListPengajuanController::class, 'verifikasi'])->name('list-pengajuan.verifikasi');
 Route::get('/list-pengajuan/stream/{persyaratan_id}/{pengajuan_id}', [ListPengajuanController::class, 'stream'])->name('list-pengajuan.stream');
 
@@ -101,3 +101,18 @@ Route::get('/pengajuan/detail/{id}/{nik}', [PengajuanController::class, 'detail'
 // Route::post('/api/save-fcm-token', [FcmController::class, 'saveToken'])->name('api.save_token');
 
 Route::post('/fcm/save-token', [FcmController::class, 'saveToken']);
+
+// // Route untuk STREAM PDF (lihat di browser/mobile)
+// Route::get('/list-pengajuan/stream/{persyaratan_id}/{pengajuan_id}', [ListPengajuanController::class, 'stream'])
+//     ->name('list-pengajuan.stream');
+
+// // Route untuk CETAK/DOWNLOAD PDF
+// Route::post('/list-pengajuan/cetak/{id}', [ListPengajuanController::class, 'handleCetak'])
+//     ->name('list-pengajuan.cetak');
+
+// // Route untuk DOWNLOAD (khusus mobile)
+// Route::post('/list-pengajuan/cetak/download/{id}', [ListPengajuanController::class, 'handleCetak'])
+//     ->name('list-pengajuan.cetak.download');
+
+Route::post('/list-pengajuan/{id}/cetak-stream', [ListPengajuanController::class, 'handleCetakStream'])->name('list-pengajuan.cetak.stream');
+Route::post('/list-pengajuan/{id}/cetak-download', [ListPengajuanController::class, 'handleCetakDownload'])->name('list-pengajuan.cetak.download');
