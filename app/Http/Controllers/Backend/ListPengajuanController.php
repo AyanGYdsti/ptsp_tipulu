@@ -85,7 +85,7 @@ class ListPengajuanController extends Controller
                 $pengajuan->pelayanan->keterangan_surat
             ),
             'jabatan' => $aparatur_jabatan,
-            'status' => $pengajuan->status,
+            'status' => $pengajuan->masyarakat->status,
             'aparatur' => $aparatur,
             'aparatur_nip' => $aparatur_nip,
             'nama_md'         => optional($pengajuan->kematian)->nama,

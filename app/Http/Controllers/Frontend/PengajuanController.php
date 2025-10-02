@@ -70,7 +70,7 @@ class PengajuanController extends Controller
                 'nik' => $data['nik'],
                 'pelayanan_id' => $data['pelayanan_id'],
                 'no_hp' => $data['no_hp'],
-                'keperluan' => $data['keperluan'],
+                'keperluan' => $data['keperluan'] ?? null,
             ]);
 
             // Upload dokumen persyaratan
