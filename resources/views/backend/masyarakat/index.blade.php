@@ -2,16 +2,17 @@
 
 @section('content')
     <div class="mx-auto">
-        <!-- Card dengan fitur scroll -->
-        <div class="bg-gradient-to-br from-blue-50 to-blue-100 shadow-xl rounded-2xl p-6 border border-blue-200 max-h-[80vh] overflow-y-auto">
-            <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-3 sticky top-0 bg-gradient-to-br from-blue-50 to-blue-100 py-2 z-10">
+       <!-- Card -->
+       <div class="bg-gradient-to-br from-blue-50 to-blue-100 shadow-xl rounded-2xl p-6 border border-blue-200">
+            <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-3">
                 <h2 class="lg:text-2xl md:text-lg sm:text-base text-sm font-extrabold text-blue-800 tracking-wide flex items-center gap-2">
                     <i class="fa fa-list-alt text-blue-600"></i> Daftar {{ $title }}
                 </h2>
 
                 <div class="flex items-center gap-2 w-full sm:w-auto">
                     <!-- Form Search -->
-                    <form method="GET" action="{{ url('/masyarakat') }}" class="flex items-center border rounded-lg overflow-hidden w-full sm:w-auto">
+                    <form method="GET" action="{{ url('/masyarakat') }}"
+                        class="flex items-center border rounded-lg overflow-hidden w-full sm:w-auto">
                         <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari nama / NIK / alamat..."
                             class="px-3 py-2 text-sm focus:outline-none w-full sm:w-48">
                         <button type="submit" class="bg-blue-600 text-white px-3 py-2">
@@ -25,7 +26,7 @@
                         <i class="fa fa-plus"></i> <span class="hidden sm:inline">Masyarakat</span>
                     </button>
                 </div>
-        </div>
+            </div>
 
 
             <!-- Tabel dengan scroll horizontal -->
