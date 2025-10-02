@@ -75,7 +75,7 @@ class ListPengajuanController extends Controller
 
             // Ambil semua data yang mungkin dibutuhkan dengan Eager Loading
             $pengajuan = Pengajuan::with([
-                'pelayanan', 'masyarakat', 'kematian', 'pindahPenduduk', 
+                'pelayanan', 'masyarakat', 'kematian', 'pindahPenduduk',
                 'domisiliUsahaYayasan', 'usaha', 'tempatTinggalSementara'
             ])->findOrFail($id);
 
@@ -94,6 +94,7 @@ class ListPengajuanController extends Controller
                 'pekerjaan' => optional($pengajuan->masyarakat)->pekerjaan,
                 'alamat' => optional($pengajuan->masyarakat)->alamat,
                 'nik' => optional($pengajuan->masyarakat)->nik,
+                'status' => $pengajuan->masyarakat->status,
                 'keterangan_surat' => str_replace(
                     ['{{ $tahun_berdiri }}', '{{ $keperluan }}', '{{ $alamat_sementara }}', '{{ $rt }}', '{{ $rw }}'],
                     [
@@ -120,7 +121,10 @@ class ListPengajuanController extends Controller
                 'kecamatan' => optional($pengajuan->pindahPenduduk)->kecamatan,
                 'kab_kota' => optional($pengajuan->pindahPenduduk)->kab_kota,
                 'provinsi' => optional($pengajuan->pindahPenduduk)->provinsi,
-                'tgl_pindah' => optional($pengajuan->pindahPenduduk)->tanggal_pindah ? Carbon::parse($pengajuan->pindahPenduduk)->tanggal_pindah->isoFormat('D MMMM Y') : null,
+                'tgl_pindah' => optional($pengajuan->pindahPenduduk)->tanggal_pindah
+                                ? Carbon::parse($pengajuan->pindahPenduduk->tanggal_pindah)->format('d-m-Y')
+                                : null,
+
                 'alasan_pindah' => optional($pengajuan->pindahPenduduk)->alasan_pindah,
                 'pengikut' => optional($pengajuan->pindahPenduduk)->pengikut,
                 'nama_usaha' => optional($pengajuan->domisiliUsahaYayasan)->nama_usaha,
@@ -133,7 +137,7 @@ class ListPengajuanController extends Controller
 
             // Generate PDF dengan satu panggilan
             $pdf = PDF::loadView('backend.surat.template-surat', $dataForView);
-            
+
             Log::info("PDF berhasil di-generate untuk action: {$action}");
 
             // Kembalikan respons berdasarkan action yang diminta
@@ -148,8 +152,8 @@ class ListPengajuanController extends Controller
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);
-            
-            return response('Terjadi kesalahan di server saat membuat dokumen.', 500);
+
+           return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
     }
 
