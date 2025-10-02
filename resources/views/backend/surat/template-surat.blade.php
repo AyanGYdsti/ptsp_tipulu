@@ -266,6 +266,65 @@
                 <td>:</td>
                 <td>{{ $alamat }}</td>
             </tr>
+            @elseif ($judul == 'Surat Izin Keramaian')
+                <table style="margin-left:27px">
+                    <tr>
+                        <td style="width: 27%">Nama</td>
+                        <td style="width: 2%">:</td>
+                        <td>{{ $nama_pengaju }}</td>
+                    </tr>
+                    <tr>
+                        <td>Tempat / Tanggal Lahir</td>
+                        <td>:</td>
+                        <td>{{ $tempat_lahir }}, {{ $tanggal_lahir }}</td>
+                    </tr>
+                    <tr>
+                        <td>Jenis Kelamin</td>
+                        <td>:</td>
+                        <td>{{ $jenis_kelamin }}</td>
+                    </tr>
+                    <tr>
+                        <td>Agama</td>
+                        <td>:</td>
+                        <td>{{ $agama }}</td>
+                    </tr>
+                    <tr>
+                        <td>Pekerjaan</td>
+                        <td>:</td>
+                        <td>{{ $pekerjaan }}</td>
+                    </tr>
+                    <tr>
+                        <td>Alamat</td>
+                        <td>:</td>
+                        <td>{{ $alamat }}</td>
+                    </tr>
+                </table>
+
+                <p style="text-align: justify; margin: 20px 27px;">
+                    Nama tersebut diatas adalah warga RT {{ $rt }}/ RW {{ $rw }}  
+                    Kelurahan {{ $kelurahan }} Kecamatan {{ $kecamatan }} Kota Kendari,  
+                    dan benar berencana mengadakan acara <b>{{ strtoupper($nama_acara) }}</b>  
+                    {{ $deskripsi_acara }} yang Insya Allah dilaksanakan pada:
+                </p>
+
+                <table style="margin-left:27px">
+                    <tr>
+                        <td style="width: 27%">Tanggal</td>
+                        <td style="width: 2%">:</td>
+                        <td>{{ $tanggal }}</td>
+                    </tr>
+                    <tr>
+                        <td>Tempat</td>
+                        <td>:</td>
+                        <td>{{ $tempat }}</td>
+                    </tr>
+                    <tr>
+                        <td>Pukul</td>
+                        <td>:</td>
+                        <td>{{ $pukul }}</td>
+                    </tr>
+                </table>
+            @endif
 
             @if ($judul == 'Surat Keterangan Memiliki Usaha (SKU)')
                 <tr>

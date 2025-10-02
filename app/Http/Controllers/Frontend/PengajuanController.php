@@ -12,6 +12,7 @@ use App\Services\FcmService; // ✅ TAMBAHKAN INI
 use Illuminate\Http\Request;
 use App\Models\Kematian;
 use App\Models\Usaha;
+use App\Models\Keramaian;
 use App\Models\domisiliUsahaYayasan;
 use App\Models\PindahPenduduk;
 use Illuminate\Support\Facades\Log;
@@ -174,6 +175,28 @@ class PengajuanController extends Controller
                     'tahun_berdiri' => $request->tahun_berdiri,
                 ]);
             }
+
+            elseif ($pelayanan && $pelayanan->nama === "Surat Izin Keramaian") {
+                $request->validate([
+                    'nama_acara'      => 'required|string',
+                    'penyelenggara'   => 'nullable|string',
+                    'deskripsi_acara' => 'nullable|string',
+                    'tanggal'         => 'required|date',
+                    'tempat'          => 'required|string',
+                    'pukul'           => 'nullable|string',
+                ]);
+
+                Keramaian::create([
+                    'pengajuan_id'   => $pengajuan->id,
+                    'nama_acara'     => $request->nama_acara,
+                    'penyelenggara'  => $request->penyelenggara,
+                    'deskripsi_acara'=> $request->deskripsi_acara,
+                    'tanggal'        => $request->tanggal,
+                    'tempat'         => $request->tempat,
+                    'pukul'          => $request->pukul,
+                ]);
+            }
+
 
 
             // ✅ KIRIM NOTIFIKASI KE ADMIN

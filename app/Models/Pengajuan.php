@@ -49,4 +49,10 @@ class Pengajuan extends Model
         return $this->hasOne(Usaha::class);
     }
 
+    public function keramaian()
+    {
+        return $this->hasOne(Keramaian::class);
+    }
+
+
 }

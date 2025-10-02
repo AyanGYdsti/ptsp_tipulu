@@ -86,6 +86,74 @@
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
+                    
+                @if ($pelayanan->nama == "Surat Izin Keramaian")
+                    {{-- Nama Acara --}}
+                    <div>
+                        <label for="nama_acara" class="block text-sm font-medium text-gray-600">Nama Acara</label>
+                        <input type="text" name="nama_acara" id="nama_acara" value="{{ old('nama_acara') }}"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('nama_acara') border-red-500 @enderror"
+                            placeholder="Masukkan Nama Acara" required>
+                        @error('nama_acara')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Penyelenggara --}}
+                    <div>
+                        <label for="penyelenggara" class="block text-sm font-medium text-gray-600">Penyelenggara</label>
+                        <input type="text" name="penyelenggara" id="penyelenggara" value="{{ old('penyelenggara') }}"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('penyelenggara') border-red-500 @enderror"
+                            placeholder="Masukkan Nama Penyelenggara">
+                        @error('penyelenggara')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Deskripsi Acara --}}
+                    <div>
+                        <label for="deskripsi_acara" class="block text-sm font-medium text-gray-600">Deskripsi Acara</label>
+                        <textarea name="deskripsi_acara" id="deskripsi_acara" rows="3"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('deskripsi_acara') border-red-500 @enderror"
+                            placeholder="Masukkan Deskripsi Acara">{{ old('deskripsi_acara') }}</textarea>
+                        @error('deskripsi_acara')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Tanggal --}}
+                    <div>
+                        <label for="tanggal" class="block text-sm font-medium text-gray-600">Tanggal Acara</label>
+                        <input type="date" name="tanggal" id="tanggal" value="{{ old('tanggal') }}"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('tanggal') border-red-500 @enderror" required>
+                        @error('tanggal')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Tempat --}}
+                    <div>
+                        <label for="tempat" class="block text-sm font-medium text-gray-600">Tempat Acara</label>
+                        <input type="text" name="tempat" id="tempat" value="{{ old('tempat') }}"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('tempat') border-red-500 @enderror"
+                            placeholder="Masukkan Tempat Acara" required>
+                        @error('tempat')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Pukul --}}
+                    <div>
+                        <label for="pukul" class="block text-sm font-medium text-gray-600">Pukul</label>
+                        <input type="text" name="pukul" id="pukul" value="{{ old('pukul') }}"
+                            class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('pukul') border-red-500 @enderror"
+                            placeholder="Contoh: 19.00 WITA - selesai">
+                        @error('pukul')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+                @endif
+
               @if ($pelayanan->nama == "Surat Keterangan Kematian")
                     {{-- Nama Meninggal --}}
                     <div>
