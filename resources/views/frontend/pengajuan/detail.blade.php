@@ -148,11 +148,16 @@
                             @enderror
                         </div>
 
+                        {{--status--}}
                         <div>
                             <label for="status" class="block text-sm font-medium text-gray-600">Status</label>
-                            <input type="text" name="status" id="status" value="{{ old('status') }}"
+                            <select name="status" id="status"
                                 class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('status') border-red-500 @enderror"
-                                placeholder="Masukkan Status" required>
+                                required>
+                                <option value="">-- Pilih Status --</option>
+                                <option value="Kawin" {{ old('status') == 'Kawin' ? 'selected' : '' }}>Kawin</option>
+                                <option value="Belum Kawin" {{ old('status') == 'Belum Kawin' ? 'selected' : '' }}>Belum Kawin</option>
+                            </select>
                             @error('status')
                                 <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                             @enderror
@@ -354,9 +359,18 @@
                             {{-- Hari --}}
                             <div>
                                 <label for="hari" class="block text-sm font-medium text-gray-600">Hari</label>
-                                <input type="text" name="hari" id="hari" value="{{ old('hari') }}"
+                                <select name="hari" id="hari"
                                     class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('hari') border-red-500 @enderror"
-                                    placeholder="Masukkan Hari Meninggal" required>
+                                    required>
+                                    <option value="">-- Pilih Hari --</option>
+                                    <option value="Senin" {{ old('hari') == 'Senin' ? 'selected' : '' }}>Senin</option>
+                                    <option value="Selasa" {{ old('hari') == 'Selasa' ? 'selected' : '' }}>Selasa</option>
+                                    <option value="Rabu" {{ old('hari') == 'Rabu' ? 'selected' : '' }}>Rabu</option>
+                                    <option value="Kamis" {{ old('hari') == 'Kamis' ? 'selected' : '' }}>Kamis</option>
+                                    <option value="Jumat" {{ old('hari') == 'Jumat' ? 'selected' : '' }}>Jumat</option>
+                                    <option value="Sabtu" {{ old('hari') == 'Sabtu' ? 'selected' : '' }}>Sabtu</option>
+                                    <option value="Minggu" {{ old('hari') == 'Minggu' ? 'selected' : '' }}>Minggu</option>
+                                </select>
                                 @error('hari')
                                     <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                                 @enderror
