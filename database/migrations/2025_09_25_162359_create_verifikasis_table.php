@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('pengajuan_id');
             $table->string('status');
+            $table->string('alasan')->nullable();
             $table->unsignedBigInteger('aparatur_id');
             $table->timestamps();
         });

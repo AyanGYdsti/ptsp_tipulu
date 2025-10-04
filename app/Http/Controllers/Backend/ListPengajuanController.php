@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class ListPengajuanController extends Controller
 {
@@ -28,10 +29,12 @@ class ListPengajuanController extends Controller
     {
         try {
             $status = $request->input('status', 'Ditolak');
+            $alasan = $request->input('alasan'); // Ambil alasan dari request
 
             Verifikasi::create([
                 'pengajuan_id' => $id,
                 'status' => $status . ' oleh ' . Auth::user()->username,
+                'alasan' => $alasan, // Simpan alasan
                 'aparatur_id' => 4, // Harap pastikan ID ini sesuai atau dinamis
             ]);
 
@@ -194,5 +197,55 @@ class ListPengajuanController extends Controller
             'Content-Disposition' => 'inline; filename="' . $filename . '"',
         ]);
     }
-}
 
+    /**
+     * Method untuk menghapus data pengajuan
+     *
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($id)
+    {
+        try {
+            Log::info("Memulai proses hapus pengajuan", ['id' => $id]);
+
+            // Cari data pengajuan dengan relasi dokumen
+            $pengajuan = Pengajuan::with('dokumenPersyaratan')->findOrFail($id);
+
+            // Hapus file dokumen persyaratan jika ada
+            if ($pengajuan->dokumenPersyaratan->count() > 0) {
+                foreach ($pengajuan->dokumenPersyaratan as $dokumen) {
+                    $filePath = public_path($dokumen->dokumen);
+
+                    // Hapus file fisik jika ada
+                    if (file_exists($filePath)) {
+                        unlink($filePath);
+                        Log::info("File dokumen dihapus", ['path' => $filePath]);
+                    }
+                }
+            }
+
+            // Hapus data verifikasi terkait
+            Verifikasi::where('pengajuan_id', $id)->delete();
+
+            // Hapus data dokumen persyaratan dari database
+            DokumenPersyaratan::where('pengajuan_id', $id)->delete();
+
+            // Hapus data pengajuan
+            $pengajuan->delete();
+
+            Log::info("Pengajuan berhasil dihapus", ['id' => $id]);
+
+            return redirect()->back()->with('success', 'Data pengajuan berhasil dihapus');
+
+        } catch (\Exception $e) {
+            Log::error('Gagal menghapus pengajuan', [
+                'id' => $id,
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return redirect()->back()->with('error', 'Gagal menghapus data: ' . $e->getMessage());
+        }
+    }
+}
