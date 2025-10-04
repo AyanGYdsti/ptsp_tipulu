@@ -116,8 +116,8 @@
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     @foreach ($aparatur as $item)
-                        <div
-                            class="text-center bg-white p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 fade-in-up">
+                        <div 
+                            class="text-center bg-gray-100 p-8 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-2 transition-all duration-300 fade-in-up">
                             @if ($item->foto)
                                 <img src="{{ asset($item->foto) }}"
                                     class="w-32 h-32 rounded-full mx-auto mb-4 object-cover" alt="[Foto Aparatur]">
