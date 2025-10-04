@@ -9,7 +9,7 @@
                     <i class="fa fa-list-alt text-blue-600"></i> Daftar {{ $title }}
                 </h2>
 
-                <div class="flex items-center gap-2 w-full sm:w-auto">
+                <div class="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
                     <!-- Form Search -->
                     <form method="GET" action="{{ url('/persyaratan') }}" class="flex items-center border rounded-lg overflow-hidden w-full sm:w-auto">
                         <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari nama / keterangan..."
@@ -22,7 +22,7 @@
                     <!-- Tombol Tambah -->
                     <button id="openModalBtn"
                         class="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-3 py-2 rounded-lg flex items-center gap-2 hover:from-blue-700 hover:to-blue-600 shadow-md transition text-xs sm:text-sm w-full sm:w-auto justify-center">
-                        <i class="fa fa-plus"></i> <span class="hidden sm:inline">Persyaratan</span>
+                        <i class="fa fa-plus"></i> <span>Tambah Persyaratan</span>
                     </button>
                 </div>
             </div>

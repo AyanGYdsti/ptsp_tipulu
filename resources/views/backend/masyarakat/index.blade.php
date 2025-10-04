@@ -1,5 +1,19 @@
 @extends('layouts.main')
 
+@push('styles')
+    <style>
+        #openModalBtn {
+            position: relative;
+            z-index: 50;
+            pointer-events: auto;
+        }
+        .desktop-table-view {
+            position: relative;
+            z-index: 0;
+        }
+    </style>
+@endpush
+
 @section('content')
     <div class="mx-auto">
        <!-- Card -->
@@ -9,28 +23,28 @@
                     <i class="fa fa-list-alt text-blue-600"></i> Daftar {{ $title }}
                 </h2>
 
-                <div class="flex items-center gap-2 w-full sm:w-auto">
+                <div class="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto relative z-50">
                     <!-- Form Search -->
                     <form method="GET" action="{{ url('/masyarakat') }}"
                         class="flex items-center border rounded-lg overflow-hidden w-full sm:w-auto">
                         <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari nama / NIK / alamat..."
                             class="px-3 py-2 text-sm focus:outline-none w-full sm:w-48">
-                        <button type="submit" class="bg-blue-600 text-white px-3 py-2">
+                        <button type="submit" class="bg-blue-600 text-white px-4 py-2">
                             <i class="fa fa-search"></i>
                         </button>
                     </form>
 
                     <!-- Tombol Tambah -->
                     <button id="openModalBtn"
-                        class="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-3 py-2 rounded-lg flex items-center gap-2 hover:from-blue-700 hover:to-blue-600 shadow-md transition text-xs sm:text-sm">
-                        <i class="fa fa-plus"></i> <span class="hidden sm:inline">Masyarakat</span>
+                        class="relative z-50 bg-gradient-to-r from-blue-600 to-blue-500 text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 hover:from-blue-700 hover:to-blue-600 shadow-md transition text-sm whitespace-nowrap w-full sm:w-auto">
+                        <i class="fa fa-plus"></i> <span>Tambah</span>
                     </button>
                 </div>
             </div>
 
 
             <!-- Tabel dengan scroll horizontal -->
-            <div class="overflow-x-auto rounded-xl border border-blue-200">
+            <div class="desktop-table-view overflow-x-auto rounded-xl border border-blue-200">
                 <table class="min-w-full rounded-xl overflow-hidden">
                     <thead class="bg-blue-600 text-white uppercase text-xs font-semibold tracking-wider sticky top-0">
                         <tr>
@@ -95,7 +109,7 @@
     </div>
 
     <!-- Modal Tambah Data dengan scroll -->
-    <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-4">
         <div class="bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto transform scale-95 opacity-0 transition-all duration-300 relative"
             id="modalContent">
             <!-- Tombol Close -->
@@ -265,7 +279,7 @@
     </div>
 
     <!-- Modal Konfirmasi Hapus -->
-    <div id="deleteModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div id="deleteModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-4">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 relative transform scale-95 opacity-0 transition-all duration-300"
             id="deleteModalContent">
             <!-- Icon Warning -->
@@ -299,7 +313,7 @@
         </div>
     </div>
 
-    <!-- JavaScript untuk modal -->
+@push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const modal = document.getElementById('modal');
@@ -315,6 +329,7 @@
                     modalContent.classList.remove('scale-95', 'opacity-0');
                     modalContent.classList.add('scale-100', 'opacity-100');
                 }, 10);
+                document.body.style.overflow = 'hidden';
             });
 
             // Tutup modal
@@ -324,6 +339,7 @@
                 setTimeout(() => {
                     modal.classList.add('hidden');
                 }, 300);
+                document.body.style.overflow = 'auto';
             }
 
             closeModalBtn.addEventListener('click', closeModal);
@@ -332,6 +348,13 @@
             // Tutup modal ketika klik di luar konten modal
             modal.addEventListener('click', function(e) {
                 if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
                     closeModal();
                 }
             });
@@ -355,6 +378,7 @@
                 deleteModalContent.classList.remove('scale-95', 'opacity-0');
                 deleteModalContent.classList.add('scale-100', 'opacity-100');
             }, 10);
+            document.body.style.overflow = 'hidden';
 
             // Tutup modal
             function closeDeleteModal() {
@@ -363,6 +387,7 @@
                 setTimeout(() => {
                     deleteModal.classList.add('hidden');
                 }, 300);
+                document.body.style.overflow = 'auto';
             }
 
             cancelDeleteBtn.onclick = closeDeleteModal;
@@ -373,6 +398,15 @@
                     closeDeleteModal();
                 }
             };
+
+            // Close with Escape key
+            document.addEventListener('keydown', function escHandler(e) {
+                if (e.key === 'Escape' && !deleteModal.classList.contains('hidden')) {
+                    closeDeleteModal();
+                    document.removeEventListener('keydown', escHandler);
+                }
+            });
         }
     </script>
+@endpush
 @endsection

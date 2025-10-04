@@ -28,13 +28,13 @@
 </head>
 
 <body class="bg-gray-100">
-    <div class="flex items-center justify-center min-h-screen bg-gray-200">
-        <div class="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
+    <div class="flex items-center justify-center min-h-screen bg-gray-200 p-4 sm:p-6 md:p-8">
+        <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-sm sm:max-w-md">
             <div class="text-center mb-6">
                 <img src="https://placehold.co/80x80/3B82F6/FFFFFF?text=KT" alt="Logo"
-                    class="mx-auto mb-4 rounded-full">
-                <h1 class="text-2xl font-bold text-gray-800">Dasbor Admin Kelurahan</h1>
-                <p class="text-gray-500">Silakan login untuk melanjutkan</p>
+                    class="mx-auto mb-4 rounded-full w-16 h-16 sm:w-20 sm:h-20">
+                <h1 class="text-xl sm:text-2xl font-bold text-gray-800">Dasbor Admin Kelurahan</h1>
+                <p class="text-sm sm:text-base text-gray-500">Silakan login untuk melanjutkan</p>
             </div>
 
             {{-- Form akan di-handle oleh route login Laravel --}}
@@ -49,17 +49,17 @@
                         <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
                         {{-- 'name' attribute penting untuk form submission --}}
                         <input type="text" id="username" name="username" value="{{ old('username') }}"
-                            class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                            class="mt-1 w-full px-3 py-2 text-sm sm:text-base border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                             placeholder="Username" required>
                     </div>
                     <div>
                         <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                         <input type="password" id="password" name="password"
-                            class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                            class="mt-1 w-full px-3 py-2 text-sm sm:text-base border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                             placeholder="*********" required>
                     </div>
                     <button type="submit"
-                        class="w-full bg-blue-600 text-white py-2 px-4 rounded-md font-semibold hover:bg-blue-700 transition-colors">Login</button>
+                        class="w-full bg-blue-600 text-white py-2 px-4 rounded-md text-sm sm:text-base font-semibold hover:bg-blue-700 transition-colors">Login</button>
                 </div>
             </form>
 
@@ -75,7 +75,7 @@
                     // Kirim pesan berisi ID user ke Flutter
                     window.flutterApp.postMessage(dataFromServer.user.id.toString());
                 }
-                
+
                 // Arahkan ke halaman dashboard setelah sukses
                 window.location.href = '/dashboard';
             } else {
@@ -90,7 +90,7 @@
 
             loginForm.addEventListener('submit', function (event) {
                 // 1. Cegah form dari me-refresh halaman
-                event.preventDefault(); 
+                event.preventDefault();
 
                 const formData = new FormData(loginForm);
 
@@ -100,14 +100,14 @@
                     headers: {
                         'Accept': 'application/json',
                         // Kita tidak set Content-Type, biarkan browser menentukannya untuk FormData
-                        'X-CSRF-TOKEN': formData.get('_token'), 
+                        'X-CSRF-TOKEN': formData.get('_token'),
                     },
                     body: formData,
                 })
                 .then(response => response.json()) // Ubah jawaban server menjadi JSON
                 .then(dataFromServer => {
                     // 3. Setelah dapat jawaban, panggil fungsi handleLoginResponse
-                    handleLoginResponse(dataFromServer); 
+                    handleLoginResponse(dataFromServer);
                 })
                 .catch(error => {
                     console.error('Error:', error);

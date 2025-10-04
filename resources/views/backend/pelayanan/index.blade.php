@@ -49,70 +49,18 @@
             }
         }
 
-        @media (max-width: 640px) {
+        /* Updated mobile card styles to match persyaratan page */
+        .mobile-card-view {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
             .mobile-card-view {
                 display: block !important;
             }
             .desktop-table-view {
                 display: none !important;
             }
-            .service-card {
-                border: 1px solid #e5e7eb;
-                border-radius: 8px;
-                padding: 16px;
-                margin-bottom: 12px;
-                background: white;
-                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            }
-            .service-card-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-start;
-                margin-bottom: 12px;
-            }
-            .service-card-title {
-                font-weight: 600;
-                color: #1e40af;
-                font-size: 14px;
-            }
-            .service-card-number {
-                background: #3b82f6;
-                color: white;
-                padding: 4px 8px;
-                border-radius: 12px;
-                font-size: 12px;
-                font-weight: 600;
-            }
-            .service-card-content {
-                space-y: 8px;
-            }
-            .service-card-row {
-                display: flex;
-                margin-bottom: 8px;
-            }
-            .service-card-label {
-                font-weight: 600;
-                color: #4b5563;
-                min-width: 80px;
-                font-size: 12px;
-            }
-            .service-card-value {
-                flex: 1;
-                color: #6b7280;
-                font-size: 12px;
-            }
-            .service-card-actions {
-                display: flex;
-                gap: 12px;
-                justify-content: flex-end;
-                margin-top: 12px;
-                padding-top: 12px;
-                border-top: 1px solid #e5e7eb;
-            }
-        }
-
-        .mobile-card-view {
-            display: none;
         }
 
         #openModalBtn {
@@ -124,8 +72,6 @@
             position: relative;
             z-index: 0;
         }
-
-
     </style>
 @endpush
 
@@ -134,31 +80,28 @@
         <!-- Card -->
         <div class="bg-gradient-to-br from-blue-50 to-blue-100 shadow-xl rounded-2xl p-3 sm:p-6 border border-blue-200">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 gap-3 sm:gap-0">
-            <h2 class="text-lg sm:text-xl lg:text-2xl font-extrabold text-blue-800 tracking-wide flex items-center gap-2">
-                <i class="fa fa-list-alt text-blue-600"></i> Daftar {{ $title }}
-            </h2>
-            <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto relative z-50">
+                <h2 class="text-lg sm:text-xl lg:text-2xl font-extrabold text-blue-800 tracking-wide flex items-center gap-2">
+                    <i class="fa fa-list-alt text-blue-600"></i> Daftar {{ $title }}
+                </h2>
+                <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto relative z-50">
+                    <!-- Search form -->
+                    <form method="GET" action="{{ route('pelayanan') }}" class="flex w-full sm:w-auto">
+                        <input type="text" name="q" value="{{ request('q') }}"
+                            placeholder="Cari pelayanan / persyaratan..."
+                            class="border border-blue-300 rounded-l-lg px-3 py-2 text-sm w-full sm:w-64 focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
+                        <button type="submit"
+                            class="bg-blue-600 text-white px-3 py-2 rounded-r-lg hover:bg-blue-700 transition">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
 
-
-                <!-- Search form -->
-                <form method="GET" action="{{ route('pelayanan') }}" class="flex w-full sm:w-auto">
-                    <input type="text" name="q" value="{{ request('q') }}"
-                        placeholder="Cari pelayanan / persyaratan..."
-                        class="border border-blue-300 rounded-l-lg px-3 py-2 text-sm w-full sm:w-64 focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
-                    <button type="submit"
-                        class="bg-blue-600 text-white px-3 py-2 rounded-r-lg hover:bg-blue-700 transition">
-                        <i class="fa fa-search"></i>
+                    <!-- Tombol tambah -->
+                    <button id="openModalBtn"
+                        class="relative z-50 bg-gradient-to-r from-blue-600 to-blue-500 text-white px-3 sm:px-4 py-2 rounded-lg flex items-center gap-2 hover:from-blue-700 hover:to-blue-600 shadow-md transition text-xs sm:text-sm w-full sm:w-auto justify-center">
+                        <i class="fa fa-plus"></i> Pelayanan
                     </button>
-                </form>
-
-                <!-- Tombol tambah -->
-               <button id="openModalBtn"
-                    class="relative z-50 bg-gradient-to-r from-blue-600 to-blue-500 text-white px-3 sm:px-4 py-2 rounded-lg flex items-center gap-2 hover:from-blue-700 hover:to-blue-600 shadow-md transition text-xs sm:text-sm w-full sm:w-auto justify-center">
-                    <i class="fa fa-plus"></i> Pelayanan
-                </button>
+                </div>
             </div>
-        </div>
-
 
             <!-- Desktop Table View -->
             <div class="desktop-table-view overflow-x-auto rounded-xl border border-blue-200">
@@ -212,52 +155,55 @@
                 </table>
             </div>
 
-            <!-- Mobile Card View -->
-            <div class="mobile-card-view">
+            <!-- Mobile Card View - Updated to match persyaratan style -->
+            <div class="mobile-card-view space-y-3">
                 @forelse ($pelayanan as $data)
-                    <div class="service-card">
-                        <div class="service-card-header">
-                            <div class="service-card-title">{{ $data->nama }}</div>
-                            <div class="service-card-number">{{ $loop->iteration }}</div>
-                        </div>
+                    <div class="bg-white rounded-lg border border-blue-200 shadow-sm p-4">
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">
+                                        {{ $loop->iteration }}
+                                    </span>
+                                    <h3 class="font-semibold text-gray-800 text-sm">{{ $data->nama }}</h3>
+                                </div>
 
-                        <div class="service-card-content">
-                            <div class="service-card-row">
-                                <div class="service-card-label">Icon:</div>
-                                <div class="service-card-value">{!! $data->icon !!}</div>
-                            </div>
+                                <div class="text-xs text-gray-600 mb-2">
+                                    <strong>Icon:</strong>
+                                    <div class="mt-1">{!! $data->icon !!}</div>
+                                </div>
 
-                            <div class="service-card-row">
-                                <div class="service-card-label">Deskripsi:</div>
-                                <div class="service-card-value">{{ $data->deskripsi }}</div>
-                            </div>
+                                <div class="text-xs text-gray-600 mb-2">
+                                    <strong>Deskripsi:</strong>
+                                    <div class="mt-1">{{ $data->deskripsi }}</div>
+                                </div>
 
-                            <div class="service-card-row">
-                                <div class="service-card-label">Persyaratan:</div>
-                                <div class="service-card-value">
-                                    @foreach ($data->pelayananPersyaratan as $item)
-                                        <span class="px-2 py-1 bg-blue-500 text-white rounded text-xs mr-1 mb-1 inline-block">{{ $item->persyaratan->nama }}</span>
-                                    @endforeach
+                                <div class="text-xs text-gray-600 mb-3">
+                                    <strong>Persyaratan:</strong>
+                                    <div class="mt-1 flex flex-wrap gap-1">
+                                        @foreach ($data->pelayananPersyaratan as $item)
+                                            <span class="px-2 py-1 bg-blue-500 text-white rounded text-xs">{{ $item->persyaratan->nama }}</span>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
+                        </div>
 
-                        <div class="service-card-actions">
+                        <div class="flex justify-end gap-3 pt-2 border-t border-gray-100">
                             <a href="{{ route('pelayanan.edit', $data->id) }}"
-                                class="text-yellow-500 hover:text-yellow-600 transition transform hover:scale-110 p-2"
-                                title="Edit">
-                                <i class="fa fa-edit text-lg"></i>
+                                class="bg-yellow-500 text-white px-3 py-1 rounded text-xs hover:bg-yellow-600 transition flex items-center gap-1">
+                                <i class="fa fa-edit"></i> Edit
                             </a>
                             <button onclick="confirmDelete('{{ route('pelayanan.delete', $data->id) }}', '{{ $data->nama }}')"
-                                class="text-red-500 hover:text-red-600 transition transform hover:scale-110 p-2"
-                                title="Hapus">
-                                <i class="fa fa-trash text-lg"></i>
+                                class="bg-red-500 text-white px-3 py-1 rounded text-xs hover:bg-red-600 transition flex items-center gap-1">
+                                <i class="fa fa-trash"></i> Hapus
                             </button>
                         </div>
                     </div>
                 @empty
-                    <div class="text-center p-8 text-gray-500">
-                        <i class="fa fa-inbox text-3xl mb-3 block"></i>
-                        <p class="text-lg font-medium">Tidak Ada Data</p>
+                    <div class="bg-white rounded-lg border border-blue-200 p-6 text-center text-gray-500">
+                        <i class="fa fa-inbox text-3xl mb-2 text-gray-300"></i>
+                        <p>Tidak Ada Data</p>
                     </div>
                 @endforelse
             </div>
@@ -377,10 +323,10 @@
         document.addEventListener("DOMContentLoaded", function() {
             // Initialize TomSelect
             new TomSelect("#persyaratanSelect", {
-                plugins: ['remove_button'], // ada tombol hapus tiap pilihan
+                plugins: ['remove_button'],
                 persist: false,
                 create: false,
-                maxItems: null, // unlimited
+                maxItems: null,
                 sortField: {
                     field: "text",
                     direction: "asc"
@@ -416,14 +362,12 @@
             closeModalBtn.addEventListener('click', closeModal);
             closeModalBtn2.addEventListener('click', closeModal);
 
-            // Close modal when clicking outside
             modal.addEventListener('click', function(e) {
                 if (e.target === modal) {
                     closeModal();
                 }
             });
 
-            // Close modal with Escape key
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
                     closeModal();
@@ -439,11 +383,9 @@
             const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
             const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
 
-            // Set the name and URL
             deleteName.textContent = name;
             confirmDeleteBtn.href = url;
 
-            // Show modal with animation
             deleteModal.classList.remove('hidden');
             setTimeout(() => {
                 deleteModalContent.classList.remove('scale-95', 'opacity-0');
@@ -451,7 +393,6 @@
             }, 10);
             document.body.style.overflow = 'hidden';
 
-            // Close modal function
             function closeDeleteModal() {
                 deleteModalContent.classList.remove('scale-100', 'opacity-100');
                 deleteModalContent.classList.add('scale-95', 'opacity-0');
@@ -461,17 +402,14 @@
                 document.body.style.overflow = 'auto';
             }
 
-            // Cancel button
             cancelDeleteBtn.onclick = closeDeleteModal;
 
-            // Close when clicking outside
             deleteModal.onclick = function(e) {
                 if (e.target === deleteModal) {
                     closeDeleteModal();
                 }
             };
 
-            // Close with Escape key
             document.addEventListener('keydown', function escHandler(e) {
                 if (e.key === 'Escape' && !deleteModal.classList.contains('hidden')) {
                     closeDeleteModal();
