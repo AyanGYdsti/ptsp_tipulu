@@ -73,11 +73,11 @@
                                             title="Edit">
                                             <i class="fa fa-edit text-sm sm:text-lg"></i>
                                         </a>
-                                        <a href="{{ route('masyarakat.delete', $data->nik) }}"
+                                        <button onclick="confirmDelete('{{ route('masyarakat.delete', $data->nik) }}', '{{ $data->nama }}')"
                                             class="text-red-500 hover:text-red-600 transition transform hover:scale-110 p-1"
                                             title="Hapus">
                                             <i class="fa fa-trash text-sm sm:text-lg"></i>
-                                        </a>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -264,6 +264,41 @@
         </div>
     </div>
 
+    <!-- Modal Konfirmasi Hapus -->
+    <div id="deleteModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 relative transform scale-95 opacity-0 transition-all duration-300"
+            id="deleteModalContent">
+            <!-- Icon Warning -->
+            <div class="flex justify-center mb-4">
+                <div class="bg-red-100 rounded-full p-3">
+                    <i class="fa fa-exclamation-triangle text-red-600 text-3xl"></i>
+                </div>
+            </div>
+
+            <!-- Header -->
+            <h3 class="text-xl font-bold text-center text-gray-800 mb-2">
+                Konfirmasi Hapus
+            </h3>
+
+            <!-- Message -->
+            <p class="text-center text-gray-600 mb-6">
+                Apakah Anda yakin ingin menghapus data masyarakat <span id="deleteNama" class="font-semibold text-gray-800"></span>?
+            </p>
+
+            <!-- Buttons -->
+            <div class="flex flex-col sm:flex-row justify-center gap-3">
+                <button type="button" id="cancelDeleteBtn"
+                    class="w-full sm:w-auto bg-gray-400 text-white px-6 py-2 rounded-lg hover:bg-gray-500 transition text-sm">
+                    Batal
+                </button>
+                <a id="confirmDeleteBtn" href="#"
+                    class="w-full sm:w-auto bg-gradient-to-r from-red-600 to-red-500 text-white px-6 py-2 rounded-lg hover:from-red-700 hover:to-red-600 shadow-md transition text-sm text-center">
+                    <i class="fa fa-trash"></i> Hapus
+                </a>
+            </div>
+        </div>
+    </div>
+
     <!-- JavaScript untuk modal -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -301,5 +336,43 @@
                 }
             });
         });
+
+        // Fungsi untuk konfirmasi hapus
+        function confirmDelete(url, nama) {
+            const deleteModal = document.getElementById('deleteModal');
+            const deleteModalContent = document.getElementById('deleteModalContent');
+            const deleteNama = document.getElementById('deleteNama');
+            const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+            const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+
+            // Set nama dan URL
+            deleteNama.textContent = nama;
+            confirmDeleteBtn.href = url;
+
+            // Tampilkan modal
+            deleteModal.classList.remove('hidden');
+            setTimeout(() => {
+                deleteModalContent.classList.remove('scale-95', 'opacity-0');
+                deleteModalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+
+            // Tutup modal
+            function closeDeleteModal() {
+                deleteModalContent.classList.remove('scale-100', 'opacity-100');
+                deleteModalContent.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    deleteModal.classList.add('hidden');
+                }, 300);
+            }
+
+            cancelDeleteBtn.onclick = closeDeleteModal;
+
+            // Tutup modal ketika klik di luar konten modal
+            deleteModal.onclick = function(e) {
+                if (e.target === deleteModal) {
+                    closeDeleteModal();
+                }
+            };
+        }
     </script>
 @endsection

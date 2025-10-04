@@ -68,7 +68,7 @@
 
                 <!-- Tombol -->
                 <div class="flex justify-end gap-2 mt-6">
-                    <a href="{{ route('berita') }}"
+                    <a href="{{ route('aparatur') }}"
                         class="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500 transition">
                         Back
                     </a>

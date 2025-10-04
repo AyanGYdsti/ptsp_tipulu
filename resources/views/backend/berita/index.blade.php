@@ -47,11 +47,11 @@
                                             title="Edit">
                                             <i class="fa fa-edit text-lg"></i>
                                         </a>
-                                        <a href="{{ route('berita.delete', $data->id) }}"
+                                        <button onclick="confirmDelete('{{ route('berita.delete', $data->id) }}', '{{ $data->judul }}')"
                                             class="text-red-500 hover:text-red-600 transition transform hover:scale-110"
                                             title="Hapus">
                                             <i class="fa fa-trash text-lg"></i>
-                                        </a>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -95,11 +95,11 @@
                                             title="Edit">
                                             <i class="fa fa-edit text-lg"></i>
                                         </a>
-                                        <a href="{{ route('berita.delete', $data->id) }}"
+                                        <button onclick="confirmDelete('{{ route('berita.delete', $data->id) }}', '{{ $data->judul }}')"
                                             class="text-red-500 hover:text-red-600 transition transform hover:scale-110"
                                             title="Hapus">
                                             <i class="fa fa-trash text-lg"></i>
-                                        </a>
+                                        </button>
                                     </div>
                                 </div>
 
@@ -149,11 +149,11 @@
                                             title="Edit">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                        <a href="{{ route('berita.delete', $data->id) }}"
+                                        <button onclick="confirmDelete('{{ route('berita.delete', $data->id) }}', '{{ $data->judul }}')"
                                             class="text-red-500 hover:text-red-600 transition"
                                             title="Hapus">
                                             <i class="fa fa-trash"></i>
-                                        </a>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -227,6 +227,42 @@
         </div>
     </div>
 
+    <!-- Modal Konfirmasi Hapus -->
+    <div id="deleteModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 relative transform scale-95 opacity-0 transition-all duration-300"
+            id="deleteModalContent">
+            <!-- Icon Warning -->
+            <div class="flex justify-center mb-4">
+                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
+                    <i class="fa fa-exclamation-triangle text-red-500 text-3xl"></i>
+                </div>
+            </div>
+
+            <!-- Header Modal -->
+            <h3 class="text-xl font-bold mb-3 text-gray-800 text-center">
+                Konfirmasi Hapus
+            </h3>
+
+            <!-- Message -->
+            <p class="text-gray-600 text-center mb-6">
+                Apakah Anda yakin ingin menghapus berita<br>
+                <strong id="deleteItemName" class="text-gray-800"></strong>?
+            </p>
+
+            <!-- Buttons -->
+            <div class="flex flex-col sm:flex-row justify-center gap-3">
+                <button type="button" id="cancelDeleteBtn"
+                    class="bg-gray-400 text-white px-6 py-2 rounded-lg hover:bg-gray-500 transition text-sm">
+                    Batal
+                </button>
+                <a id="confirmDeleteBtn" href="#"
+                    class="bg-gradient-to-r from-red-600 to-red-500 text-white px-6 py-2 rounded-lg hover:from-red-700 hover:to-red-600 shadow-md transition text-sm text-center">
+                    <i class="fa fa-trash"></i> Hapus
+                </a>
+            </div>
+        </div>
+    </div>
+
     <style>
         .line-clamp-2 {
             display: -webkit-box;
@@ -235,4 +271,77 @@
             overflow: hidden;
         }
     </style>
+
+    <script>
+        // Modal Tambah Berita
+        const modal = document.getElementById('modal');
+        const modalContent = document.getElementById('modalContent');
+        const openModalBtn = document.getElementById('openModalBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const closeModalBtn2 = document.getElementById('closeModalBtn2');
+
+        openModalBtn.addEventListener('click', () => {
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        });
+
+        [closeModalBtn, closeModalBtn2].forEach(btn => {
+            btn.addEventListener('click', () => {
+                modalContent.classList.remove('scale-100', 'opacity-100');
+                modalContent.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            });
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modalContent.classList.remove('scale-100', 'opacity-100');
+                modalContent.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+        });
+
+        // Modal Konfirmasi Hapus
+        const deleteModal = document.getElementById('deleteModal');
+        const deleteModalContent = document.getElementById('deleteModalContent');
+        const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+        const deleteItemName = document.getElementById('deleteItemName');
+
+        function confirmDelete(url, itemName) {
+            deleteItemName.textContent = itemName;
+            confirmDeleteBtn.href = url;
+
+            deleteModal.classList.remove('hidden');
+            setTimeout(() => {
+                deleteModalContent.classList.remove('scale-95', 'opacity-0');
+                deleteModalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        cancelDeleteBtn.addEventListener('click', () => {
+            deleteModalContent.classList.remove('scale-100', 'opacity-100');
+            deleteModalContent.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                deleteModal.classList.add('hidden');
+            }, 300);
+        });
+
+        deleteModal.addEventListener('click', (e) => {
+            if (e.target === deleteModal) {
+                deleteModalContent.classList.remove('scale-100', 'opacity-100');
+                deleteModalContent.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    deleteModal.classList.add('hidden');
+                }, 300);
+            }
+        });
+    </script>
 @endsection

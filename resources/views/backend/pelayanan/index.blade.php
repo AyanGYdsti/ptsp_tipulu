@@ -192,11 +192,11 @@
                                             title="Edit">
                                             <i class="fa fa-edit text-sm sm:text-lg"></i>
                                         </a>
-                                        <a href="{{ route('pelayanan.delete', $data->id) }}"
+                                        <button onclick="confirmDelete('{{ route('pelayanan.delete', $data->id) }}', '{{ $data->nama }}')"
                                             class="text-red-500 hover:text-red-600 transition transform hover:scale-110 p-1"
                                             title="Hapus">
                                             <i class="fa fa-trash text-sm sm:text-lg"></i>
-                                        </a>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -247,11 +247,11 @@
                                 title="Edit">
                                 <i class="fa fa-edit text-lg"></i>
                             </a>
-                            <a href="{{ route('pelayanan.delete', $data->id) }}"
+                            <button onclick="confirmDelete('{{ route('pelayanan.delete', $data->id) }}', '{{ $data->nama }}')"
                                 class="text-red-500 hover:text-red-600 transition transform hover:scale-110 p-2"
                                 title="Hapus">
                                 <i class="fa fa-trash text-lg"></i>
-                            </a>
+                            </button>
                         </div>
                     </div>
                 @empty
@@ -336,6 +336,39 @@
         </div>
     </div>
 
+    <!-- Modal Konfirmasi Hapus -->
+    <div id="deleteModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 relative transform scale-95 opacity-0 transition-all duration-300"
+            id="deleteModalContent">
+            <!-- Icon Warning -->
+            <div class="text-center mb-4">
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+                    <i class="fa fa-exclamation-triangle text-red-600 text-2xl"></i>
+                </div>
+            </div>
+
+            <!-- Header Modal -->
+            <h3 class="text-xl font-bold mb-2 text-gray-900 text-center">
+                Konfirmasi Hapus
+            </h3>
+            <p class="text-sm text-gray-500 text-center mb-6">
+                Apakah Anda yakin ingin menghapus pelayanan <strong id="deleteName" class="text-gray-900"></strong>?
+            </p>
+
+            <!-- Action Buttons -->
+            <div class="flex gap-3">
+                <button type="button" id="cancelDeleteBtn"
+                    class="flex-1 bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition text-sm font-medium">
+                    Batal
+                </button>
+                <a href="#" id="confirmDeleteBtn"
+                    class="flex-1 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition text-sm font-medium text-center">
+                    Ya, Hapus
+                </a>
+            </div>
+        </div>
+    </div>
+
 
 @push('scripts')
     <!-- Tom Select JS -->
@@ -397,5 +430,54 @@
                 }
             });
         });
+
+        // Delete confirmation functionality
+        function confirmDelete(url, name) {
+            const deleteModal = document.getElementById('deleteModal');
+            const deleteModalContent = document.getElementById('deleteModalContent');
+            const deleteName = document.getElementById('deleteName');
+            const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+            const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+
+            // Set the name and URL
+            deleteName.textContent = name;
+            confirmDeleteBtn.href = url;
+
+            // Show modal with animation
+            deleteModal.classList.remove('hidden');
+            setTimeout(() => {
+                deleteModalContent.classList.remove('scale-95', 'opacity-0');
+                deleteModalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+            document.body.style.overflow = 'hidden';
+
+            // Close modal function
+            function closeDeleteModal() {
+                deleteModalContent.classList.remove('scale-100', 'opacity-100');
+                deleteModalContent.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    deleteModal.classList.add('hidden');
+                }, 300);
+                document.body.style.overflow = 'auto';
+            }
+
+            // Cancel button
+            cancelDeleteBtn.onclick = closeDeleteModal;
+
+            // Close when clicking outside
+            deleteModal.onclick = function(e) {
+                if (e.target === deleteModal) {
+                    closeDeleteModal();
+                }
+            };
+
+            // Close with Escape key
+            document.addEventListener('keydown', function escHandler(e) {
+                if (e.key === 'Escape' && !deleteModal.classList.contains('hidden')) {
+                    closeDeleteModal();
+                    document.removeEventListener('keydown', escHandler);
+                }
+            });
+        }
     </script>
 @endpush
