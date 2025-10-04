@@ -18,6 +18,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\PermohonanController;
 use App\Http\Controllers\Api\FcmController;
+use App\Models\Pengajuan;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -116,3 +117,4 @@ Route::post('/fcm/save-token', [FcmController::class, 'saveToken']);
 
 Route::post('/list-pengajuan/{id}/cetak-stream', [ListPengajuanController::class, 'handleCetakStream'])->name('list-pengajuan.cetak.stream');
 Route::post('/list-pengajuan/{id}/cetak-download', [ListPengajuanController::class, 'handleCetakDownload'])->name('list-pengajuan.cetak.download');
+Route::delete('/list-pengajuan/{id}', [ListPengajuanController::class, 'destroy'])->name('list-pengajuan.destroy');

@@ -31,6 +31,7 @@
                             <th class="px-4 py-3 text-left">Nama</th>
                             <th class="px-4 py-3 text-left">Nomor WA</th>
                             <th class="px-4 py-3 text-left">Pelayanan</th>
+                            <th class="px-4 py-3 text-center">Status</th>
                             <th class="px-4 py-3 text-center">Aksi</th>
                         </tr>
                     </thead>
@@ -41,6 +42,30 @@
                                 <td class="px-4 py-3">{{ optional($data->masyarakat)->nama ?? optional($data->tempatTinggalSementara)->nama }}</td>
                                 <td class="px-4 py-3">{{ $data->no_hp }}</td>
                                 <td class="px-4 py-3">{{ $data->pelayanan->nama }}</td>
+                                <td class="px-4 py-3 text-center">
+                                    @php
+                                        $verifikasi = $data->verifikasiByAparatur(4)->first();
+                                    @endphp
+                                    @if($verifikasi)
+                                        @if(str_contains($verifikasi->status, 'Terverifikasi'))
+                                            <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">
+                                                <i class="fa fa-check-circle mr-1"></i>Terverifikasi
+                                            </span>
+                                        @elseif(str_contains($verifikasi->status, 'Ditolak'))
+                                            <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-semibold">
+                                                <i class="fa fa-times-circle mr-1"></i>Ditolak
+                                            </span>
+                                        @else
+                                            <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-semibold">
+                                                {{ $verifikasi->status }}
+                                            </span>
+                                        @endif
+                                    @else
+                                        <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-semibold">
+                                            <i class="fa fa-clock mr-1"></i>Menunggu
+                                        </span>
+                                    @endif
+                                </td>
                                 <td class="px-4 py-3 text-center flex justify-center gap-3">
                                     @if (!$data->verifikasiByAparatur(4)->first())
                                         <button data-id="{{ $data->id }}" data-nama="{{ optional($data->masyarakat)->nama ?? optional($data->tempatTinggalSementara)->nama }}"
@@ -87,7 +112,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="text-center p-4 text-gray-500">Tidak Ada data pengajuan.</td>
+                                <td colspan="6" class="text-center p-4 text-gray-500">Tidak Ada data pengajuan.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -112,6 +137,31 @@
                                     <div class="flex items-center gap-2">
                                         <i class="fa fa-briefcase text-blue-500"></i>
                                         <span>{{ $data->pelayanan->nama }}</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <i class="fa fa-info-circle text-gray-500"></i>
+                                        @php
+                                            $verifikasi = $data->verifikasiByAparatur(4)->first();
+                                        @endphp
+                                        @if($verifikasi)
+                                            @if(str_contains($verifikasi->status, 'Terverifikasi'))
+                                                <span class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">
+                                                    <i class="fa fa-check-circle mr-1"></i>Terverifikasi
+                                                </span>
+                                            @elseif(str_contains($verifikasi->status, 'Ditolak'))
+                                                <span class="px-2 py-1 bg-red-100 text-red-700 rounded-full text-xs font-semibold">
+                                                    <i class="fa fa-times-circle mr-1"></i>Ditolak
+                                                </span>
+                                            @else
+                                                <span class="px-2 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-semibold">
+                                                    {{ $verifikasi->status }}
+                                                </span>
+                                            @endif
+                                        @else
+                                            <span class="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-semibold">
+                                                <i class="fa fa-clock mr-1"></i>Menunggu
+                                            </span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -274,11 +324,12 @@
                         @csrf
                         @method('PUT')
                         <input type="hidden" name="status" id="statusPengajuan">
+                        <input type="hidden" name="alasan" id="alasanPenolakan">
                         <div class="flex flex-col sm:flex-row justify-end gap-2 sm:gap-3">
                             <button type="button" onclick="closeVerifikasiModal()" class="w-full sm:w-auto px-4 py-2 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100 text-sm">
                                 Batal
                             </button>
-                            <button type="submit" onclick="setStatus('Ditolak')" class="w-full sm:w-auto px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 shadow-md text-sm">
+                            <button type="button" onclick="showAlasanModal()" class="w-full sm:w-auto px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 shadow-md text-sm">
                                 <i class="fa-solid fa-xmark mr-1"></i> Tolak
                             </button>
                             <button type="submit" onclick="setStatus('Terverifikasi')" class="w-full sm:w-auto px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 shadow-md text-sm">
@@ -286,6 +337,35 @@
                             </button>
                         </div>
                     </form>
+                </div>
+            </div>
+
+            {{-- Modal Alasan Penolakan --}}
+            <div id="alasanModal" class="hidden fixed inset-0 z-[60] flex items-center justify-center bg-black bg-opacity-50 p-4">
+                <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-4 sm:p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-red-100 text-red-600 mr-3">
+                            <i class="fa-solid fa-exclamation-triangle text-xl sm:text-2xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h2 class="text-base sm:text-lg font-bold text-gray-800">Alasan Penolakan</h2>
+                            <p class="text-xs sm:text-sm text-gray-500">Berikan alasan penolakan</p>
+                        </div>
+                    </div>
+                    <div class="border-t border-gray-200 pt-4">
+                        <label class="block text-xs sm:text-sm font-semibold text-gray-600 mb-2">Alasan Penolakan</label>
+                        <textarea id="alasanTextarea" rows="4"
+                            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-400"
+                            placeholder="Tuliskan alasan penolakan pengajuan..."></textarea>
+                    </div>
+                    <div class="flex flex-col sm:flex-row justify-end gap-2 sm:gap-3 mt-6">
+                        <button type="button" onclick="closeAlasanModal()" class="w-full sm:w-auto px-4 py-2 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100 text-sm">
+                            Batal
+                        </button>
+                        <button type="button" onclick="submitPenolakan()" class="w-full sm:w-auto px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 shadow-md text-sm">
+                            <i class="fa-solid fa-paper-plane mr-1"></i> Kirim Penolakan
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -296,19 +376,88 @@
     </style>
 
     <script>
+        let currentPengajuanId = null;
+        let currentNamaWa = null;
+        let currentNoHp = null;
+        let currentPelayanan = null;
+
         // Verifikasi Modal
         function openVerifikasiModal(button) {
             const id = button.getAttribute("data-id");
             const nama = button.getAttribute("data-nama");
+            currentPengajuanId = id;
+            currentNamaWa = nama;
+
+            // Ambil data nomor HP dan pelayanan dari baris yang sama
+            const row = button.closest('tr') || button.closest('.bg-white');
+            if (row) {
+                const noHpElement = row.querySelector('td:nth-child(3)') || row.querySelector('.fa-whatsapp').parentElement;
+                const pelayananElement = row.querySelector('td:nth-child(4)') || row.querySelector('.fa-briefcase').parentElement;
+
+                if (noHpElement) {
+                    currentNoHp = noHpElement.textContent.trim();
+                }
+                if (pelayananElement) {
+                    currentPelayanan = pelayananElement.textContent.trim();
+                }
+            }
+
             document.getElementById("namaMasyarakat").innerText = nama;
             document.getElementById("formVerifikasi").action = "{{ url('/list-pengajuan/verifikasi') }}/" + id;
             document.getElementById("verifikasiModal").classList.remove("hidden");
         }
+
         function closeVerifikasiModal() {
             document.getElementById("verifikasiModal").classList.add("hidden");
+            document.getElementById("alasanTextarea").value = '';
+            document.getElementById("alasanPenolakan").value = '';
         }
+
         function setStatus(status) {
             document.getElementById("statusPengajuan").value = status;
+        }
+
+        // Modal Alasan Penolakan
+        function showAlasanModal() {
+            document.getElementById("alasanModal").classList.remove("hidden");
+        }
+
+        function closeAlasanModal() {
+            document.getElementById("alasanModal").classList.add("hidden");
+        }
+
+        function submitPenolakan() {
+            const alasan = document.getElementById("alasanTextarea").value.trim();
+
+            if (!alasan) {
+                alert('Harap isi alasan penolakan terlebih dahulu!');
+                return;
+            }
+
+            // Set status dan alasan
+            document.getElementById("statusPengajuan").value = 'Ditolak';
+            document.getElementById("alasanPenolakan").value = alasan;
+
+            // Kirim notifikasi WhatsApp
+            if (currentNoHp && currentNamaWa && currentPelayanan) {
+                const cleanPhone = currentNoHp.replace(/^0/, '62').replace(/[^0-9]/g, '');
+                const message = `Assalamualaikum Bapak/Ibu ${currentNamaWa},\n\n` +
+                    `Dengan hormat, kami informasikan bahwa pengajuan layanan ${currentPelayanan} Anda telah ditolak.\n\n` +
+                    `Alasan penolakan:\n${alasan}\n\n` +
+                    `Untuk informasi lebih lanjut, silakan hubungi kantor lurah pada jam kerja.\n\n` +
+                    `Terima kasih atas pengertiannya.\n\n` +
+                    `Hormat Kami,\n` +
+                    `Staf Pelayanan Kantor Lurah`;
+
+                const waUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
+                window.open(waUrl, '_blank');
+            }
+
+            // Tutup modal alasan
+            closeAlasanModal();
+
+            // Submit form verifikasi
+            document.getElementById("formVerifikasi").submit();
         }
 
         // Dokumen & Cetak Modal
