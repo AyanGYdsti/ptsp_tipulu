@@ -171,36 +171,38 @@
             </div>
         </section>
 
-        <section id="tentang" class="py-20 bg-white">
+      <section id="tentang" class="py-20 bg-white">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <!-- Deskripsi -->
                     <div class="fade-in-up">
-                        <h3 class="text-2xl font-bold mb-4 text-gray-900">Sejarah Singkat & Visi Misi Kelurahan Tipulu
+                        <h3 class="text-2xl font-bold mb-4 text-gray-900">
+                            Sejarah Singkat & Visi Misi Kelurahan Tipulu
                         </h3>
                         <p class="text-gray-600 leading-relaxed mb-6">
                             {{ $landingPage->deskripsi ?? '-' }}
                         </p>
-                        <a href="#" class="font-semibold text-blue-600 hover:text-blue-800 transition-colors">Baca
-                            Selengkapnya
-                            →</a>
+                        <a href="#" class="font-semibold text-blue-600 hover:text-blue-800 transition-colors">
+                            Baca Selengkapnya →
+                        </a>
                     </div>
+
+                    <!-- Google Maps Embed -->
                     <div class="h-96 rounded-lg overflow-hidden shadow-lg fade-in-up">
-                        @php
-                            $coords = explode(',', $landingPage->koordinat ?? '');
-                            $lat = $coords[0] ?? '-3.9877478';
-                            $lng = $coords[1] ?? '122.5029891';
-                        @endphp
-                        <div class="w-full h-[400px] rounded-xl overflow-hidden border border-blue-200">
-                            <iframe
-                                src="https://maps.google.com/maps?q={{ $lat }},{{ $lng }}&z=15&output=embed"
-                                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade">
-                            </iframe>
-                        </div>
+                        <iframe
+                            src="https://www.google.com/maps?q=-3.9639639,122.5485688&hl=id&z=15&output=embed"
+                            width="100%"
+                            height="100%"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
                     </div>
                 </div>
             </div>
         </section>
+
 
         <section id="kontak" class="py-20 bg-blue-50">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
