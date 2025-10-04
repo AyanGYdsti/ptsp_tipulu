@@ -107,7 +107,7 @@
             </div>
         </section>
 
-        <section id="profil" class="py-20 bg-white">
+        <section id="aparatur" class="py-20 bg-white">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12 fade-in-up">
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Aparatur Kelurahan Tipulu</h2>
@@ -171,7 +171,7 @@
             </div>
         </section>
 
-        <section id="tentang" class="py-20 bg-white">
+        <section id="profil" class="py-20 bg-white">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     <div class="fade-in-up">
