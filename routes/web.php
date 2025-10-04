@@ -83,6 +83,10 @@ Route::get('/berita/delete/{id}', [BeritaController::class, 'delete'])->name('be
 
 Route::get('/landing-page', [LandingPageController::class, 'index'])->name('landing-page');
 Route::post('/landing-page/store', [LandingPageController::class, 'store'])->name('landing-page.store');
+Route::get('/sejarah', [LandingPageController::class, 'sejarah'])->name('sejarah');
+Route::get('/sejarah/detail', [LandingPageController::class, 'detailSejarah'])->name('sejarah.detail');
+Route::get('/visimisi', [LandingPageController::class, 'detailVisiMisi'])->name('visimisi');
+
 
 Route::get('/list-pelayanan', [FrontendListpelayananController::class, 'index'])->name('list-pelayanan');
 

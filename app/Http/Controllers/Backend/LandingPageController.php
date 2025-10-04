@@ -43,4 +43,23 @@ class LandingPageController extends Controller
             return back()->with('error', 'Gagal menyimpan data.');
         }
     }
+
+    public function sejarah()
+{
+    $landingPage = LandingPage::first(); 
+    return view('frontend.sejarah.index', compact('landingPage'));
+}
+
+public function detailSejarah()
+{
+    $landingPage = LandingPage::first(); 
+    return view('frontend.sejarah.detail', compact('landingPage'));
+}
+
+public function detailVisiMisi()
+{
+    $landingPage = LandingPage::first(); 
+    return view('frontend.visimisi.index', compact('landingPage'));
+}
+
 }

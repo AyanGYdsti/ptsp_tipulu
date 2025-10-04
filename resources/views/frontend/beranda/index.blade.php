@@ -51,7 +51,7 @@
                 </div>
                 <div class="text-center mt-12 fade-in-up">
                     <a href="{{ route('list-pelayanan') }}"
-                        class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors text-lg">Lihat
+                        class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors text-lg">Lihat
                         Semua Layanan</a>
                 </div>
             </div>
@@ -174,15 +174,17 @@
         <section id="profil" class="py-20 bg-white">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    <!-- Deskripsi -->
+
+                   <!-- Deskripsi -->
                     <div class="fade-in-up">
                         <h3 class="text-2xl font-bold mb-4 text-gray-900">
                             Sejarah Singkat & Visi Misi Kelurahan Tipulu
                         </h3>
-                        <p class="text-gray-600 leading-relaxed mb-6">
-                            {{ $landingPage->deskripsi ?? '-' }}
+                        <p class="text-gray-600 leading-relaxed mb-6 line-clamp-3">
+                            {{ Str::limit($landingPage->deskripsi ?? '-', 180, '...') }}
                         </p>
-                        <a href="#" class="font-semibold text-blue-600 hover:text-blue-800 transition-colors">
+                        <a href="{{ route('sejarah') }}" 
+                        class="font-semibold text-blue-600 hover:text-blue-800 transition-colors">
                             Baca Selengkapnya →
                         </a>
                     </div>
