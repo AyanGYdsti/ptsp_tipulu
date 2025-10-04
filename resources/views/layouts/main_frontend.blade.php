@@ -130,7 +130,7 @@
                 </div>
             </div>
             <div class="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400">
-                <p>© <span id="year"></span> Pemerintah Kelurahan Tipulu. All Rights Reserved.</p>
+                <p>© <span id="year"></span> KKN-T UHO Tahun 2025 Kelurahan Tipulu || Pemerintah Kelurahan Tipulu. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
