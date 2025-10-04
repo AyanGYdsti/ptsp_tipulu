@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Aparatur;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -24,32 +23,38 @@ class DatabaseSeeder extends Seeder
 
         $aparatur = [
             [
+                'nip' => '197501011999031001',
                 'nama' => 'Andika',
                 'jabatan' => 'Lurah',
                 'foto' => 'assets/img/avatar.jpg',
                 'posisi' => 1,
             ],
             [
+                'nip' => '198003021999031002',
                 'nama' => 'Yaya',
                 'jabatan' => 'Sekretaris',
                 'foto' => 'assets/img/avatar.jpg',
                 'posisi' => 2,
             ],
             [
+                'nip' => '198504051999031003',
                 'nama' => 'Tendri',
                 'jabatan' => 'Kepala Seksi',
                 'foto' => 'assets/img/avatar.jpg',
                 'posisi' => 3,
             ],
             [
+                'nip' => '199001011999031004',
                 'nama' => 'Admin',
                 'jabatan' => 'Admin',
                 'foto' => 'assets/img/avatar.jpg',
                 'posisi' => 4,
             ],
         ];
+
         foreach ($aparatur as $item) {
             Aparatur::create([
+                'nip' => $item['nip'],
                 'nama' => $item['nama'],
                 'jabatan' => $item['jabatan'],
                 'foto' => $item['foto'],
