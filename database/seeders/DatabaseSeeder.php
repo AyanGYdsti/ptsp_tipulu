@@ -20,6 +20,13 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'admin@gmail.com',
         //     'password' => 'pass1234',
         // ]);
+
+        $this->call([
+            MasyarakatSeeder::class,
+            UserSeeder::class,
+            PersyaratanSeeder::class,
+            PelayananSeeder::class,
+        ]);
         Aparatur::truncate();
 
         $aparatur = [
