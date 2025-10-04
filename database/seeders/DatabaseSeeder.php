@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'admin@gmail.com',
         //     'password' => 'pass1234',
         // ]);
+        Aparatur::truncate();
 
         $aparatur = [
             [
