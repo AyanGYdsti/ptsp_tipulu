@@ -172,7 +172,7 @@
 
     <!-- Modal Tambah Berita -->
     <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-        <div class="bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-2xl w-full max-w-lg p-6 relative transform scale-95 opacity-0 transition-all duration-300 max-h-[90vh] overflow-y-auto"
+        <div class="bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-2xl w-full max-w-3xl p-6 relative transform scale-95 opacity-0 transition-all duration-300 max-h-[90vh] overflow-y-auto"
             id="modalContent">
             <!-- Tombol Close -->
             <button id="closeModalBtn" class="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition">
@@ -197,7 +197,7 @@
                 </div>
                 <div class="mb-4">
                     <label class="block text-sm font-semibold text-gray-600 mb-1">Deskripsi</label>
-                    <textarea name="deskripsi" rows="4"
+                    <textarea id="editor" name="deskripsi" rows="4"
                         class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-sm resize-vertical">{{ old('deskripsi') }}</textarea>
                     @error('deskripsi')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -272,7 +272,42 @@
         }
     </style>
 
+    <!-- TinyMCE CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js"></script>
+
     <script>
+        // Inisialisasi TinyMCE
+        let editorInstance = null;
+
+        function initEditor() {
+            if (editorInstance) {
+                tinymce.remove('#editor');
+            }
+
+            tinymce.init({
+                selector: '#editor',
+                height: 300,
+                menubar: false,
+                plugins: [
+                    'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                    'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                    'insertdatetime', 'media', 'table', 'help', 'wordcount'
+                ],
+                toolbar: 'undo redo | blocks | ' +
+                    'bold italic forecolor backcolor | alignleft aligncenter ' +
+                    'alignright alignjustify | bullist numlist outdent indent | ' +
+                    'removeformat | help',
+                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                skin: 'oxide',
+                content_css: 'default',
+                language: 'id',
+                branding: false,
+                setup: function(editor) {
+                    editorInstance = editor;
+                }
+            });
+        }
+
         // Modal Tambah Berita
         const modal = document.getElementById('modal');
         const modalContent = document.getElementById('modalContent');
@@ -285,6 +320,8 @@
             setTimeout(() => {
                 modalContent.classList.remove('scale-95', 'opacity-0');
                 modalContent.classList.add('scale-100', 'opacity-100');
+                // Inisialisasi editor ketika modal dibuka
+                initEditor();
             }, 10);
         });
 
@@ -294,6 +331,11 @@
                 modalContent.classList.add('scale-95', 'opacity-0');
                 setTimeout(() => {
                     modal.classList.add('hidden');
+                    // Hapus instance editor ketika modal ditutup
+                    if (editorInstance) {
+                        tinymce.remove('#editor');
+                        editorInstance = null;
+                    }
                 }, 300);
             });
         });
@@ -304,6 +346,10 @@
                 modalContent.classList.add('scale-95', 'opacity-0');
                 setTimeout(() => {
                     modal.classList.add('hidden');
+                    if (editorInstance) {
+                        tinymce.remove('#editor');
+                        editorInstance = null;
+                    }
                 }, 300);
             }
         });
