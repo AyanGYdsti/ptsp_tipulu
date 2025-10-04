@@ -25,7 +25,7 @@ class AuthController extends Controller
     if (Auth::attempt($credentials)) {
         // Jika berhasil, jangan redirect. Tapi kirim respons JSON.
         $request->session()->regenerate();
-        
+
         $user = Auth::user(); // Ambil data user yang sedang login
 
         // Kirim jawaban JSON yang menandakan sukses, beserta ID user
@@ -54,6 +54,6 @@ class AuthController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/login');
     }
 }
