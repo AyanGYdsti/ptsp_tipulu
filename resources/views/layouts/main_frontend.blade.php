@@ -44,10 +44,10 @@
                             class="text-gray-600 hover:text-blue-600 font-medium">Layanan</a>
                         <a href="{{ $prefix }}#berita"
                             class="text-gray-600 hover:text-blue-600 font-medium">Berita</a>
+                        <a href="{{ $prefix }}#aparatur"
+                            class="text-gray-600 hover:text-blue-600 font-medium">Aparatur</a>
                         <a href="{{ $prefix }}#profil"
                             class="text-gray-600 hover:text-blue-600 font-medium">Profil</a>
-                        <a href="{{ $prefix }}#pengaduan"
-                            class="text-gray-600 hover:text-blue-600 font-medium">Pengaduan</a>
                         <a href="{{ $prefix }}#kontak"
                             class="text-gray-600 hover:text-blue-600 font-medium">Kontak</a>
                     </nav>
