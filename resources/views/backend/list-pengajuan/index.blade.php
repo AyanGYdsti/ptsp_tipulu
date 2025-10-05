@@ -67,14 +67,25 @@
                                     @endif
                                 </td>
                                 <td class="px-4 py-3 text-center flex justify-center gap-3">
-                                    @if (!$data->verifikasiByAparatur(4)->first())
-                                        <button data-id="{{ $data->id }}" data-nama="{{ optional($data->masyarakat)->nama ?? optional($data->tempatTinggalSementara)->nama }}"
+                                    @php
+                                        $verifikasi = $data->verifikasiByAparatur(4)->first();
+                                        $isDitolak = $verifikasi && str_contains($verifikasi->status, 'Ditolak');
+                                        $isTerverifikasi = $verifikasi && str_contains($verifikasi->status, 'Terverifikasi');
+                                    @endphp
+
+                                    @if (!$verifikasi || $isDitolak)
+                                        {{-- Tombol Verifikasi / Verifikasi Ulang --}}
+                                        <button data-id="{{ $data->id }}"
+                                            data-nama="{{ optional($data->masyarakat)->nama ?? optional($data->tempatTinggalSementara)->nama }}"
                                             onclick="openVerifikasiModal(this)"
                                             class="text-blue-500 hover:text-blue-600 transition transform hover:scale-110"
-                                            title="Verifikasi">
+                                            title="{{ $isDitolak ? 'Verifikasi Ulang' : 'Verifikasi' }}">
                                             <i class="fa-solid fa-hand-pointer text-lg"></i>
                                         </button>
-                                    @else
+                                    @endif
+
+                                    @if ($isTerverifikasi)
+                                        {{-- Tombol WhatsApp --}}
                                         <a href="{{
                                             'https://wa.me/'
                                             . preg_replace('/^0/', '62', preg_replace('/[^0-9]/', '', $data->no_hp))
@@ -97,12 +108,15 @@
                                             <i class="fa-brands fa-whatsapp text-lg"></i>
                                         </a>
 
+                                        {{-- Tombol Cetak --}}
                                         <button type="button" onclick="openCetakModal('{{ $data->id }}')"
                                             class="text-yellow-500 hover:text-yellow-600 transition transform hover:scale-110"
                                             title="Cetak Surat">
                                             <i class="fa-solid fa-print text-lg"></i>
                                         </button>
                                     @endif
+
+                                    {{-- Tombol Lihat Detail (selalu ada) --}}
                                     <button type="button" onclick="openDokumenModal('{{ $data->id }}')"
                                         class="text-gray-500 hover:text-gray-600 transition transform hover:scale-110"
                                         title="Detail Dokumen Pengajuan">
@@ -168,15 +182,26 @@
                         </div>
 
                         <div class="flex justify-end gap-3 pt-3 border-t border-gray-200">
-                            @if (!$data->verifikasiByAparatur(4)->first())
-                                <button data-id="{{ $data->id }}" data-nama="{{ optional($data->masyarakat)->nama ?? optional($data->tempatTinggalSementara)->nama }}"
+                            @php
+                                $verifikasi = $data->verifikasiByAparatur(4)->first();
+                                $isDitolak = $verifikasi && str_contains($verifikasi->status, 'Ditolak');
+                                $isTerverifikasi = $verifikasi && str_contains($verifikasi->status, 'Terverifikasi');
+                            @endphp
+
+                            @if (!$verifikasi || $isDitolak)
+                                {{-- Tombol Verifikasi / Verifikasi Ulang --}}
+                                <button data-id="{{ $data->id }}"
+                                    data-nama="{{ optional($data->masyarakat)->nama ?? optional($data->tempatTinggalSementara)->nama }}"
                                     onclick="openVerifikasiModal(this)"
                                     class="flex items-center gap-1 px-3 py-2 bg-blue-500 text-white text-xs rounded-lg hover:bg-blue-600 transition"
-                                    title="Verifikasi">
+                                    title="{{ $isDitolak ? 'Verifikasi Ulang' : 'Verifikasi' }}">
                                     <i class="fa-solid fa-hand-pointer"></i>
-                                    <span>Verifikasi</span>
+                                    <span>{{ $isDitolak ? 'Verifikasi Ulang' : 'Verifikasi' }}</span>
                                 </button>
-                            @else
+                            @endif
+
+                            @if ($isTerverifikasi)
+                                {{-- Tombol WhatsApp --}}
                                 <a href="{{
                                     'https://wa.me/'
                                     . preg_replace('/^0/', '62', preg_replace('/[^0-9]/', '', $data->no_hp))
@@ -200,6 +225,7 @@
                                     <span>WA</span>
                                 </a>
 
+                                {{-- Tombol Cetak --}}
                                 <button type="button" onclick="openCetakModal('{{ $data->id }}')"
                                     class="flex items-center gap-1 px-3 py-2 bg-yellow-500 text-white text-xs rounded-lg hover:bg-yellow-600 transition"
                                     title="Cetak Surat">
@@ -207,6 +233,8 @@
                                     <span>Cetak</span>
                                 </button>
                             @endif
+
+                            {{-- Tombol Lihat Detail (selalu ada) --}}
                             <button type="button" onclick="openDokumenModal('{{ $data->id }}')"
                                 class="flex items-center gap-1 px-3 py-2 bg-gray-500 text-white text-xs rounded-lg hover:bg-gray-600 transition"
                                 title="Detail Dokumen Pengajuan">
