@@ -115,9 +115,10 @@
                         berdedikasi melayani masyarakat.</p>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    @foreach ($aparatur as $item)
-                        <div 
-                            class="text-center bg-gray-100 p-8 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-2 transition-all duration-300 fade-in-up">
+                    @foreach ($aparatur as $index => $item)
+                        <div
+                            class="text-center bg-gray-100 p-8 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-2 transition-all duration-300 fade-in-up
+                            {{ $index > 1 ? 'hidden sm:block' : '' }}">
                             @if ($item->foto)
                                 <img src="{{ asset($item->foto) }}"
                                     class="w-32 h-32 rounded-full mx-auto mb-4 object-cover" alt="[Foto Aparatur]">
@@ -125,10 +126,18 @@
                                 <span class="text-gray-400">-</span>
                             @endif
                             <h3 class="text-xl font-bold">{{ $item->nama }}</h3>
+                            <p class="text-gray-600 mt-2 font-semibold">NIP : {{ $item->nip }}</p>
                             <p class="text-blue-600 font-semibold">{{ $item->jabatan }}</p>
                         </div>
                     @endforeach
                 </div>
+                <div class="text-center mt-12 fade-in-up">
+                    
+                    <a href="#"
+                        class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors text-lg">Lihat
+                        Semua Aparatur</a>
+                </div>
+
             </div>
         </section>
 
@@ -183,7 +192,7 @@
                         <p class="text-gray-600 leading-relaxed mb-6 line-clamp-3">
                             {{ Str::limit($landingPage->deskripsi ?? '-', 180, '...') }}
                         </p>
-                        <a href="{{ route('sejarah') }}" 
+                        <a href="{{ route('sejarah') }}"
                         class="font-semibold text-blue-600 hover:text-blue-800 transition-colors">
                             Baca Selengkapnya →
                         </a>
