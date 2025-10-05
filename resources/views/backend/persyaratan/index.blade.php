@@ -41,7 +41,9 @@
                     <tbody class="text-gray-700 text-sm bg-white">
                         @forelse ($persyaratan as $data)
                             <tr class="hover:bg-blue-50 transition">
-                                <td class="px-4 py-3 text-center font-semibold text-blue-600">{{ $loop->iteration }}</td>
+                                <td class="px-2 sm:px-4 py-3 text-center font-semibold text-blue-600">
+                                    {{ $persyaratan->firstItem() + $loop->index }}
+                                </td>
                                 <td class="px-4 py-3">{{ $data->nama }}</td>
                                 <td class="px-4 py-3">{!! $data->keterangan !!}</td>
                                 <td class="px-4 py-3 text-center flex justify-center gap-3">
@@ -66,17 +68,57 @@
                         @endforelse
                     </tbody>
                 </table>
+                <!-- Pagination -->
+                @if ($persyaratan->hasPages())
+                    <div class="mt-6 flex flex-col sm:flex-row justify-center sm:justify-between items-center text-sm text-gray-700 gap-4">
+                        <div class="text-gray-600">
+                            Menampilkan 
+                            <span class="font-semibold text-blue-600">
+                                {{ $persyaratan->firstItem() }}–{{ $persyaratan->lastItem() }}
+                            </span> 
+                            dari 
+                            <span class="font-semibold text-blue-600">{{ $persyaratan->total() }}</span> data
+                        </div>
+
+                        <!-- Tombol Navigasi -->
+                        <div class="flex items-center justify-center space-x-2">
+                            {{-- Tombol Previous --}}
+                            @if ($persyaratan->onFirstPage())
+                                <span class="px-3 py-2 bg-gray-200 text-gray-400 rounded-lg cursor-not-allowed">&laquo;</span>
+                            @else
+                                <a href="{{ $persyaratan->previousPageUrl() }}" class="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">&laquo;</a>
+                            @endif
+
+                            {{-- Tombol Halaman --}}
+                            @foreach ($persyaratan->getUrlRange(1, $persyaratan->lastPage()) as $page => $url)
+                                @if ($page == $persyaratan->currentPage())
+                                    <span class="px-3 py-2 bg-blue-600 text-white rounded-lg font-bold">{{ $page }}</span>
+                                @else
+                                    <a href="{{ $url }}" class="px-3 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition">{{ $page }}</a>
+                                @endif
+                            @endforeach
+
+                            {{-- Tombol Next --}}
+                            @if ($persyaratan->hasMorePages())
+                                <a href="{{ $persyaratan->nextPageUrl() }}" class="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">&raquo;</a>
+                            @else
+                                <span class="px-3 py-2 bg-gray-200 text-gray-400 rounded-lg cursor-not-allowed">&raquo;</span>
+                            @endif
+                        </div>
+                    </div>
+                @endif
             </div>
 
-            <!-- Tabel Mobile (Card Layout) -->
+           <!-- Tabel Mobile (Card Layout) -->
             <div class="block md:hidden space-y-3">
                 @forelse ($persyaratan as $data)
                     <div class="bg-white rounded-lg border border-blue-200 shadow-sm p-4">
                         <div class="flex justify-between items-start mb-3">
                             <div class="flex-1">
                                 <div class="flex items-center gap-2 mb-2">
+                                    <!-- Nomor urut tetap berlanjut di setiap halaman -->
                                     <span class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">
-                                        {{ $loop->iteration }}
+                                        {{ $loop->iteration + ($persyaratan->currentPage() - 1) * $persyaratan->perPage() }}
                                     </span>
                                     <h3 class="font-semibold text-gray-800 text-sm">{{ $data->nama }}</h3>
                                 </div>
@@ -103,9 +145,13 @@
                         <p>Tidak Ada data</p>
                     </div>
                 @endforelse
+            <!-- Pagination -->
+                @if ($persyaratan->hasPages())
+                    <div class="mt-6">
+                        {{ $persyaratan->links('vendor.pagination.tailwind') }}
+                    </div>
+                @endif
             </div>
-        </div>
-    </div>
 
     <!-- Modal Tambah Data -->
     <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">

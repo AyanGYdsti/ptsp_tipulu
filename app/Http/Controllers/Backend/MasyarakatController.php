@@ -20,10 +20,14 @@ class MasyarakatController extends Controller
               ->orWhere('alamat', 'like', '%' . $request->q . '%');
     }
 
-    $masyarakat = $query->get();
+        $masyarakat = $query->orderBy('nama', 'asc')->paginate(10);
 
-    return view('backend.masyarakat.index', compact('title', 'masyarakat'))
-           ->with('q', $request->q);
+        // Simpan parameter pencarian agar tetap ada saat berpindah halaman
+        $masyarakat->appends(['q' => $request->q]);
+
+        return view('backend.masyarakat.index', compact('title', 'masyarakat'))
+               ->with('q', $request->q);
+
 }
 
 

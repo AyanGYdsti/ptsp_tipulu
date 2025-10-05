@@ -59,7 +59,9 @@
                     <tbody class="text-gray-700 text-xs sm:text-sm bg-white">
                         @forelse ($masyarakat as $data)
                             <tr class="hover:bg-blue-50 transition">
-                                <td class="px-2 sm:px-4 py-3 text-center font-semibold text-blue-600">{{ $loop->iteration }}</td>
+                                <td class="px-2 sm:px-4 py-3 text-center font-semibold text-blue-600">
+                                    {{ $masyarakat->firstItem() + $loop->index }}
+                                </td>
                                 <td class="px-2 sm:px-4 py-3">
                                     <div class="d-flex flex-column">
                                         <p class="font-bold text-xs sm:text-sm">{{ $data->nama }}</p>
@@ -104,10 +106,48 @@
                         @endforelse
                     </tbody>
                 </table>
+                <!-- Pagination -->
+                @if ($masyarakat->hasPages())
+                    <div class="mt-6 flex flex-col sm:flex-row justify-center sm:justify-between items-center text-sm text-gray-700 gap-4">
+                        <div class="text-gray-600">
+                            Menampilkan 
+                            <span class="font-semibold text-blue-600">
+                                {{ $masyarakat->firstItem() }}–{{ $masyarakat->lastItem() }}
+                            </span> 
+                            dari 
+                            <span class="font-semibold text-blue-600">{{ $masyarakat->total() }}</span> data
+                        </div>
+
+                        <!-- Tombol Navigasi -->
+                        <div class="flex items-center justify-center space-x-2">
+                            {{-- Tombol Previous --}}
+                            @if ($masyarakat->onFirstPage())
+                                <span class="px-3 py-2 bg-gray-200 text-gray-400 rounded-lg cursor-not-allowed">&laquo;</span>
+                            @else
+                                <a href="{{ $masyarakat->previousPageUrl() }}" class="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">&laquo;</a>
+                            @endif
+
+                            {{-- Tombol Halaman --}}
+                            @foreach ($masyarakat->getUrlRange(1, $masyarakat->lastPage()) as $page => $url)
+                                @if ($page == $masyarakat->currentPage())
+                                    <span class="px-3 py-2 bg-blue-600 text-white rounded-lg font-bold">{{ $page }}</span>
+                                @else
+                                    <a href="{{ $url }}" class="px-3 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition">{{ $page }}</a>
+                                @endif
+                            @endforeach
+
+                            {{-- Tombol Next --}}
+                            @if ($masyarakat->hasMorePages())
+                                <a href="{{ $masyarakat->nextPageUrl() }}" class="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">&raquo;</a>
+                            @else
+                                <span class="px-3 py-2 bg-gray-200 text-gray-400 rounded-lg cursor-not-allowed">&raquo;</span>
+                            @endif
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
-
     <!-- Modal Tambah Data dengan scroll -->
     <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-4">
         <div class="bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto transform scale-95 opacity-0 transition-all duration-300 relative"

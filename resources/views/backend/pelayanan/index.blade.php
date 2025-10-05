@@ -119,7 +119,9 @@
                     <tbody class="text-gray-700 text-sm bg-white">
                         @forelse ($pelayanan as $data)
                             <tr class="hover:bg-blue-50 transition">
-                                <td class="px-2 sm:px-4 py-3 text-center font-semibold text-blue-600">{{ $loop->iteration }}</td>
+                                <td class="px-2 sm:px-4 py-3 text-center font-semibold text-blue-600">
+                                {{ $pelayanan->firstItem() + $loop->index }}
+                                </td>
                                 <td class="px-2 sm:px-4 py-3 font-medium">{{ $data->nama }}</td>
                                 <td class="px-2 sm:px-4 py-3 text-center">{!! $data->icon !!}</td>
                                 <td class="px-2 sm:px-4 py-3 description-col" title="{{ $data->deskripsi }}">{{ $data->deskripsi }}</td>
@@ -153,9 +155,53 @@
                         @endforelse
                     </tbody>
                 </table>
+                <!-- Pagination -->
+                @if ($pelayanan->hasPages())
+                    <div class="mt-6 w-full flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-4 text-sm text-gray-700">
+                        
+                        <!-- Info jumlah data -->
+                        <div class="text-center sm:text-left text-gray-600 w-full sm:w-auto">
+                            Menampilkan 
+                            <span class="font-semibold text-blue-600">
+                                {{ $pelayanan->firstItem() }}–{{ $pelayanan->lastItem() }}
+                            </span> 
+                            dari 
+                            <span class="font-semibold text-blue-600">{{ $pelayanan->total() }}</span> data
+                        </div>
+
+                        <!-- Tombol Navigasi -->
+                        <div class="flex flex-wrap justify-center gap-2 w-full sm:w-auto">
+                            {{-- Tombol Previous --}}
+                            @if ($pelayanan->onFirstPage())
+                                <span class="px-3 py-2 bg-gray-200 text-gray-400 rounded-lg cursor-not-allowed">&laquo;</span>
+                            @else
+                                <a href="{{ $pelayanan->previousPageUrl() }}" 
+                                class="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">&laquo;</a>
+                            @endif
+
+                            {{-- Tombol Halaman --}}
+                            @foreach ($pelayanan->getUrlRange(1, $pelayanan->lastPage()) as $page => $url)
+                                @if ($page == $pelayanan->currentPage())
+                                    <span class="px-3 py-2 bg-blue-600 text-white rounded-lg font-bold">{{ $page }}</span>
+                                @else
+                                    <a href="{{ $url }}" 
+                                    class="px-3 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition">{{ $page }}</a>
+                                @endif
+                            @endforeach
+
+                            {{-- Tombol Next --}}
+                            @if ($pelayanan->hasMorePages())
+                                <a href="{{ $pelayanan->nextPageUrl() }}" 
+                                class="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">&raquo;</a>
+                            @else
+                                <span class="px-3 py-2 bg-gray-200 text-gray-400 rounded-lg cursor-not-allowed">&raquo;</span>
+                            @endif
+                        </div>
+                    </div>
+                @endif
             </div>
 
-            <!-- Mobile Card View - Updated to match persyaratan style -->
+            <!-- Mobile Card View - Updated to match pelayanan style -->
             <div class="mobile-card-view space-y-3">
                 @forelse ($pelayanan as $data)
                     <div class="bg-white rounded-lg border border-blue-200 shadow-sm p-4">
@@ -206,6 +252,14 @@
                         <p>Tidak Ada Data</p>
                     </div>
                 @endforelse
+
+                    <!-- Pagination -->
+                    @if ($pelayanan->hasPages())
+                        <div class="mt-6">
+                            {{ $pelayanan->links('vendor.pagination.tailwind') }}
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
     </div>

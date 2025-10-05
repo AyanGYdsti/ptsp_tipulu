@@ -24,11 +24,16 @@ class PelayananController extends Controller
                 });
         }
 
-        $pelayanan = $query->get();
-
+        $pelayanan = $query->orderBy('nama', 'asc')->paginate(10);
         $persyaratan = Persyaratan::get(['id', 'nama']);
 
-        return view('backend.pelayanan.index', compact('title', 'pelayanan', 'persyaratan'));
+        // Simpan parameter pencarian agar tetap ada saat berpindah halaman
+        $pelayanan->appends(['q' => $request->q]);
+
+        return view('backend.pelayanan.index', compact('title', 'pelayanan','persyaratan'))
+               ->with('q', $request->q);
+        $pelayanan = $query->get();
+
     }
 
 

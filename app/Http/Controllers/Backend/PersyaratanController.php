@@ -19,10 +19,13 @@ class PersyaratanController extends Controller
                 ->orWhere('keterangan', 'like', '%' . $request->q . '%');
         }
 
-        $persyaratan = $query->get();
+        $persyaratan = $query->orderBy('nama', 'asc')->paginate(10);
+
+        // Simpan parameter pencarian agar tetap ada saat berpindah halaman
+        $persyaratan->appends(['q' => $request->q]);
 
         return view('backend.persyaratan.index', compact('title', 'persyaratan'))
-            ->with('q', $request->q);
+               ->with('q', $request->q);
     }
 
     public function edit($id)
