@@ -66,106 +66,53 @@
                 </table>
             </div>
 
-            <!-- Tabel Mobile/Tablet - Card Layout -->
-            <div class="lg:hidden space-y-4">
+            <!-- Mobile Card View - Matching pelayanan style -->
+            <div class="lg:hidden space-y-3">
                 @forelse ($berita as $data)
-                    <div class="bg-white rounded-xl border border-blue-200 p-4 shadow-sm hover:shadow-md transition">
-                        <div class="flex items-start gap-4">
-                            <!-- Thumbnail -->
-                            <div class="flex-shrink-0">
+                    <div class="bg-white rounded-lg border border-blue-200 shadow-sm p-4">
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">
+                                        {{ $loop->iteration }}
+                                    </span>
+                                    <h3 class="font-semibold text-gray-800 text-sm">{{ $data->judul }}</h3>
+                                </div>
+
+                                <div class="text-xs text-gray-600 mb-2">
+                                    <strong>Deskripsi:</strong>
+                                    <div class="mt-1">{!! Str::limit($data->deskripsi, 100) !!}</div>
+                                </div>
+
                                 @if ($data->thumbnail)
-                                    <img src="{{ asset($data->thumbnail) }}" alt="thumb"
-                                        class="w-16 h-16 object-cover rounded-lg shadow">
-                                @else
-                                    <div class="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center">
-                                        <span class="text-gray-400 text-xs">No Image</span>
+                                    <div class="text-xs text-gray-600 mb-3">
+                                        <strong>Thumbnail:</strong>
+                                        <div class="mt-1">
+                                            <img src="{{ asset($data->thumbnail) }}" alt="thumb"
+                                                class="w-full max-w-[200px] h-32 object-cover rounded-lg shadow">
+                                        </div>
                                     </div>
                                 @endif
                             </div>
+                        </div>
 
-                            <!-- Content -->
-                            <div class="flex-1 min-w-0">
-                                <div class="flex items-start justify-between mb-2">
-                                    <span class="inline-flex items-center justify-center w-6 h-6 bg-blue-600 text-white rounded-full text-xs font-semibold">
-                                        {{ $loop->iteration }}
-                                    </span>
-                                    <div class="flex gap-3">
-                                        <a href="{{ route('berita.edit', $data->id) }}"
-                                            class="text-yellow-500 hover:text-yellow-600 transition transform hover:scale-110"
-                                            title="Edit">
-                                            <i class="fa fa-edit text-lg"></i>
-                                        </a>
-                                        <button onclick="confirmDelete('{{ route('berita.delete', $data->id) }}', '{{ $data->judul }}')"
-                                            class="text-red-500 hover:text-red-600 transition transform hover:scale-110"
-                                            title="Hapus">
-                                            <i class="fa fa-trash text-lg"></i>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <h3 class="font-semibold text-gray-800 text-sm mb-2 line-clamp-2">{{ $data->judul }}</h3>
-                                <p class="text-gray-600 text-xs leading-relaxed">{!! Str::limit($data->deskripsi, 100) !!}</p>
-                            </div>
+                        <div class="flex justify-end gap-3 pt-2 border-t border-gray-100">
+                            <a href="{{ route('berita.edit', $data->id) }}"
+                                class="bg-yellow-500 text-white px-3 py-1 rounded text-xs hover:bg-yellow-600 transition flex items-center gap-1">
+                                <i class="fa fa-edit"></i> Edit
+                            </a>
+                            <button onclick="confirmDelete('{{ route('berita.delete', $data->id) }}', '{{ $data->judul }}')"
+                                class="bg-red-500 text-white px-3 py-1 rounded text-xs hover:bg-red-600 transition flex items-center gap-1">
+                                <i class="fa fa-trash"></i> Hapus
+                            </button>
                         </div>
                     </div>
                 @empty
-                    <div class="bg-white rounded-xl border border-blue-200 p-8 text-center">
-                        <i class="fa fa-newspaper text-gray-300 text-4xl mb-3"></i>
-                        <p class="text-gray-500">Tidak ada data berita</p>
+                    <div class="bg-white rounded-lg border border-blue-200 p-6 text-center text-gray-500">
+                        <i class="fa fa-inbox text-3xl mb-2 text-gray-300"></i>
+                        <p>Tidak ada data berita</p>
                     </div>
                 @endforelse
-            </div>
-
-            <!-- Alternatif: Tabel Horizontal Scroll untuk Tablet -->
-            <div class="hidden md:block lg:hidden overflow-x-auto rounded-xl border border-blue-200">
-                <table class="min-w-full rounded-xl overflow-hidden">
-                    <thead class="bg-blue-600 text-white uppercase text-xs font-semibold tracking-wider">
-                        <tr>
-                            <th class="px-3 py-2 text-center">No</th>
-                            <th class="px-3 py-2 text-left min-w-[150px]">Judul</th>
-                            <th class="px-3 py-2 text-left min-w-[200px]">Deskripsi</th>
-                            <th class="px-3 py-2 text-center min-w-[80px]">Thumbnail</th>
-                            <th class="px-3 py-2 text-center min-w-[100px]">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-gray-700 text-sm bg-white">
-                        @forelse ($berita as $data)
-                            <tr class="hover:bg-blue-50 transition">
-                                <td class="px-3 py-2 text-center font-semibold text-blue-600">{{ $loop->iteration }}</td>
-                                <td class="px-3 py-2">{{ $data->judul }}</td>
-                                <td class="px-3 py-2">{!! Str::limit($data->deskripsi, 60) !!}</td>
-                                <td class="px-3 py-2 text-center">
-                                    @if ($data->thumbnail)
-                                        <img src="{{ asset($data->thumbnail) }}" alt="thumb"
-                                            class="w-12 h-12 object-cover rounded-lg mx-auto shadow">
-                                    @else
-                                        <span class="text-gray-400">-</span>
-                                    @endif
-                                </td>
-                                <td class="px-3 py-2">
-                                    <div class="flex justify-center items-center gap-2">
-                                        <a href="{{ route('berita.edit', $data->id) }}"
-                                            class="text-yellow-500 hover:text-yellow-600 transition"
-                                            title="Edit">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                        <button onclick="confirmDelete('{{ route('berita.delete', $data->id) }}', '{{ $data->judul }}')"
-                                            class="text-red-500 hover:text-red-600 transition"
-                                            title="Hapus">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5" class="text-center p-3">
-                                    Tidak ada data berita
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>
@@ -262,15 +209,6 @@
             </div>
         </div>
     </div>
-
-    <style>
-        .line-clamp-2 {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-    </style>
 
     <!-- TinyMCE CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js"></script>

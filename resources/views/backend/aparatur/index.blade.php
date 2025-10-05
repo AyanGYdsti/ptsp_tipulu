@@ -21,21 +21,17 @@
                 <table class="min-w-full rounded-xl overflow-hidden">
                     <thead class="bg-blue-600 text-white uppercase text-xs font-semibold tracking-wider">
                         <tr>
+                            <th class="px-4 py-3 text-center">Foto</th>
                             <th class="px-4 py-3 text-center">Posisi</th>
                             <th class="px-4 py-3 text-left">NIP</th>
                             <th class="px-4 py-3 text-left">Nama</th>
                             <th class="px-4 py-3 text-left">Jabatan</th>
-                            <th class="px-4 py-3 text-center">Foto</th>
                             <th class="px-4 py-3 text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="text-gray-700 text-sm bg-white">
                         @forelse ($aparatur as $data)
                             <tr class="hover:bg-blue-50 transition">
-                                <td class="px-4 py-3 text-center font-semibold text-blue-600">{{ $data->posisi }}</td>
-                                <td class="px-4 py-3">{{ $data->nip }}</td>
-                                <td class="px-4 py-3">{{ $data->nama }}</td>
-                                <td class="px-4 py-3">{{ $data->jabatan }}</td>
                                 <td class="px-4 py-3 text-center">
                                     @if ($data->foto)
                                         <img src="{{ asset($data->foto) }}" alt="foto_aparatur"
@@ -44,6 +40,10 @@
                                         <span class="text-gray-400">-</span>
                                     @endif
                                 </td>
+                                <td class="px-4 py-3 text-center font-semibold text-blue-600">{{ $data->posisi }}</td>
+                                <td class="px-4 py-3">{{ $data->nip }}</td>
+                                <td class="px-4 py-3">{{ $data->nama }}</td>
+                                <td class="px-4 py-3">{{ $data->jabatan }}</td>
                                 <td class="px-4 py-3">
                                     <div class="flex justify-center items-center gap-3">
                                         <a href="{{ route('aparatur.edit', $data->id) }}"
@@ -72,51 +72,58 @@
             </div>
 
             <!-- Mobile & Tablet Card View -->
-            <div class="lg:hidden space-y-4">
+            <div class="lg:hidden space-y-3">
                 @forelse ($aparatur as $data)
-                    <div class="bg-white rounded-xl border border-blue-200 shadow-sm p-4 hover:shadow-md transition">
-                        <div class="flex items-start gap-4">
-                            <!-- Foto -->
-                            <div class="flex-shrink-0">
-                                @if ($data->foto)
-                                    <img src="{{ asset($data->foto) }}" alt="foto_aparatur"
-                                        class="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg shadow">
-                                @else
-                                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gray-200 rounded-lg flex items-center justify-center">
-                                        <i class="fa fa-user text-gray-400 text-xl"></i>
-                                    </div>
-                                @endif
+                    <div class="bg-white rounded-lg border border-blue-200 shadow-sm p-4">
+                        <!-- Foto di Atas & Tengah -->
+                        <div class="flex justify-center mb-4">
+                            @if ($data->foto)
+                                <img src="{{ asset($data->foto) }}" alt="foto_aparatur"
+                                    class="w-24 h-24 object-cover rounded-lg shadow-md">
+                            @else
+                                <div class="w-24 h-24 bg-gray-200 rounded-lg flex items-center justify-center">
+                                    <span class="text-gray-400 text-xs">Tidak ada foto</span>
+                                </div>
+                            @endif
+                        </div>
+
+                        <!-- Info Aparatur -->
+                        <div class="space-y-2">
+                            <div class="flex justify-center mb-3">
+                                <span class="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded">
+                                    Posisi {{ $data->posisi }}
+                                </span>
                             </div>
 
-                            <!-- Info -->
-                            <div class="flex-1 min-w-0">
-                                <div class="flex justify-between items-start mb-2">
-                                    <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-1 rounded-full">
-                                        Posisi {{ $data->posisi }}
-                                    </span>
-                                    <div class="flex gap-2 ml-2">
-                                        <a href="{{ route('aparatur.edit', $data->id) }}"
-                                            class="text-yellow-500 hover:text-yellow-600 transition p-1"
-                                            title="Edit">
-                                            <i class="fa fa-edit text-lg"></i>
-                                        </a>
-                                        <button onclick="confirmDelete('{{ route('aparatur.delete', $data->id) }}', '{{ $data->nama }}')"
-                                            class="text-red-500 hover:text-red-600 transition p-1"
-                                            title="Hapus">
-                                            <i class="fa fa-trash text-lg"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <h3 class="font-semibold text-gray-900 text-lg truncate">{{ $data->nama }}</h3>
-                                <p class="text-gray-600 text-sm mt-1 break-words">{{ $data->nip }}</p>
-                                <p class="text-gray-600 text-sm mt-1 break-words">{{ $data->jabatan }}</p>
+                            <div class="text-center mb-2">
+                                <h3 class="font-semibold text-gray-800 text-base">{{ $data->nama }}</h3>
                             </div>
+
+                            <div class="text-sm text-gray-600 text-center">
+                                <strong>NIP:</strong> {{ $data->nip }}
+                            </div>
+
+                            <div class="text-sm text-gray-600 text-center">
+                                <strong>Jabatan:</strong> {{ $data->jabatan }}
+                            </div>
+                        </div>
+
+                        <!-- Aksi Buttons -->
+                        <div class="flex justify-center gap-3 pt-3 mt-3 border-t border-gray-100">
+                            <a href="{{ route('aparatur.edit', $data->id) }}"
+                                class="bg-yellow-500 text-white px-4 py-2 rounded text-sm hover:bg-yellow-600 transition flex items-center gap-1">
+                                <i class="fa fa-edit"></i> Edit
+                            </a>
+                            <button onclick="confirmDelete('{{ route('aparatur.delete', $data->id) }}', '{{ $data->nama }}')"
+                                class="bg-red-500 text-white px-4 py-2 rounded text-sm hover:bg-red-600 transition flex items-center gap-1">
+                                <i class="fa fa-trash"></i> Hapus
+                            </button>
                         </div>
                     </div>
                 @empty
-                    <div class="bg-white rounded-xl border border-blue-200 p-8 text-center">
-                        <i class="fa fa-inbox text-4xl text-gray-300 mb-4"></i>
-                        <p class="text-gray-500">Tidak ada data aparatur</p>
+                    <div class="bg-white rounded-lg border border-blue-200 p-6 text-center text-gray-500">
+                        <i class="fa fa-inbox text-3xl mb-2 text-gray-300"></i>
+                        <p>Tidak ada data aparatur</p>
                     </div>
                 @endforelse
             </div>
