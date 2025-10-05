@@ -39,6 +39,27 @@
                     @enderror
                 </div>
 
+                <!-- RT & RW -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-600 mb-1">RT</label>
+                        <input type="number" name="RT" value="{{ old('RT', $masyarakat->RT) }}"
+                            class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
+                        @error('RT')
+                            <p class="text-red-500 text-sm">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-600 mb-1">RW</label>
+                        <input type="number" name="RW" value="{{ old('RW', $masyarakat->RW) }}"
+                            class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
+                        @error('RW')
+                            <p class="text-red-500 text-sm">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
                 <!-- Tempat Lahir -->
                 <div class="mb-4">
                     <label class="block text-sm font-semibold text-gray-600 mb-1">Tempat Lahir</label>

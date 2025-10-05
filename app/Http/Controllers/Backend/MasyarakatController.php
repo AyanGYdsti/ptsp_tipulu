@@ -72,7 +72,7 @@ class MasyarakatController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            'nik' => 'required|unique:masyarakats,nik',
+            'nik' => 'required|unique:masyarakats,nik,' . $id . ',nik',
             'nama' => 'required',
             'RT'=> 'required',
             'RW'=> 'required',
