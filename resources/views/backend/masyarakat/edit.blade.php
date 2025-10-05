@@ -125,17 +125,6 @@
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
-
-                <!-- Nomor HP -->
-                <div class="mb-4">
-                    <label class="block text-sm font-semibold text-gray-600 mb-1">Nomor HP</label>
-                    <input type="text" name="no_hp" value="{{ old('no_hp', $masyarakat->no_hp) }}"
-                        class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
-                    @error('no_hp')
-                        <p class="text-red-500 text-sm">{{ $message }}</p>
-                    @enderror
-                </div>
-
                 <!-- Tombol -->
                 <div class="flex justify-end gap-2 mt-6">
                     <a href="{{ route('masyarakat') }}"
