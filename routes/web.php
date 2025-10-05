@@ -30,6 +30,16 @@ Route::get('/detail-berita/{id}', [DetailBeritaController::class, 'index'])->nam
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'authLogin'])->name('auth.login');
 
+Route::get('/landing-page', [LandingPageController::class, 'index'])->name('landing-page');
+Route::post('/landing-page/store', [LandingPageController::class, 'store'])->name('landing-page.store');
+Route::get('/sejarah', [LandingPageController::class, 'sejarah'])->name('sejarah');
+Route::get('/sejarah/detail', [LandingPageController::class, 'detailSejarah'])->name('sejarah.detail');
+Route::get('/visimisi', [LandingPageController::class, 'detailVisiMisi'])->name('visimisi');
+
+Route::get('/pengajuan/{id}', [PengajuanController::class, 'index'])->name('pengajuan');
+Route::post('/pengajuan/cek/{id}', [PengajuanController::class, 'cek'])->name('pengajuan.cek');
+Route::post('/pengajuan/store/{id}', [PengajuanController::class, 'store'])->name('pengajuan.store');
+Route::get('/pengajuan/detail/{id}/{nik?}', [PengajuanController::class, 'detail'])->name('pengajuan.detail');
 // Route dengan middleware auth
 Route::middleware(['auth'])->group(function () {
     Route::get('/surat', function () {
@@ -87,11 +97,6 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/berita/update/{id}', [BeritaController::class, 'update'])->name('berita.update');
     Route::get('/berita/delete/{id}', [BeritaController::class, 'delete'])->name('berita.delete');
 
-    Route::get('/landing-page', [LandingPageController::class, 'index'])->name('landing-page');
-    Route::post('/landing-page/store', [LandingPageController::class, 'store'])->name('landing-page.store');
-    Route::get('/sejarah', [LandingPageController::class, 'sejarah'])->name('sejarah');
-    Route::get('/sejarah/detail', [LandingPageController::class, 'detailSejarah'])->name('sejarah.detail');
-    Route::get('/visimisi', [LandingPageController::class, 'detailVisiMisi'])->name('visimisi');
 
 
     Route::get('/list-pelayanan', [FrontendListpelayananController::class, 'index'])->name('list-pelayanan');
@@ -102,10 +107,6 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/aparatur/update/{id}', [AparaturController::class, 'update'])->name('aparatur.update');
     Route::get('/aparatur/delete/{id}', [AparaturController::class, 'delete'])->name('aparatur.delete');
 
-    Route::get('/pengajuan/{id}', [PengajuanController::class, 'index'])->name('pengajuan');
-    Route::post('/pengajuan/cek/{id}', [PengajuanController::class, 'cek'])->name('pengajuan.cek');
-    Route::post('/pengajuan/store/{id}', [PengajuanController::class, 'store'])->name('pengajuan.store');
-    Route::get('/pengajuan/detail/{id}/{nik?}', [PengajuanController::class, 'detail'])->name('pengajuan.detail');
 
     // Route ini khusus untuk menerima laporan FCM token dari aplikasi Flutter
     // Route::post('/api/save-fcm-token', [FcmController::class, 'saveToken'])->name('api.save_token');
