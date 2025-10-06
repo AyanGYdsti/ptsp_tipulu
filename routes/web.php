@@ -13,6 +13,7 @@ use App\Http\Controllers\Frontend\BerandaController;
 use App\Http\Controllers\Frontend\DetailBeritaController;
 use App\Http\Controllers\Frontend\ListpelayananController as FrontendListpelayananController;
 use App\Http\Controllers\Frontend\PengajuanController;
+use App\Http\Controllers\Frontend\ListaparaturController;
 use App\Http\Controllers\ListpelayananController;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,7 @@ Route::get('/sejarah', [LandingPageController::class, 'sejarah'])->name('sejarah
 Route::get('/sejarah/detail', [LandingPageController::class, 'detailSejarah'])->name('sejarah.detail');
 Route::get('/visimisi', [LandingPageController::class, 'detailVisiMisi'])->name('visimisi');
 
+Route::get('/list-aparatur', [ListaparaturController::class, 'index'])->name('frontend.aparatur.index');
 Route::get('/list-pelayanan', [FrontendListpelayananController::class, 'index'])->name('list-pelayanan');
 Route::get('/pengajuan/{id}', [PengajuanController::class, 'index'])->name('pengajuan');
 Route::post('/pengajuan/cek/{id}', [PengajuanController::class, 'cek'])->name('pengajuan.cek');

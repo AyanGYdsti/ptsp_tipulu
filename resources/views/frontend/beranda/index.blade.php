@@ -133,7 +133,7 @@
                 </div>
                 <div class="text-center mt-12 fade-in-up">
                     
-                    <a href="#"
+                <a href="{{ route('frontend.aparatur.index') }}" 
                         class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors text-lg">Lihat
                         Semua Aparatur</a>
                 </div>
