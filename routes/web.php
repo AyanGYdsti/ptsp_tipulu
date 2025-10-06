@@ -36,6 +36,7 @@ Route::get('/sejarah', [LandingPageController::class, 'sejarah'])->name('sejarah
 Route::get('/sejarah/detail', [LandingPageController::class, 'detailSejarah'])->name('sejarah.detail');
 Route::get('/visimisi', [LandingPageController::class, 'detailVisiMisi'])->name('visimisi');
 
+Route::get('/list-pelayanan', [FrontendListpelayananController::class, 'index'])->name('list-pelayanan');
 Route::get('/pengajuan/{id}', [PengajuanController::class, 'index'])->name('pengajuan');
 Route::post('/pengajuan/cek/{id}', [PengajuanController::class, 'cek'])->name('pengajuan.cek');
 Route::post('/pengajuan/store/{id}', [PengajuanController::class, 'store'])->name('pengajuan.store');
@@ -99,7 +100,6 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-    Route::get('/list-pelayanan', [FrontendListpelayananController::class, 'index'])->name('list-pelayanan');
 
     Route::get('/aparatur', [AparaturController::class, 'index'])->name('aparatur');
     Route::get('/aparatur/edit/{id}', [AparaturController::class, 'edit'])->name('aparatur.edit');
