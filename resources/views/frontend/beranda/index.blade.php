@@ -259,7 +259,7 @@
                     </div>
                     <div>
                         <h3 class="text-2xl font-bold mb-4">Waktu Pelayanan</h3>
-                        <p>{!! $landingPage->waktu_pelayanan ?? '-' !!}</p>
+                        <p>{!! $landingPage->waktu_pelayanan ?? '07:00 - 15:00 WITA' !!}</p>
                         <div class="mt-6">
                             <a href="#"
                                 class="inline-flex items-center bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">
@@ -279,3 +279,4 @@
 
 @push('scripts')
 @endpush
+ 
