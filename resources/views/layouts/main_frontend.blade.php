@@ -5,6 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Resmi Kelurahan Tipulu</title>
+
+    <meta name="google-site-verification" content="nQDPltT3lbevHFhYmcdR1_9crePvIG-lDKTJuNJElS8" />
+
+    <!-- 🌍 SEO Meta Tags -->
+    <meta name="description" content="Portal resmi Kelurahan Tipulu melalui program Meambo. Layanan administrasi publik seperti surat keterangan domisili, izin usaha mikro, dan surat pengantar RT/RW secara online.">
+    <meta name="keywords" content="PTSP Kelurahan Tipulu, Meambo, Kelurahan Tipulu, layanan publik Kendari, pelayanan terpadu satu pintu, surat keterangan domisili, surat pengantar RT RW, izin usaha mikro, pelayanan online, pemerintah kota Kendari, kelurahan Tipulu Kendari">
+    <meta name="author" content="Pemerintah Kelurahan Tipulu">
+    <meta name="robots" content="index, follow">
+
+    <!-- 🧩 Open Graph -->
+    <meta property="og:title" content="Portal Resmi Kelurahan Tipulu | Meambo - Layanan Publik Online">
+    <meta property="og:description" content="Pelayanan publik online Kelurahan Tipulu melalui program Meambo — cepat, mudah, dan transparan.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://meambo.id/">
+    <meta property="og:image" content="{{ asset('assets/images/thumbnail.png') }}">
+
+    <!-- 🐦 Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Portal Resmi Kelurahan Tipulu | Meambo">
+    <meta name="twitter:description" content="Akses layanan administrasi kelurahan secara online dengan cepat dan mudah.">
+    <meta name="twitter:image" content="{{ asset('assets/images/thumbnail.png') }}">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
