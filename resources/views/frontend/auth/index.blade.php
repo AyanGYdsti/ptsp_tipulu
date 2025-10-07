@@ -31,8 +31,8 @@
     <div class="flex items-center justify-center min-h-screen bg-gray-200 p-4 sm:p-6 md:p-8">
         <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-sm sm:max-w-md">
             <div class="text-center mb-6">
-                <img src="https://placehold.co/80x80/3B82F6/FFFFFF?text=KT" alt="Logo"
-                    class="mx-auto mb-4 rounded-full w-16 h-16 sm:w-20 sm:h-20">
+                <img src="/assets/img/SPLASH%20SCREEN%20LOGO.png" alt="Logo"
+                    class="mx-auto mb-4 w-16 h-16 sm:w-20 sm:h-20">
                 <h1 class="text-xl sm:text-2xl font-bold text-gray-800">Dasbor Admin Kelurahan</h1>
                 <p class="text-sm sm:text-base text-gray-500">Silakan login untuk melanjutkan</p>
             </div>

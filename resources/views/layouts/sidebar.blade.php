@@ -2,10 +2,14 @@
 <div id="sidebar"
     class="w-64 bg-gray-800 text-white flex flex-col fixed h-full transform -translate-x-full md:translate-x-0 transition-transform duration-300 z-50">
 
-    <div class="p-4 border-b border-gray-700 flex items-center gap-3">
-        <img src="https://placehold.co/40x40/3B82F6/FFFFFF?text=KT" alt="Logo" class="rounded-full">
-        <div>
-            <h2 class="text-lg font-bold">Kel. Tipulu</h2>
+   <div class="p-5 border-b border-gray-700 flex items-center gap-4">
+        <div class="bg-gray-800 p-2 rounded-xl flex items-center justify-center">
+            <img src="/assets/img/APP%20LOGO.png" 
+                alt="Logo" 
+                class="w-14 h-14 sm:w-16 sm:h-16 object-contain rounded-lg shadow-md">
+        </div>
+        <div class="flex flex-col">
+            <h2 class="text-lg font-semibold text-white leading-tight">Kel. Tipulu</h2>
             <p class="text-xs text-gray-400">Dasbor Admin</p>
         </div>
     </div>

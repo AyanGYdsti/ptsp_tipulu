@@ -53,9 +53,8 @@
             <div class="flex items-center justify-between h-20">
                 <div class="flex-shrink-0">
                     <a href="#" class="flex items-center space-x-3">
-                        <img class="h-10 w-auto" src="/public/assets/images/HEADER LOGO.png"
+                        <img class="h-[100px] w-auto" src="/assets/img/HEADER%20LOGO.png"
                             alt="Logo Kelurahan Tipulu">
-                        <span class="font-bold text-xl text-gray-800">Kelurahan Tipulu</span>
                     </a>
                 </div>
                 <div class="hidden md:block">
