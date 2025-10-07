@@ -25,13 +25,13 @@
     <meta property="og:description" content="Pelayanan publik online Kelurahan Tipulu melalui program Meambo — cepat, mudah, dan transparan.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="http://meambo.id/">
-    <meta property="og:image" content="{{ asset('assets/images/thumbnail.png') }}">
+    <meta property="og:image" content="{{ asset('assets/img/APP%20LOGO.png') }}">
 
     <!-- 🐦 Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Portal Resmi Kelurahan Tipulu | Meambo">
     <meta name="twitter:description" content="Akses layanan administrasi kelurahan secara online dengan cepat dan mudah.">
-    <meta name="twitter:image" content="{{ asset('assets/images/thumbnail.png') }}">
+    <meta name="twitter:image" content="{{ asset('assets/img/APP%20LOGO.png') }}">
 
     <script src="/assets/js/tail.js"></script>
     <script src="/assets/js/chart.js"></script>
