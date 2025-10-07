@@ -32,7 +32,7 @@ Route::get('/detail-berita/{id}', [DetailBeritaController::class, 'index'])->nam
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'authLogin'])->name('auth.login');
 
-Route::get('/detail-aparatur', [DetailAparaturController::class, 'index'])->name('detail-aparatur');
+Route::get('/detail-aparatur', [ListAparaturController::class, 'index'])->name('detail-aparatur');
 
 Route::get('/landing-page', [LandingPageController::class, 'index'])->name('landing-page');
 Route::post('/landing-page/store', [LandingPageController::class, 'store'])->name('landing-page.store');
