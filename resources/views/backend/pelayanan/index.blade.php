@@ -262,7 +262,6 @@
             </div>
         </div>
     </div>
-@endsection
 
     <!-- Modal Tambah Data -->
     <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-4">
@@ -367,6 +366,7 @@
             </div>
         </div>
     </div>
+@endsection
 
 
 @push('scripts')
