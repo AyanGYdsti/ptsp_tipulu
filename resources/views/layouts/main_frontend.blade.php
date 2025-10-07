@@ -14,6 +14,12 @@
     <meta name="author" content="Pemerintah Kelurahan Tipulu">
     <meta name="robots" content="index, follow">
 
+    <!-- 🧿 Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/img/APP%20LOGO.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/img/APP%20LOGO.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/img/APP%20LOGO.png') }}">
+    <meta name="theme-color" content="#1e3a8a">
+    
     <!-- 🧩 Open Graph -->
     <meta property="og:title" content="Portal Resmi Kelurahan Tipulu | Meambo - Layanan Publik Online">
     <meta property="og:description" content="Pelayanan publik online Kelurahan Tipulu melalui program Meambo — cepat, mudah, dan transparan.">
