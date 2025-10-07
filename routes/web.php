@@ -18,6 +18,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\PermohonanController;
 use App\Http\Controllers\Api\FcmController;
+use App\Http\Controllers\Frontend\DetailAparaturController;
 use App\Models\Pengajuan;
 
 // Route::get('/', function () {
@@ -29,6 +30,8 @@ Route::get('/', [BerandaController::class, 'index'])->name('beranda');
 Route::get('/detail-berita/{id}', [DetailBeritaController::class, 'index'])->name('detail-berita');
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'authLogin'])->name('auth.login');
+
+Route::get('/detail-aparatur', [DetailAparaturController::class, 'index'])->name('detail-aparatur');
 
 Route::get('/landing-page', [LandingPageController::class, 'index'])->name('landing-page');
 Route::post('/landing-page/store', [LandingPageController::class, 'store'])->name('landing-page.store');
