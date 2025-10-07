@@ -275,33 +275,38 @@ class PengajuanController extends Controller
             }
 
             // ✅ KIRIM NOTIFIKASI KE ADMIN
+            $pengajuNama = '';
             if ($pelayanan && $pelayanan->nama === "Surat Keterangan Tempat Tinggal Sementara") {
-                // Ambil dari form langsung
+                // Untuk layanan ini, nama diambil langsung dari input form yang sudah divalidasi
                 $pengajuNama = $data['nama'];
-                $pengajuNik  = $data['nik'];
             } else {
-                // Ambil dari relasi masyarakat
-                $pengajuNama = $masyarakat->nama ?? 'Tidak diketahui';
-                $pengajuNik  = $masyarakat->nik ?? $data['nik'];
+                // Untuk layanan lain, ambil dari relasi 'masyarakat' yang ada di model Pengajuan.
+                // Ini lebih andal karena model $pengajuan sudah pasti ada.
+                $pengajuNama = optional($pengajuan->masyarakat)->nama;
             }
 
+            // Sediakan nilai fallback (pengganti) jika nama tetap kosong karena alasan apapun
+            $namaUntukNotif = $pengajuNama ?? 'Pengaju Tidak Dikenal';
+            $pelayananNama = optional($pelayanan)->nama ?? 'Layanan';
+
+            // ✅ KIRIM NOTIFIKASI KE ADMIN DENGAN DATA YANG SUDAH AMAN
             $this->fcmService->sendToAllAdmins(
                 '📝 Pengajuan Baru!',
-                "Pengajuan {$pelayanan->nama} dari {$pengajuNama}",
+                "Pengajuan {$pelayananNama} dari {$namaUntukNotif}",
                 [
                     'type' => 'new_pengajuan',
                     'pengajuan_id' => (string) $pengajuan->id,
-                    'pelayanan_id' => (string) $pelayanan->id,
-                    'pelayanan_nama' => $pelayanan->nama,
-                    'pengaju_nama' => $pengajuNama,
-                    'pengaju_nik' => $pengajuNik,
+                    'pelayanan_id' => (string) $pengajuan->pelayanan_id,
+                    'pelayanan_nama' => $pelayananNama,
+                    'pengaju_nama' => $namaUntukNotif,
+                    'pengaju_nik' => $pengajuan->nik,
                 ]
             );
 
             Log::info('Pengajuan berhasil dibuat', [
                 'pengajuan_id' => $pengajuan->id,
-                'nik' => $pengajuNik,
-                'pelayanan' => $pelayanan->nama
+                'nik' => $pengajuan->nik,
+                'pelayanan' => $pelayananNama
             ]);
 
             return redirect()->back()->with('success', 'Berhasil mengajukan permohonan.');
