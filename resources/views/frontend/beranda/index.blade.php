@@ -55,12 +55,12 @@
                         @endforeach
                     </div>
                 </div>
-            </section>
                 <div class="text-center mt-12 fade-in-up">
                     <a href="{{ route('list-pelayanan') }}"
                         class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors text-lg">Lihat
                         Semua Layanan</a>
                 </div>
+            </section>
             </div>
         </section>
 
@@ -189,6 +189,10 @@
 
         <section id="profil" class="py-20 bg-white">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12 fade-in-up">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Profil Kelurahan</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Pelajari lebih dalam tentang sejarah, visi, dan misi Kelurahan Tipulu untuk membangun lingkungan yang lebih maju dan harmonis.</p>
+                </div>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
                    <!-- Deskripsi -->

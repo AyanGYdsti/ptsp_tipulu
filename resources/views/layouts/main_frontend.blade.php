@@ -68,6 +68,8 @@
                             class="text-gray-600 hover:text-blue-600 font-medium">Berita</a>
                         <a href="{{ $prefix }}#aparatur"
                             class="text-gray-600 hover:text-blue-600 font-medium">Aparatur</a>
+                        <a href="{{ $prefix }}#data-penduduk"
+                            class="text-gray-600 hover:text-blue-600 font-medium">Statistik</a  >
                         <a href="{{ $prefix }}#profil"
                             class="text-gray-600 hover:text-blue-600 font-medium">Profil</a>
                         <a href="{{ $prefix }}#kontak"
@@ -96,8 +98,8 @@
                     class="text-gray-600 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">Berita</a>
                 <a href="{{ $prefix }}#profil"
                     class="text-gray-600 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">Profil</a>
-                <a href="{{ $prefix }}#pengaduan"
-                    class="text-gray-600 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">Pengaduan</a>
+                <a href="{{ $prefix }}#data-penduduk"
+                    class="text-gray-600 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">Statistik</a>
                 <a href="{{ $prefix }}#kontak"
                     class="text-gray-600 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">Kontak</a>
             </div>
@@ -119,8 +121,9 @@
                     <ul class="space-y-2">
                         <li><a href="#layanan" class="text-gray-400 hover:text-white">Layanan</a></li>
                         <li><a href="#berita" class="text-gray-400 hover:text-white">Berita</a></li>
+                        <li><a href="#aparatur" class="text-gray-400 hover:text-white">Aparatur</a></li>
+                        <li><a href="#data-penduduk" class="text-gray-400 hover:text-white">Statistik</a></li>
                         <li><a href="#profil" class="text-gray-400 hover:text-white">Profil</a></li>
-                        <li><a href="#pengaduan" class="text-gray-400 hover:text-white">Pengaduan</a></li>
                         <li><a href="#kontak" class="text-gray-400 hover:text-white">Kontak</a></li>
                     </ul>
                 </div>
