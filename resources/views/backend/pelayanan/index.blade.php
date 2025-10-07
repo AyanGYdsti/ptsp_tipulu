@@ -102,8 +102,7 @@
                     </button>
                 </div>
             </div>
-
-            <!-- Desktop Table View -->
+            {{-- Table Dekstop --}}
             <div class="desktop-table-view overflow-x-auto rounded-xl border border-blue-200">
                 <table class="min-w-full rounded-xl overflow-hidden table-responsive">
                     <thead class="bg-blue-600 text-white uppercase text-xs font-semibold tracking-wider">
@@ -118,19 +117,19 @@
                     </thead>
                     <tbody class="text-gray-700 text-sm bg-white">
                         @forelse ($pelayanan as $data)
-                            <tr class="hover:bg-blue-50 transition">
-                                <td class="px-2 sm:px-4 py-3 text-center font-semibold text-blue-600">
-                                {{ $pelayanan->firstItem() + $loop->index }}
+                            <tr class="border-b border-gray-200 hover:bg-blue-50 transition">
+                                <td class="px-2 sm:px-4 py-3 text-center font-semibold text-blue-600 align-top">
+                                    {{ $pelayanan->firstItem() + $loop->index }}
                                 </td>
-                                <td class="px-2 sm:px-4 py-3 font-medium">{{ $data->nama }}</td>
-                                <td class="px-2 sm:px-4 py-3 text-center">{!! $data->icon !!}</td>
-                                <td class="px-2 sm:px-4 py-3 description-col" title="{{ $data->deskripsi }}">{{ $data->deskripsi }}</td>
-                                <td class="px-2 sm:px-4 py-3 requirements-col">
+                                <td class="px-2 sm:px-4 py-3 font-medium align-top">{{ $data->nama }}</td>
+                                <td class="px-2 sm:px-4 py-3 text-center align-top">{!! $data->icon !!}</td>
+                                <td class="px-2 sm:px-4 py-3 description-col align-top" title="{{ $data->deskripsi }}">{{ $data->deskripsi }}</td>
+                                <td class="px-2 sm:px-4 py-3 requirements-col align-top">
                                     @foreach ($data->pelayananPersyaratan as $item)
                                         <span class="px-1 sm:px-2 py-1 bg-blue-500 text-white rounded text-xs mr-1 mb-1 inline-block">{{ $item->persyaratan->nama }}</span>
                                     @endforeach
                                 </td>
-                                <td class="px-2 sm:px-4 py-3 text-center">
+                                <td class="px-2 sm:px-4 py-3 text-center align-top">
                                     <div class="flex justify-center gap-2 action-buttons">
                                         <a href="{{ route('pelayanan.edit', $data->id) }}"
                                             class="text-yellow-500 hover:text-yellow-600 transition transform hover:scale-110 p-1"

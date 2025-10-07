@@ -56,7 +56,6 @@
                 </div>
             </div>
 
-            <!-- Desktop Table View -->
             <div class="desktop-table-view overflow-x-auto rounded-xl border border-blue-200">
                 <table class="min-w-full rounded-xl overflow-hidden">
                     <thead class="bg-blue-600 text-white uppercase text-xs font-semibold tracking-wider">
@@ -71,11 +70,11 @@
                     </thead>
                     <tbody class="text-gray-700 text-sm bg-white">
                         @forelse ($masyarakat as $data)
-                            <tr class="hover:bg-blue-50 transition">
-                                <td class="px-2 sm:px-4 py-3 text-center font-semibold text-blue-600">
+                            <tr class="border-b border-gray-200 hover:bg-blue-50 transition">
+                                <td class="px-2 sm:px-4 py-3 text-center font-semibold text-blue-600 align-top">
                                     {{ $masyarakat->firstItem() + $loop->index }}
                                 </td>
-                                <td class="px-2 sm:px-4 py-3">
+                                <td class="px-2 sm:px-4 py-3 align-top">
                                     <div class="d-flex flex-column">
                                         <p class="font-bold text-sm">{{ $data->nama }}</p>
                                         <p class="opacity-75 text-xs">Nik:{{ $data->nik }}</p>
@@ -84,10 +83,10 @@
                                         <p class="opacity-75 text-xs break-words max-w-[200px]">Alamat:{{ $data->alamat }}</p>
                                     </div>
                                 </td>
-                                <td class="px-2 sm:px-4 py-3 text-sm">{{ $data->tempat_lahir . ', ' . $data->tgl_lahir }}</td>
-                                <td class="px-2 sm:px-4 py-3 text-sm">{{ $data->status }}</td>
-                                <td class="px-2 sm:px-4 py-3 text-sm">{{ $data->agama }}</td>
-                                <td class="px-2 sm:px-4 py-3 text-center">
+                                <td class="px-2 sm:px-4 py-3 text-sm align-top">{{ $data->tempat_lahir . ', ' . $data->tgl_lahir }}</td>
+                                <td class="px-2 sm:px-4 py-3 text-sm align-top">{{ $data->status }}</td>
+                                <td class="px-2 sm:px-4 py-3 text-sm align-top">{{ $data->agama }}</td>
+                                <td class="px-2 sm:px-4 py-3 text-center align-top">
                                     <div class="flex justify-center gap-2">
                                         <a href="{{ route('masyarakat.edit', $data->nik) }}"
                                             class="text-yellow-500 hover:text-yellow-600 transition transform hover:scale-110 p-1"
