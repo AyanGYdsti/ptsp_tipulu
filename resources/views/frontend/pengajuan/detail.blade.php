@@ -129,9 +129,16 @@
                         {{-- RT --}}
                         <div>
                             <label for="RT" class="block text-sm font-medium text-gray-600">RT</label>
-                            <input type="number" name="RT" id="RT" value="{{ old('RT') }}"
+                            <input
+                                type="number"
+                                name="RT"
+                                id="RT"
+                                value="{{ old('RT') }}"
+                                min="0"
                                 class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('RT') border-red-500 @enderror"
-                                placeholder="Masukkan RT Berapa" required>
+                                placeholder="Masukkan nomor RT"
+                                required
+                            >
                             @error('RT')
                                 <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                             @enderror
@@ -140,9 +147,16 @@
                         {{-- RW --}}
                         <div>
                             <label for="RW" class="block text-sm font-medium text-gray-600">RW</label>
-                            <input type="number" name="RW" id="RW" value="{{ old('RW') }}"
+                            <input
+                                type="number"
+                                name="RW"
+                                id="RW"
+                                value="{{ old('RW') }}"
+                                min="0"
                                 class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('RW') border-red-500 @enderror"
-                                placeholder="Masukkan RW Berapa" required>
+                                placeholder="Masukkan nomor RW"
+                                required
+                            >
                             @error('RW')
                                 <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                             @enderror
