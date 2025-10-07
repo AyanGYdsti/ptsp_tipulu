@@ -57,7 +57,7 @@ class Pengajuan extends Model
 
     public function domisiliUsahaYayasan()
     {
-        return $this->hasOne(DomisiliUsahaYayasan::class);
+        return $this->hasOne(domisiliUsahaYayasan::class);
     }
 
     public function usaha()
