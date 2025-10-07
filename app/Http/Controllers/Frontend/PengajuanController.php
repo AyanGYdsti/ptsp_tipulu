@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use App\Models\Kematian;
 use App\Models\Usaha;
 use App\Models\Keramaian;
-use App\Models\domisiliUsahaYayasan;
+use App\Models\DomisiliUsahaYayasan;
 use App\Models\PindahPenduduk;
 use App\Models\TempatTinggalSementara;
 use Illuminate\Support\Facades\Log;
