@@ -13,8 +13,7 @@
                     <i class="fa fa-plus"></i> Berita
                 </button>
             </div>
-
-            <!-- Tabel Desktop -->
+            {{-- Table Dekstop --}}
             <div class="hidden lg:block overflow-x-auto rounded-xl border border-blue-200">
                 <table class="min-w-full rounded-xl overflow-hidden">
                     <thead class="bg-blue-600 text-white uppercase text-xs font-semibold tracking-wider">
@@ -28,11 +27,11 @@
                     </thead>
                     <tbody class="text-gray-700 text-sm bg-white">
                         @forelse ($berita as $data)
-                            <tr class="hover:bg-blue-50 transition">
-                                <td class="px-4 py-3 text-center font-semibold text-blue-600">{{ $loop->iteration }}</td>
-                                <td class="px-4 py-3">{{ $data->judul }}</td>
-                                <td class="px-4 py-3">{!! Str::limit($data->deskripsi, 80) !!}</td>
-                                <td class="px-4 py-3 text-center">
+                            <tr class="border-b border-gray-200 hover:bg-blue-50 transition">
+                                <td class="px-4 py-3 text-center font-semibold text-blue-600 align-top">{{ $loop->iteration }}</td>
+                                <td class="px-4 py-3 align-top">{{ $data->judul }}</td>
+                                <td class="px-4 py-3 align-top">{!! Str::limit($data->deskripsi, 80) !!}</td>
+                                <td class="px-4 py-3 text-center align-top">
                                     @if ($data->thumbnail)
                                         <img src="{{ asset($data->thumbnail) }}" alt="thumb"
                                             class="w-16 h-16 object-cover rounded-lg mx-auto shadow">
@@ -40,7 +39,7 @@
                                         <span class="text-gray-400">-</span>
                                     @endif
                                 </td>
-                                <td class="px-4 py-3">
+                                <td class="px-4 py-3 align-top">
                                     <div class="flex justify-center items-center gap-3">
                                         <a href="{{ route('berita.edit', $data->id) }}"
                                             class="text-yellow-500 hover:text-yellow-600 transition transform hover:scale-110"
@@ -57,7 +56,8 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="text-center p-3">
+                                <td colspan="5" class="text-center p-6 text-gray-500">
+                                    <i class="fa fa-inbox text-2xl mb-2 block"></i>
                                     Tidak ada data berita
                                 </td>
                             </tr>

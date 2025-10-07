@@ -15,8 +15,7 @@
                     <span class="hidden sm:inline">Tambah </span>Aparatur
                 </button>
             </div>
-
-            <!-- Desktop Table -->
+            {{-- Table Dekstop --}}
             <div class="hidden lg:block overflow-x-auto rounded-xl border border-blue-200">
                 <table class="min-w-full rounded-xl overflow-hidden">
                     <thead class="bg-blue-600 text-white uppercase text-xs font-semibold tracking-wider">
@@ -31,8 +30,8 @@
                     </thead>
                     <tbody class="text-gray-700 text-sm bg-white">
                         @forelse ($aparatur as $data)
-                            <tr class="hover:bg-blue-50 transition">
-                                <td class="px-4 py-3 text-center">
+                            <tr class="border-b border-gray-200 hover:bg-blue-50 transition">
+                                <td class="px-4 py-3 text-center align-top">
                                     @if ($data->foto)
                                         <img src="{{ asset($data->foto) }}" alt="foto_aparatur"
                                             class="w-16 h-16 object-cover rounded-lg mx-auto shadow">
@@ -40,11 +39,11 @@
                                         <span class="text-gray-400">-</span>
                                     @endif
                                 </td>
-                                <td class="px-4 py-3 text-center font-semibold text-blue-600">{{ $data->posisi }}</td>
-                                <td class="px-4 py-3">{{ $data->nip }}</td>
-                                <td class="px-4 py-3">{{ $data->nama }}</td>
-                                <td class="px-4 py-3">{{ $data->jabatan }}</td>
-                                <td class="px-4 py-3">
+                                <td class="px-4 py-3 text-center font-semibold text-blue-600 align-top">{{ $data->posisi }}</td>
+                                <td class="px-4 py-3 align-top">{{ $data->nip }}</td>
+                                <td class="px-4 py-3 align-top">{{ $data->nama }}</td>
+                                <td class="px-4 py-3 align-top">{{ $data->jabatan }}</td>
+                                <td class="px-4 py-3 align-top">
                                     <div class="flex justify-center items-center gap-3">
                                         <a href="{{ route('aparatur.edit', $data->id) }}"
                                             class="text-yellow-500 hover:text-yellow-600 transition transform hover:scale-110"

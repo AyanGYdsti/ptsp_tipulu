@@ -17,7 +17,7 @@ class BerandaController extends Controller
     {
         // Ambil data-data statis seperti biasa
         $landingPage = LandingPage::first();
-        $pelayanan = Pelayanan::paginate(3);
+        $pelayanan = Pelayanan::whereIn('id', [7, 10, 13])->get();
         $aparatur = Aparatur::orderBy('posisi', 'asc')->paginate(4);
         $berita = Berita::latest()->limit(6)->get();
 

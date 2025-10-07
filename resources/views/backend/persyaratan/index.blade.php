@@ -26,8 +26,7 @@
                     </button>
                 </div>
             </div>
-
-            <!-- Tabel Desktop -->
+            {{-- Table Dekstop --}}
             <div class="hidden md:block overflow-x-auto rounded-xl border border-blue-200">
                 <table class="min-w-full rounded-xl overflow-hidden">
                     <thead class="bg-blue-600 text-white uppercase text-xs font-semibold tracking-wider">
@@ -40,34 +39,38 @@
                     </thead>
                     <tbody class="text-gray-700 text-sm bg-white">
                         @forelse ($persyaratan as $data)
-                            <tr class="hover:bg-blue-50 transition">
-                                <td class="px-2 sm:px-4 py-3 text-center font-semibold text-blue-600">
+                            <tr class="border-b border-gray-200 hover:bg-blue-50 transition">
+                                <td class="px-2 sm:px-4 py-3 text-center font-semibold text-blue-600 align-top">
                                     {{ $persyaratan->firstItem() + $loop->index }}
                                 </td>
-                                <td class="px-4 py-3">{{ $data->nama }}</td>
-                                <td class="px-4 py-3">{!! $data->keterangan !!}</td>
-                                <td class="px-4 py-3 text-center flex justify-center gap-3">
-                                    <a href="{{ route('persyaratan.edit', $data->id) }}"
-                                        class="text-yellow-500 hover:text-yellow-600 transition transform hover:scale-110"
-                                        title="Edit">
-                                        <i class="fa fa-edit text-lg"></i>
-                                    </a>
-                                    <button onclick="confirmDelete('{{ route('persyaratan.delete', $data->id) }}', '{{ $data->nama }}')"
-                                        class="text-red-500 hover:text-red-600 transition transform hover:scale-110"
-                                        title="Hapus">
-                                        <i class="fa fa-trash text-lg"></i>
-                                    </button>
+                                <td class="px-4 py-3 align-top">{{ $data->nama }}</td>
+                                <td class="px-4 py-3 align-top">{!! $data->keterangan !!}</td>
+                                <td class="px-4 py-3 text-center align-top">
+                                    <div class="flex justify-center gap-3">
+                                        <a href="{{ route('persyaratan.edit', $data->id) }}"
+                                            class="text-yellow-500 hover:text-yellow-600 transition transform hover:scale-110"
+                                            title="Edit">
+                                            <i class="fa fa-edit text-lg"></i>
+                                        </a>
+                                        <button onclick="confirmDelete('{{ route('persyaratan.delete', $data->id) }}', '{{ $data->nama }}')"
+                                            class="text-red-500 hover:text-red-600 transition transform hover:scale-110"
+                                            title="Hapus">
+                                            <i class="fa fa-trash text-lg"></i>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="text-center p-3">
-                                    Tidak Ada data
+                                <td colspan="4" class="text-center p-6 text-gray-500">
+                                    <i class="fa fa-inbox text-2xl mb-2 block"></i>
+                                    Tidak Ada Data
                                 </td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
+
                 <!-- Pagination -->
                 @if ($persyaratan->hasPages())
                     <div class="mt-6 flex flex-col sm:flex-row justify-center sm:justify-between items-center text-sm text-gray-700 gap-4">
