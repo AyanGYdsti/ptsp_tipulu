@@ -20,6 +20,9 @@ class DashboardController extends Controller
         $jumlahMasyarakat = Masyarakat::count();
         $jumlahAparatur = Aparatur::count();
 
-        return view('backend.dashboard.index', compact('title', 'jumlahPelayanan', 'jumlahPengajuan', 'jumlahMasyarakat', 'jumlahAparatur'));
+        $totalLakiLaki = Masyarakat::where('jk', 'Laki-laki')->count();
+        $totalPerempuan = Masyarakat::where('jk', 'Perempuan')->count();
+
+        return view('backend.dashboard.index', compact('title', 'jumlahPelayanan', 'jumlahPengajuan', 'jumlahMasyarakat', 'jumlahAparatur', 'totalLakiLaki', 'totalPerempuan'));
     }
 }
