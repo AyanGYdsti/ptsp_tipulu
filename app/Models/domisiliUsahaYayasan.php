@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class DomisiliUsahaYayasan extends Model
 {
-
-    use HasFactory;
+     use HasFactory;
 
     protected $table = 'domisili_usaha_yayasan';
 
