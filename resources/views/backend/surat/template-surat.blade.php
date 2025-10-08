@@ -14,7 +14,7 @@
             margin-right: 1.59cm;
             margin-top: 0.75cm;
             margin-bottom: 2.54cm;
-            line-height: 1.5;
+            line-height: 1.5    ;
             width: 21.59cm;
             height: 35.56cm;
         }
@@ -32,6 +32,30 @@
         table {
             width: 100%
         }
+
+        .blok-ttd {
+            text-align: left;
+            padding-left: 120px;
+            font-family: "Times New Roman", serif;
+
+        }
+        .ttd-wrapper {
+            display: inline-block;
+            text-align: left;
+            line-height: 1.0;
+            text-transform: uppercase;
+        }
+        .ttd-nama {
+            display: block;
+            border-bottom: 1px solid black;
+            padding-bottom: 2px;
+            margin-bottom: 4px;
+            width: max-content; /* mengikuti panjang isi */
+            font-weight: bold;
+        }
+        .ttd-nip {
+            display: block;
+        }
     </style>
 </head>
 
@@ -40,7 +64,7 @@
         <tr>
             {{-- Kolom kiri: logo --}}
             <td style="width: 25%; text-align: center; vertical-align: middle;">
-                <img src="data:image/webp;base64,{{ base64_encode(file_get_contents(public_path('assets/img/logo.webp'))) }}"
+                <img src="data:image/webp;base64,{{ base64_encode(file_get_contents(public_path('assets/img/kendari.webp'))) }}"
                     alt="Logo" width="80" height="80">
             </td>
 
@@ -60,9 +84,9 @@
     <div style="text-align:center;margin:20px 0">
         @if($judul == "Surat Keterangan Kelakuan Baik (Pengantar SKCK)")
 
-            <p><span><b style="border-bottom:2px solid black">Surat Pengantar</b></span></p>
+            <p><span style="text-transform: uppercase;"><b style="border-bottom:2px solid black; ">SURAT PENGANTAR</b></span></p>
         @else
-            <p><span><b style="border-bottom:2px solid black">{{ $judul }}</b></span></p>
+            <p><span style="text-transform: uppercase;"><b style="border-bottom:2px solid black">{{ $judul }}</b></span></p>
         @endif
         <p>Nomor : <span style="padding-left:25px">/</span>
             <span style="padding-left:25px">/</span>
@@ -81,7 +105,7 @@
 
         <table style="margin-left:27px">
             <tr>
-                <td style="width: 27%">Nama</td>
+                <td style="width: 30%">Nama</td>
                 <td style="width: 2%">:</td>
                 <td>{{ $nama_md }}</td>
             </tr>
@@ -100,7 +124,7 @@
                 <td>:</td>
                 <td>{{ $alamat_md }}</td>
             </tr>
-
+            <div style='padding-bottom: 3px;'></div>
             <tr>
                 <td>Telah Meninggal Dunia Pada</td>
                 <td>:</td>
@@ -353,7 +377,7 @@
         <p style="text-align: justify; text-indent: 27px;">
              {!!$keterangan_surat !!}
         </p>
-    @elseif($judul == "Surat Keterangan Pindah Penduduk")
+    @elseif($judul == "Surat Keterangan Pindah Penduduk" || $judul = "Surat Keterangan Kematian")
 
     @else
         <p style="text-align: justify; text-indent: 27px;">
@@ -415,35 +439,25 @@
             </p>
         @endif
 
-    <table style="text-align: center;margin-top:30px">
-        <tr>
-            <td style="width: 50%"></td>
-            <td style="width: 50%">Kendari, {{ $tanggal }}</td>
-        </tr>
-        <tr>
-            <td style="width: 50%"></td>
-            <td style="width: 50%">
-                <p>AN. LURAH TIPULU</p>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>
-                <br>
-                <br>
-                <br>
-                <br>
-                <p style="border-bottom: 1px solid black; display: inline-block; padding-bottom: 1px;">
-                   {{ $aparatur }}</p>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>
-                <p>{{ $aparatur_nip }}
-                </p>
-            </td>
-        </tr>
+    <table style="margin-top:30px; width:100%;">
+    <tr>
+        <td style="width:50%;"></td>
+        <td class="blok-ttd">
+        Kendari, 8 Oktober 2025<br>
+        <span style="text-transform: uppercase;">
+        <b>LURAH TIPULU</span><br>
+        @if($jabatan != "Lurah")
+            <span style="text-transform: uppercase;">
+            <b>AN. {{ $jabatan }}
+            </span>
+        @endif
+        <br><br><br><br><br>
+        <div class="ttd-wrapper">
+            <span class="ttd-nama">{{ $aparatur }}</span>
+            <span class="ttd-nip">NIP: {{ $aparatur_nip }}</span>
+        </div>
+        </td>
+    </tr>
     </table>
 </body>
 
