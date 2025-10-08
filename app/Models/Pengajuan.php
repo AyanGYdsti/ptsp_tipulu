@@ -42,7 +42,7 @@ class Pengajuan extends Model
         return $this->hasOne(PindahPenduduk::class);
     }
 
-    public function domisiliUsahaYayasans()
+    public function domisiliUsahaYayasan()
     {
         return $this->hasOne(DomisiliUsahaYayasan::class);
     }
