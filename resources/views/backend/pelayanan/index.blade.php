@@ -94,12 +94,6 @@
                             <i class="fa fa-search"></i>
                         </button>
                     </form>
-
-                    <!-- Tombol tambah -->
-                    <button id="openModalBtn"
-                        class="relative z-50 bg-gradient-to-r from-blue-600 to-blue-500 text-white px-3 sm:px-4 py-2 rounded-lg flex items-center gap-2 hover:from-blue-700 hover:to-blue-600 shadow-md transition text-xs sm:text-sm w-full sm:w-auto justify-center">
-                        <i class="fa fa-plus"></i> Pelayanan
-                    </button>
                 </div>
             </div>
             {{-- Table Dekstop --}}
@@ -157,14 +151,14 @@
                 <!-- Pagination -->
                 @if ($pelayanan->hasPages())
                     <div class="mt-6 w-full flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-4 text-sm text-gray-700">
-                        
+
                         <!-- Info jumlah data -->
                         <div class="text-center sm:text-left text-gray-600 w-full sm:w-auto">
-                            Menampilkan 
+                            Menampilkan
                             <span class="font-semibold text-blue-600">
                                 {{ $pelayanan->firstItem() }}–{{ $pelayanan->lastItem() }}
-                            </span> 
-                            dari 
+                            </span>
+                            dari
                             <span class="font-semibold text-blue-600">{{ $pelayanan->total() }}</span> data
                         </div>
 
@@ -174,7 +168,7 @@
                             @if ($pelayanan->onFirstPage())
                                 <span class="px-3 py-2 bg-gray-200 text-gray-400 rounded-lg cursor-not-allowed">&laquo;</span>
                             @else
-                                <a href="{{ $pelayanan->previousPageUrl() }}" 
+                                <a href="{{ $pelayanan->previousPageUrl() }}"
                                 class="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">&laquo;</a>
                             @endif
 
@@ -183,14 +177,14 @@
                                 @if ($page == $pelayanan->currentPage())
                                     <span class="px-3 py-2 bg-blue-600 text-white rounded-lg font-bold">{{ $page }}</span>
                                 @else
-                                    <a href="{{ $url }}" 
+                                    <a href="{{ $url }}"
                                     class="px-3 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition">{{ $page }}</a>
                                 @endif
                             @endforeach
 
                             {{-- Tombol Next --}}
                             @if ($pelayanan->hasMorePages())
-                                <a href="{{ $pelayanan->nextPageUrl() }}" 
+                                <a href="{{ $pelayanan->nextPageUrl() }}"
                                 class="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">&raquo;</a>
                             @else
                                 <span class="px-3 py-2 bg-gray-200 text-gray-400 rounded-lg cursor-not-allowed">&raquo;</span>
@@ -260,77 +254,6 @@
                     @endif
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Modal Tambah Data -->
-    <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-4">
-        <div class="bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-2xl w-full max-w-md p-4 sm:p-6 relative transform scale-95 opacity-0 transition-all duration-300 max-h-[90vh] overflow-y-auto"
-            id="modalContent">
-            <!-- Tombol Close -->
-            <button id="closeModalBtn" class="absolute top-3 right-3 sm:top-4 sm:right-4 text-gray-500 hover:text-red-500 transition z-10">
-                <i class="fa fa-times text-lg"></i>
-            </button>
-
-            <!-- Header Modal -->
-            <h3 class="text-lg sm:text-xl font-bold mb-4 sm:mb-5 text-blue-700 flex items-center gap-2 pr-8">
-                <i class="fa fa-plus-circle text-blue-500"></i> Tambah Pelayanan
-            </h3>
-
-            <!-- Form -->
-            <form method="POST" action="{{ route('pelayanan.store') }}">
-                @csrf
-                <div class="mb-3 sm:mb-4">
-                    <label class="block text-sm font-semibold text-gray-600 mb-1">Nama Pelayanan</label>
-                    <input type="text" name="nama" value="{{ old('nama') }}"
-                        class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-sm">
-                    @error('nama')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-                <div class="mb-3 sm:mb-4">
-                    <label class="block text-sm font-semibold text-gray-600 mb-1">Icon</label>
-                    <input type="text" name="icon" value="{{ old('icon') }}"
-                        class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-sm">
-                    @error('icon')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-                <div class="mb-3 sm:mb-4">
-                    <label class="block text-sm font-semibold text-gray-600 mb-1">Deskripsi</label>
-                    <textarea name="deskripsi" rows="3"
-                        class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-sm resize-vertical">{{ old('deskripsi') }}</textarea>
-                    @error('deskripsi')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="mb-4 sm:mb-4">
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Persyaratan</label>
-                    <select id="persyaratanSelect" name="persyaratan_id[]" multiple>
-                        @foreach ($persyaratan as $item)
-                            <option value="{{ $item->id }}"
-                                {{ collect(old('persyaratan_id', []))->contains($item->id) ? 'selected' : '' }}>
-                                {{ $item->nama }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('persyaratan_id')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="flex flex-col sm:flex-row justify-end gap-2 sm:gap-2 mt-4 sm:mt-6">
-                    <button type="button" id="closeModalBtn2"
-                        class="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500 transition text-sm order-2 sm:order-1">
-                        Batal
-                    </button>
-                    <button type="submit"
-                        class="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-4 py-2 rounded-lg hover:from-blue-700 hover:to-blue-600 shadow-md transition text-sm order-1 sm:order-2">
-                        <i class="fa fa-save"></i> Simpan
-                    </button>
-                </div>
-            </form>
         </div>
     </div>
 
