@@ -78,7 +78,7 @@ class PelayananController extends Controller
         $pelayanan = Pelayanan::find($id);
 
         $data = $request->validate([
-            'nama' => 'required',
+            'nama' => 'nullable',
             'icon' => 'required',
             'deskripsi' => 'required',
             'persyaratan_id' => 'required',

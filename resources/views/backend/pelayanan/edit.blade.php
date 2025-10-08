@@ -15,7 +15,7 @@
                 <div class="mb-4">
                     <label class="block text-sm font-semibold text-gray-600 mb-1">Nama Pelayanan</label>
                     <input type="text" name="nama" value="{{ old('nama', $pelayanan->nama) }}"
-                        class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
+                        class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400" disabled>
                     @error('nama')
                         <p class="text-red-500">{{ $message }}</p>
                     @enderror
@@ -36,7 +36,7 @@
                         <p class="text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
-                
+
                 <div class="mb-4">
                     <label class="block text-sm font-semibold text-gray-700 mb-1">Persyaratan</label>
                     <select id="persyaratanSelect" name="persyaratan_id[]" multiple>
