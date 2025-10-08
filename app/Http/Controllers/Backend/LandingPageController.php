@@ -17,32 +17,41 @@ class LandingPageController extends Controller
         return view('backend.landing-page.index', compact('title', 'landingPage'));
     }
 
-    public function store(Request $request)
-    {
-        $data = $request->validate([
-            'nama_instansi'     => 'required|string|max:255',
-            'slogan'            => 'required|string',
-            'deskripsi'         => 'required|string',
-            'visi'              => 'required|string',
-            'misi'              => 'required|string',
-            'koordinat'         => 'required|string',
-            'alamat'            => 'required|string',
-            'telpon'            => 'required|string|max:50',
-            'waktu_pelayanan'   => 'required|string',
-        ]);
-        
-        try {
-            // updateOrCreate -> kalau ada id, update. Kalau tidak, create.
-            LandingPage::updateOrCreate(
-                ['id' => $request->id],
-                $data
-            );
+public function store(Request $request)
+{
+    try {
+        // 🔹 1. Ambil data landing page pertama (karena biasanya hanya 1 data)
+        $landingPage = LandingPage::first();
 
-            return back()->with('success', 'Berhasil menyimpan data.');
-        } catch (\Exception $e) {
-            return back()->with('error', 'Gagal menyimpan data.');
+        // 🔹 2. Validasi dinamis (bisa full update atau partial)
+        $rules = [
+            'nama_instansi'   => 'sometimes|string|max:255',
+            'slogan'          => 'sometimes|string|max:255',
+            'deskripsi'       => 'sometimes|string',
+            'visi'            => 'sometimes|string',
+            'misi'            => 'sometimes|string',
+            'koordinat'       => 'sometimes|string|max:100',
+            'alamat'          => 'sometimes|string|max:255',
+            'telpon'          => 'sometimes|string|max:50',
+            'email'           => 'sometimes|email|max:255',
+            'waktu_pelayanan' => 'sometimes|string|max:255',
+        ];
+
+        $data = $request->validate($rules);
+
+        // 🔹 3. Jika data belum ada → buat baru, kalau ada → update
+        if (!$landingPage) {
+            LandingPage::create($data);
+            return back()->with('success', 'Data landing page berhasil dibuat.');
+        } else {
+            $landingPage->update($data);
+            return back()->with('success', 'Data landing page berhasil diperbarui.');
         }
+    } catch (\Exception $e) {
+        // 🔹 4. Tangani error & tampilkan pesan
+        return back()->with('error', 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage());
     }
+}
 
     public function sejarah()
 {
@@ -53,7 +62,7 @@ class LandingPageController extends Controller
 public function detailSejarah()
 {
     $landingPage = LandingPage::first(); 
-    return view('frontend.sejarah.detail', compact('landingPage'));
+    return view('frontend.sejarah.index', compact('landingPage'));
 }
 
 public function detailVisiMisi()

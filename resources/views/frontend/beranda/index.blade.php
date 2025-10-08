@@ -191,26 +191,49 @@
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12 fade-in-up">
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Profil Kelurahan</h2>
-                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Pelajari lebih dalam tentang sejarah, visi, dan misi Kelurahan Tipulu untuk membangun lingkungan yang lebih maju dan harmonis.</p>
+                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+                        Pelajari lebih dalam tentang sejarah, visi, dan misi Kelurahan Tipulu untuk membangun lingkungan yang lebih maju dan harmonis.
+                    </p>
                 </div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-                   <!-- Deskripsi -->
-                    <div class="fade-in-up bg-white p-8 rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 ease-in-out">
-                        <h3 class="text-2xl font-bold mb-4 text-gray-900">
-                            Sejarah Singkat & Visi Misi Kelurahan Tipulu
-                        </h3>
-                        <a href="{{ route('sejarah') }}" class="inline-block font-semibold text-blue-600 hover:text-blue-800 transition-colors">
-                            Baca Selengkapnya →
-                        </a>
+                <!-- Gunakan flex agar tinggi kiri & kanan sejajar -->
+                <div class="flex flex-col lg:flex-row gap-8 items-stretch">
+
+                    <!-- Kolom kiri -->
+                    <div class="flex flex-col justify-between w-full lg:w-1/2 space-y-8">
+
+                        <!-- Card Sejarah -->
+                        <div class="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition duration-300 ease-in-out flex-1 text-center">
+                            <h3 class="text-2xl font-bold mb-4 text-gray-900">Sejarah Singkat</h3>
+                            <p class="text-gray-600 mb-6">
+                                Nama Tipulu berasal dari sebuah pohon besar bernama “Tipulu” yang dahulu ....
+                            </p>
+                            <a href="{{ route('sejarah') }}"
+                            class="inline-block px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-green-700 transition">
+                                Lihat Selengkapnya →
+                            </a>
+                        </div>
+
+                        <!-- Card Visi Misi -->
+                        <div class="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition duration-300 ease-in-out flex-1 text-center">
+                            <h3 class="text-2xl font-bold mb-4 text-gray-900">Visi & Misi</h3>
+                            <p class="text-gray-600 mb-6">
+                                Visi: Mewujudkan kawasan permukiman Tipulu yang layak huni, humanis, dan produktif
+                            </p>
+                            <a href="{{ route('visimisi') }}"
+                            class="inline-block px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-green-700 transition">
+                                Lihat Selengkapnya →
+                            </a>
+                        </div>
                     </div>
 
-                    <!-- Google Maps Embed -->
-                    <div class="h-96 rounded-lg overflow-hidden shadow-lg fade-in-up">
+                  <!-- Kolom kanan (maps) -->
+                    <div class="w-full lg:w-1/2 rounded-2xl overflow-hidden shadow-lg">
                         <iframe
-                            src="https://www.google.com/maps?q=-3.9639639,122.5485688&hl=id&z=15&output=embed"
+                            src="https://www.google.com/maps?q={{ urlencode($landingPage->koordinat ?? '-3.9639639,122.5485688') }}&hl=id&z=15&output=embed"
                             width="100%"
                             height="100%"
+                            class="min-h-[520px] h-full"
                             style="border:0;"
                             allowfullscreen=""
                             loading="lazy"
@@ -220,7 +243,6 @@
                 </div>
             </div>
         </section>
-
 
         <section id="kontak" class="py-20 bg-blue-50">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">

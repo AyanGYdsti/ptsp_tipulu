@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('alamat');
             $table->string('telpon');
             $table->text('waktu_pelayanan');
+            $table->string('email');
             $table->timestamps();
         });
     }

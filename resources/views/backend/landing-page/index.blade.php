@@ -1,114 +1,163 @@
 @extends('layouts.main')
 
 @section('content')
-    <div class="mx-auto">
-        <div class="bg-gradient-to-br from-blue-50 to-blue-100 shadow-xl rounded-2xl p-6 border border-blue-200">
-            <h2 class="lg:text-2xl md:text-[12px] font-bold text-blue-800 mb-6 flex items-center gap-2">
-                <i class="fa fa-building text-blue-600"></i> Form Data Instansi
-            </h2>
 
-            <form method="POST" action="{{ route('landing-page.store') }}" class="space-y-5">
-                @csrf
-                <input type="hidden" name="id" value="{{ $landingPage->id ?? '' }}">
-                <!-- Nama Instansi -->
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Instansi</label>
-                    <input type="text" name="nama_instansi"
-                        value="{{ old('nama_instansi', $landingPage->nama_instansi ?? '') }}"
-                        class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
-                    @error('nama_instansi')
-                        <p class="text-red-500 text-sm">{{ $message }}</p>
-                    @enderror
-                </div>
+<script>
+    setTimeout(() => {
+        document.querySelectorAll('[role="alert"]').forEach(el => el.remove());
+    }, 4000); // hilang setelah 4 detik
+</script>
 
-                <!-- Slogan -->
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Slogan</label>
-                    <textarea name="slogan" rows="2"
-                        class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400">{{ old('slogan', $landingPage->slogan ?? '') }}</textarea>
-                    @error('slogan')
-                        <p class="text-red-500 text-sm">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <!-- Deskripsi -->
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Deskripsi</label>
-                    <textarea name="deskripsi" rows="3"
-                        class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400">{{ old('deskripsi', $landingPage->deskripsi ?? '') }}</textarea>
-                    @error('deskripsi')
-                        <p class="text-red-500 text-sm">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <!-- Visi -->
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Visi</label>
-                    <textarea name="visi" rows="3"
-                        class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400">{{ old('visi', $landingPage->visi ?? '') }}</textarea>
-                    @error('visi')
-                        <p class="text-red-500 text-sm">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <!-- Misi -->
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Misi</label>
-                    <textarea name="misi" rows="3"
-                        class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400">{{ old('misi', $landingPage->misi ?? '') }}</textarea>
-                    @error('misi')
-                        <p class="text-red-500 text-sm">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <!-- Koordinat -->
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Koordinat</label>
-                    <textarea name="koordinat" rows="2"
-                        class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400">{{ old('koordinat', $landingPage->koordinat ?? '') }}</textarea>
-                    @error('koordinat')
-                        <p class="text-red-500 text-sm">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <!-- Alamat -->
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Alamat</label>
-                    <textarea name="alamat" rows="2"
-                        class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400">{{ old('alamat', $landingPage->alamat ?? '') }}</textarea>
-                    @error('alamat')
-                        <p class="text-red-500 text-sm">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <!-- Telpon -->
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Telpon</label>
-                    <input type="text" name="telpon" value="{{ old('telpon', $landingPage->telpon ?? '') }}"
-                        class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
-                    @error('telpon')
-                        <p class="text-red-500 text-sm">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <!-- Waktu Pelayanan -->
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Waktu Pelayanan</label>
-                    <textarea name="waktu_pelayanan" rows="2"
-                        class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400">{{ old('waktu_pelayanan', $landingPage->waktu_pelayanan ?? '') }}</textarea>
-                    @error('waktu_pelayanan')
-                        <p class="text-red-500 text-sm">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <!-- Tombol -->
-                <div class="flex justify-end gap-2 pt-4">
-                    <button type="submit"
-                        class="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-4 py-2 rounded-lg hover:from-blue-700 hover:to-blue-600 shadow-md transition">
-                        <i class="fa fa-save"></i> Simpan
-                    </button>
-                </div>
-            </form>
-        </div>
+{{-- Alert Sukses --}}
+@if (session('success'))
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+        <strong class="font-bold">Berhasil!</strong>
+        <span class="block sm:inline">{{ session('success') }}</span>
     </div>
+@endif
+
+{{-- Alert Error --}}
+@if (session('error'))
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+        <strong class="font-bold">Gagal!</strong>
+        <span class="block sm:inline">{{ session('error') }}</span>
+    </div>
+@endif
+
+{{-- Alert Validasi (Jika ada error pada input) --}}
+@if ($errors->any())
+    <div class="bg-yellow-100 border border-yellow-400 text-yellow-800 px-4 py-3 rounded relative mb-4" role="alert">
+        <strong class="font-bold">Perhatian!</strong>
+        <ul class="list-disc pl-5 mt-2 space-y-1">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+<div class="p-6 bg-blue-50 rounded-lg shadow">
+    <h2 class="text-xl font-bold mb-4 text-gray-700">Manajemen Landing Page</h2>
+
+    <form action="{{ route('landing-page.store') }}" method="POST">
+        @csrf
+        <input type="hidden" name="id" value="{{ $landingPage->id ?? '' }}">
+
+        <!-- Nama Instansi -->
+        <div class="mb-4">
+            <label class="font-semibold">Nama Instansi</label>
+            <input type="text" name="nama_instansi"
+                value="{{ old('nama_instansi', $landingPage->nama_instansi ?? '') }}"
+                class="w-full border border-blue-300 rounded-md p-2">
+        </div>
+
+        <!-- Slogan -->
+        <div class="mb-4">
+            <label class="font-semibold">Slogan</label>
+            <input type="text" name="slogan"
+                value="{{ old('slogan', $landingPage->slogan ?? '') }}"
+                class="w-full border border-blue-300 rounded-md p-2">
+        </div>
+        
+        <!-- Deskripsi / Sejarah -->
+        <div class="mb-4">
+            <label class="font-semibold">Deskripsi / Sejarah</label>
+            <textarea id="editorDeskripsi" name="deskripsi" rows="10"
+            class="w-full border border-blue-300 rounded-md p-2">{{ old('deskripsi', $landingPage->deskripsi ?? '') }}</textarea>
+        </div>
+        
+        <!-- Visi -->
+        <div class="mb-4">
+            <label class="font-semibold">Visi</label>
+            <textarea id="editorVisi" name="visi" rows="6"
+            class="w-full border border-blue-300 rounded-md p-2">{{ old('visi', $landingPage->visi ?? '') }}</textarea>
+        </div>
+        
+        <!-- Misi -->
+        <div class="mb-4">
+            <label class="font-semibold">Misi</label>
+            <textarea id="editorMisi" name="misi" rows="6"
+            class="w-full border border-blue-300 rounded-md p-2">{{ old('misi', $landingPage->misi ?? '') }}</textarea>
+        </div>
+        
+        <!-- Kontak & Alamat -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label class="font-semibold">Alamat</label>
+                <input type="text" name="alamat"
+                value="{{ old('alamat', $landingPage->alamat ?? '') }}"
+                class="w-full border border-blue-300 rounded-md p-2">
+            </div>
+            
+            <div>
+                <label class="font-semibold">Koordinat (Maps)</label>
+                <input type="text" name="koordinat"
+                value="{{ old('koordinat', $landingPage->koordinat ?? '') }}"
+                class="w-full border border-blue-300 rounded-md p-2">
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <div>
+                <label class="font-semibold">Telepon</label>
+                <input type="text" name="telpon"
+                value="{{ old('telpon', $landingPage->telpon ?? '') }}"
+                class="w-full border border-blue-300 rounded-md p-2">
+            </div>
+            
+            <div>
+                <label class="font-semibold">Waktu Pelayanan</label>
+                <input type="text" name="waktu_pelayanan"
+                value="{{ old('waktu_pelayanan', $landingPage->waktu_pelayanan ?? '') }}"
+                class="w-full border border-blue-300 rounded-md p-2">
+            </div>
+        </div>
+        
+        <!-- email -->
+        <div class="mb-4">
+            <label class="font-semibold">Email</label>
+            <input type="text" name="email"
+                value="{{ old('email', $landingPage->email ?? '') }}"
+                class="w-full border border-blue-300 rounded-md p-2">
+        </div>
+
+        <!-- Tombol Simpan -->
+        <div class="mt-6">
+            <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition">
+                Simpan
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- TinyMCE -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js"></script>
+
+<script>
+    function initTiny(selector) {
+        tinymce.init({
+            selector: selector,
+            height: 300,
+            menubar: false,
+            plugins: [
+                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                'insertdatetime', 'media', 'table', 'help', 'wordcount'
+            ],
+            toolbar: 'undo redo | blocks | bold italic forecolor backcolor | ' +
+                'alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | help',
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+            skin: 'oxide',
+            content_css: 'default',
+            language: 'id',
+            branding: false
+        });
+    }
+
+    // Inisialisasi untuk semua editor
+    initTiny('#editorDeskripsi');
+    initTiny('#editorVisi');
+    initTiny('#editorMisi');
+</script>
 @endsection

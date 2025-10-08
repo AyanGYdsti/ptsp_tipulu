@@ -46,6 +46,21 @@
     <link rel="stylesheet" href="/assets/css/styles.css">
 </head>
 
+ <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        main {
+            flex: 1;
+        }
+</style>
+
 <body class="bg-gray-50 text-gray-800">
 
     @php
@@ -111,59 +126,20 @@
         </div>
     </header>
 
-    @yield('content')
+    <main>
+        @yield('content')
+    </main>
 
-    <footer class="bg-gray-800 text-white">
-        <div class="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div>
-                    <h3 class="font-bold text-lg mb-4">Kelurahan Tipulu</h3>
-                    <p class="text-gray-400">Portal layanan digital untuk masyarakat Kelurahan Tipulu, Kota Kendari.
-                    </p>
-                </div>
-                <div>
-                    <h3 class="font-bold text-lg mb-4">Navigasi Cepat</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#layanan" class="text-gray-400 hover:text-white">Layanan</a></li>
-                        <li><a href="#berita" class="text-gray-400 hover:text-white">Berita</a></li>
-                        <li><a href="#aparatur" class="text-gray-400 hover:text-white">Aparatur</a></li>
-                        <li><a href="#data-penduduk" class="text-gray-400 hover:text-white">Statistik</a></li>
-                        <li><a href="#profil" class="text-gray-400 hover:text-white">Profil</a></li>
-                        <li><a href="#kontak" class="text-gray-400 hover:text-white">Kontak</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-bold text-lg mb-4">Ikuti Kami</h3>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white"><span
-                                class="sr-only">Facebook</span><svg class="h-6 w-6" fill="currentColor"
-                                viewBox="0 0 24 24">
-                                <path fill-rule="evenodd"
-                                    d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
-                                    clip-rule="evenodd" />
-                            </svg></a>
-                        <a href="#" class="text-gray-400 hover:text-white"><span
-                                class="sr-only">Instagram</span><svg class="h-6 w-6" fill="currentColor"
-                                viewBox="0 0 24 24">
-                                <path fill-rule="evenodd"
-                                    d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.024.06 1.378.06 3.808s-.012 2.784-.06 3.808c-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.024.048-1.378.06-3.808.06s-2.784-.012-3.808-.06c-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.048-1.024-.06-1.378-.06-3.808s.012-2.784.06-3.808c.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 016.345 2.525c.636-.247 1.363-.416 2.427-.465C9.795 2.013 10.149 2 12.315 2zm-1.162 4.243a.81.81 0 01-.81-.81V4.18c0-.447.363-.81.81-.81h1.623c.447 0 .81.363.81.81v1.253a.81.81 0 01-.81.81h-1.623zm-1.803 2.131a4.875 4.875 0 109.75 0 4.875 4.875 0 00-9.75 0zm6.983 0a2.108 2.108 0 11-4.217 0 2.108 2.108 0 014.217 0z"
-                                    clip-rule="evenodd" />
-                            </svg></a>
-                        <a href="#" class="text-gray-400 hover:text-white"><span
-                                class="sr-only">YouTube</span><svg class="h-6 w-6" fill="currentColor"
-                                viewBox="0 0 24 24">
-                                <path fill-rule="evenodd"
-                                    d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.78 22 12 22 12s0 3.22-.42 4.814a2.506 2.506 0 01-1.768 1.768c-1.594.42-7.812.42-7.812.42s-6.218 0-7.812-.42a2.506 2.506 0 01-1.768-1.768C2 15.22 2 12 2 12s0-3.22.42-4.814a2.506 2.506 0 011.768-1.768C5.782 5 12 5 12 5s6.218 0 7.812.418zM9.75 15.5V8.5l6.5 3.5-6.5 3.5z"
-                                    clip-rule="evenodd" />
-                            </svg></a>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400">
-                <p>© <span id="year"></span> KKN-T UHO Tahun 2025 Kelurahan Tipulu || Pemerintah Kelurahan Tipulu. All Rights Reserved.</p>
-            </div>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-4 mt-auto">
+        <div class="text-center text-gray-400 text-sm">
+            © <span id="year"></span> KKN-T UHO Tahun 2025 Kelurahan Tipulu || Pemerintah Kelurahan Tipulu. All Rights Reserved.
         </div>
     </footer>
+
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
 
     <div id="chat-widget" class="fixed bottom-6 right-6 z-50">
         <button id="chat-open-btn"
@@ -340,5 +316,4 @@
         });
     </script>
 </body>
-
 </html>

@@ -62,10 +62,6 @@
                     </div>
                 @endif
 
-
-
-
-
                 {{-- Form Pengajuan --}}
                 <form action="{{ route('pengajuan.store', $pelayanan->id) }}" method="POST" enctype="multipart/form-data"
                     class="space-y-5">
@@ -351,9 +347,17 @@
                             {{-- Umur --}}
                             <div>
                                 <label for="umur" class="block text-sm font-medium text-gray-600">Umur</label>
-                                <input type="number" name="umur" id="umur" value="{{ old('umur') }}"
-                                    class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('umur') border-red-500 @enderror"
-                                    placeholder="Masukkan Umur" required>
+                                <input 
+                                    type="number" 
+                                    name="umur" 
+                                    id="umur"
+                                    min="0" 
+                                    max="120"
+                                    class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none
+                                    @error('umur') border-red-500 @enderror"
+                                    placeholder="Masukkan Umur (minimal 0 tahun)" 
+                                    required
+                                >
                                 @error('umur')
                                     <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                                 @enderror
@@ -570,17 +574,45 @@
                             </div>
 
                             {{-- Tahun Berdiri --}}
-                            <div>
-                                <label for="tahun_berdiri" class="block text-sm font-medium text-gray-600">Tahun
-                                    Berdiri</label>
-                                <input type="number" name="tahun_berdiri" id="tahun_berdiri"
-                                    value="{{ old('tahun_berdiri') }}"
-                                    class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('tahun_berdiri') border-red-500 @enderror"
-                                    placeholder="Masukkan Tahun Berdiri Usaha (contoh: 2020)" required>
+
+                            <div x-data="{ open: false, selectedYear: '{{ old('tahun_berdiri') ?? '' }}' }" class="relative">
+                                <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+                                <label for="tahun_berdiri" class="block text-sm font-medium text-gray-600">
+                                    Tahun Berdiri
+                                </label>
+
+                                <!-- Tombol utama -->
+                                <button type="button" @click="open = !open"
+                                    class="mt-2 w-full px-4 py-2 border rounded-lg bg-white text-left flex justify-between items-center
+                                        focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                    <span x-text="selectedYear || 'Pilih Tahun'"></span>
+                                    <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </button>
+
+                                <!-- Daftar tahun -->
+                                <div x-show="open" @click.outside="open = false"
+                                    class="absolute z-10 mt-1 max-h-48 w-full overflow-y-auto border border-gray-300 bg-white rounded-lg shadow-lg">
+                                    @for ($year = date('Y'); $year >= 1900; $year--)
+                                    <div @click="selectedYear = '{{ $year }}'; open = false;"
+                                        class="px-4 py-2 hover:bg-blue-100 cursor-pointer text-gray-700"
+                                        :class="{ 'bg-blue-500 text-white': selectedYear == '{{ $year }}' }">
+                                        {{ $year }}
+                                    </div>
+                                    @endfor
+                                </div>
+
+                                <!-- Hidden input untuk form -->
+                                <input type="hidden" name="tahun_berdiri" x-model="selectedYear">
+
                                 @error('tahun_berdiri')
                                     <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                                 @enderror
                             </div>
+
                         @elseif ($pelayanan->nama == 'Surat Keterangan Tidak Mampu (SKTM)' || $pelayanan->nama == 'Surat Keterangan Belum Bekerja' || $pelayanan->nama == 'Surat Keterangan Belum Nikah')
                             {{-- Keperluan --}}
                             <div>

@@ -36,8 +36,7 @@ Route::get('/detail-aparatur', [ListAparaturController::class, 'index'])->name('
 
 Route::get('/landing-page', [LandingPageController::class, 'index'])->name('landing-page');
 Route::post('/landing-page/store', [LandingPageController::class, 'store'])->name('landing-page.store');
-Route::get('/sejarah', [LandingPageController::class, 'sejarah'])->name('sejarah');
-Route::get('/sejarah/detail', [LandingPageController::class, 'detailSejarah'])->name('sejarah.detail');
+Route::get('/sejarah', [LandingPageController::class, 'detailSejarah'])->name('sejarah');
 Route::get('/visimisi', [LandingPageController::class, 'detailVisiMisi'])->name('visimisi');
 
 Route::get('/list-aparatur', [ListaparaturController::class, 'index'])->name('frontend.aparatur.index');
