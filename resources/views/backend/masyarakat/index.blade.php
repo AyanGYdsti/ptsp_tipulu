@@ -321,6 +321,8 @@
                                 <option value="">-- Pilih Status --</option>
                                 <option value="Belum Kawin" {{ old('status') == 'Belum Kawin' ? 'selected' : '' }}>Belum Kawin</option>
                                 <option value="Kawin" {{ old('status') == 'Kawin' ? 'selected' : '' }}>Kawin</option>
+                                <option value="Kawin belum tercatat" {{ old('status') == 'Kawin Belum Tercatat' ? 'selected' : '' }}>Kawin belum tercatat</option>
+                                <option value="Cerai Mati" {{ old('status') == 'Cerai Mati' ? 'selected' : '' }}>Cerai Mati</option>
                             </select>
                             @error('status')
                                 <p class="text-red-500 text-sm">{{ $message }}</p>
