@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @push('styles')
     <!-- Tom Select CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
+    <link href="/assets/css/tom-select.css" rel="stylesheet">
 @endpush
 
 @section('content')
@@ -100,7 +100,7 @@
 
 @push('scripts')
     <!-- Tom Select JS -->
-    <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+    <script src="/assets/js/tom-select.complete.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Inisialisasi Tom Select
