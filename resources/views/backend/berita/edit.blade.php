@@ -61,7 +61,7 @@
     </div>
 
     <!-- TinyMCE Script -->
-    <script src="https://cdn.tiny.cloud/1/photmhyle1lxjt6f9n0cu25wjj8314u6ruv5ng668e5i153s/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="/assets/js/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             tinymce.init({

@@ -131,7 +131,7 @@
 </div>
 
 <!-- TinyMCE -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js"></script>
+<script src="/assets/js/tinymce.min.js"></script>
 
 <script>
     function initTiny(selector) {
