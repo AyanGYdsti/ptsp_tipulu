@@ -9,7 +9,7 @@
         <!-- Card -->
         <div class="bg-gradient-to-br from-blue-50 to-blue-100 shadow-xl rounded-2xl p-6 border border-blue-200">
             <!-- Form -->
-            <form method="POST" action="{{ route('pelayanan.update', $pelayanan->id) }}">
+            <form method="POST" action="{{ route('pelayanan.update', $pelayanan->id) }}" id="formPelayanan">
                 @csrf
                 @method('PUT')
                 <div class="mb-4">
@@ -67,6 +67,35 @@
             </form>
         </div>
     </div>
+
+    <style>
+        /* Animasi notifikasi */
+        @keyframes slide-in {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slide-out {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        .animate-slide-in {
+            animation: slide-in 0.3s ease-out;
+        }
+    </style>
 @endsection
 
 @push('scripts')
@@ -74,16 +103,187 @@
     <script src="/assets/js/tom-select.complete.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            new TomSelect("#persyaratanSelect", {
-                plugins: ['remove_button'], // ada tombol hapus tiap pilihan
+            // Inisialisasi Tom Select
+            let tomSelectInstance = new TomSelect("#persyaratanSelect", {
+                plugins: ['remove_button'],
                 persist: false,
                 create: false,
-                maxItems: null, // unlimited
+                maxItems: null,
                 sortField: {
                     field: "text",
                     direction: "asc"
                 },
             });
+
+            const form = document.getElementById('formPelayanan');
+
+            // ============ VALIDASI FORM DENGAN PESAN BAHASA INDONESIA ============
+            const pesanError = {
+                icon: 'Icon harus diisi',
+                deskripsi: 'Deskripsi harus diisi',
+                persyaratan_id: 'Minimal satu persyaratan harus dipilih'
+            };
+
+            // Validasi form sebelum submit
+            form.addEventListener('submit', function(e) {
+                // Reset semua pesan error sebelumnya
+                const errorMessages = this.querySelectorAll('.error-message-custom');
+                errorMessages.forEach(msg => msg.remove());
+
+                let hasError = false;
+                let firstErrorField = null;
+
+                // Validasi Icon
+                const iconField = this.querySelector('[name="icon"]');
+                if (!iconField.value.trim()) {
+                    tampilkanError(iconField, pesanError.icon);
+                    hasError = true;
+                    if (!firstErrorField) firstErrorField = iconField;
+                }
+
+                // Validasi Deskripsi
+                const deskripsiField = this.querySelector('[name="deskripsi"]');
+                if (!deskripsiField.value.trim()) {
+                    tampilkanError(deskripsiField, pesanError.deskripsi);
+                    hasError = true;
+                    if (!firstErrorField) firstErrorField = deskripsiField;
+                }
+
+                // Validasi Persyaratan (minimal 1 dipilih)
+                const persyaratanSelect = document.getElementById('persyaratanSelect');
+                const selectedValues = tomSelectInstance.getValue();
+
+                if (!selectedValues || selectedValues.length === 0) {
+                    tampilkanErrorSelect(persyaratanSelect, pesanError.persyaratan_id);
+                    hasError = true;
+                    if (!firstErrorField) firstErrorField = persyaratanSelect;
+                }
+
+                // Cegah submit jika ada error
+                if (hasError) {
+                    e.preventDefault();
+
+                    // Scroll ke error pertama
+                    if (firstErrorField) {
+                        firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        firstErrorField.focus();
+                    }
+
+                    // Tampilkan notifikasi
+                    tampilkanNotifikasi('Mohon lengkapi semua field yang wajib diisi dengan benar', 'error');
+                }
+            });
+
+            // Fungsi untuk menampilkan pesan error pada input biasa
+            function tampilkanError(field, pesan) {
+                // Hapus error lama jika ada
+                const oldError = field.parentElement.querySelector('.error-message-custom');
+                if (oldError) oldError.remove();
+
+                // Tambahkan border merah
+                field.classList.add('border-red-500', '!border-red-500');
+                field.classList.remove('border-blue-300');
+
+                // Buat elemen error baru
+                const errorElement = document.createElement('p');
+                errorElement.className = 'error-message-custom text-red-500 text-sm mt-1';
+                errorElement.innerHTML = `<i class="fa fa-exclamation-circle"></i> ${pesan}`;
+
+                // Sisipkan setelah input field
+                field.parentElement.appendChild(errorElement);
+            }
+
+            // Fungsi untuk menampilkan pesan error pada Tom Select
+            function tampilkanErrorSelect(field, pesan) {
+                // Hapus error lama jika ada
+                const oldError = field.parentElement.querySelector('.error-message-custom');
+                if (oldError) oldError.remove();
+
+                // Tambahkan border merah pada wrapper Tom Select
+                const tsControl = field.parentElement.querySelector('.ts-control');
+                if (tsControl) {
+                    tsControl.style.borderColor = '#ef4444';
+                }
+
+                // Buat elemen error baru
+                const errorElement = document.createElement('p');
+                errorElement.className = 'error-message-custom text-red-500 text-sm mt-1';
+                errorElement.innerHTML = `<i class="fa fa-exclamation-circle"></i> ${pesan}`;
+
+                // Sisipkan setelah Tom Select
+                field.parentElement.appendChild(errorElement);
+            }
+
+            // Hapus error ketika user mulai mengetik/memilih
+            const iconInput = form.querySelector('[name="icon"]');
+            const deskripsiInput = form.querySelector('[name="deskripsi"]');
+
+            if (iconInput) {
+                iconInput.addEventListener('input', function() {
+                    this.classList.remove('border-red-500', '!border-red-500');
+                    this.classList.add('border-blue-300');
+                    const errorMsg = this.parentElement.querySelector('.error-message-custom');
+                    if (errorMsg) errorMsg.remove();
+                });
+            }
+
+            if (deskripsiInput) {
+                deskripsiInput.addEventListener('input', function() {
+                    this.classList.remove('border-red-500', '!border-red-500');
+                    this.classList.add('border-blue-300');
+                    const errorMsg = this.parentElement.querySelector('.error-message-custom');
+                    if (errorMsg) errorMsg.remove();
+                });
+            }
+
+            // Hapus error ketika user memilih persyaratan
+            tomSelectInstance.on('change', function() {
+                const persyaratanSelect = document.getElementById('persyaratanSelect');
+                const tsControl = persyaratanSelect.parentElement.querySelector('.ts-control');
+
+                if (tsControl) {
+                    tsControl.style.borderColor = '';
+                }
+
+                const errorMsg = persyaratanSelect.parentElement.querySelector('.error-message-custom');
+                if (errorMsg) errorMsg.remove();
+            });
+
+            // Fungsi untuk menampilkan notifikasi
+            function tampilkanNotifikasi(pesan, tipe = 'error') {
+                // Hapus notifikasi lama jika ada
+                const oldNotif = document.querySelector('.notifikasi-custom');
+                if (oldNotif) oldNotif.remove();
+
+                const notif = document.createElement('div');
+                notif.className = 'notifikasi-custom fixed top-4 right-4 px-6 py-4 rounded-lg shadow-2xl z-[10000] animate-slide-in max-w-md';
+
+                if (tipe === 'error') {
+                    notif.classList.add('bg-red-500', 'text-white');
+                    notif.innerHTML = `
+                        <div class="flex items-center gap-3">
+                            <i class="fa fa-exclamation-circle text-xl"></i>
+                            <span class="font-medium">${pesan}</span>
+                        </div>
+                    `;
+                } else {
+                    notif.classList.add('bg-green-500', 'text-white');
+                    notif.innerHTML = `
+                        <div class="flex items-center gap-3">
+                            <i class="fa fa-check-circle text-xl"></i>
+                            <span class="font-medium">${pesan}</span>
+                        </div>
+                    `;
+                }
+
+                document.body.appendChild(notif);
+
+                // Hapus notifikasi setelah 5 detik
+                setTimeout(() => {
+                    notif.style.animation = 'slide-out 0.3s ease-out';
+                    setTimeout(() => notif.remove(), 300);
+                }, 5000);
+            }
         })
     </script>
 @endpush
