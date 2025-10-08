@@ -81,7 +81,7 @@ class ListPengajuanController extends Controller
             // Ambil semua data yang mungkin dibutuhkan dengan Eager Loading
             $pengajuan = Pengajuan::with([
                 'pelayanan', 'masyarakat', 'kematian', 'pindahPenduduk',
-                'domisiliUsahaYayasan', 'usaha', 'tempatTinggalSementara'
+                'domisiliUsahaYayasans', 'usaha', 'tempatTinggalSementara'
             ])->findOrFail($id);
 
             $aparatur = Aparatur::findOrFail($request->aparatur_id);
