@@ -19,7 +19,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/img/APP%20LOGO.png') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/img/APP%20LOGO.png') }}">
     <meta name="theme-color" content="#1e3a8a">
-    
+
     <!-- 🧩 Open Graph -->
     <meta property="og:title" content="Portal Resmi Kelurahan Tipulu | Meambo - Layanan Publik Online">
     <meta property="og:description" content="Pelayanan publik online Kelurahan Tipulu melalui program Meambo — cepat, mudah, dan transparan.">
@@ -47,6 +47,16 @@
 </head>
 
  <style>
+        /* CSS untuk membuat navbar sticky/tetap saat scroll */
+        #navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
         html, body {
             height: 100%;
             margin: 0;
@@ -55,6 +65,7 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            padding-top: 80px; /* Tambahan padding agar konten tidak tertutup navbar */
         }
         main {
             flex: 1;
@@ -181,6 +192,17 @@
     <script src="/assets/js/script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Auto close mobile menu setelah link diklik
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuLinks = document.querySelectorAll('#mobile-menu a');
+
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    // Tutup mobile menu
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
             // Animasi counter untuk statistik penduduk
             function animateCounter(element) {
                 if (!element) return;
