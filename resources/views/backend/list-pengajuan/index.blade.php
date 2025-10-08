@@ -77,6 +77,8 @@
                                         {{-- Tombol Verifikasi / Verifikasi Ulang --}}
                                         <button data-id="{{ $data->id }}"
                                             data-nama="{{ optional($data->masyarakat)->nama ?? optional($data->tempatTinggalSementara)->nama }}"
+                                            data-nohp="{{ $data->no_hp }}"
+                                            data-pelayanan="{{ $data->pelayanan->nama }}"
                                             onclick="openVerifikasiModal(this)"
                                             class="text-blue-500 hover:text-blue-600 transition transform hover:scale-110"
                                             title="{{ $isDitolak ? 'Verifikasi Ulang' : 'Verifikasi' }}">
@@ -192,6 +194,8 @@
                                 {{-- Tombol Verifikasi / Verifikasi Ulang --}}
                                 <button data-id="{{ $data->id }}"
                                     data-nama="{{ optional($data->masyarakat)->nama ?? optional($data->tempatTinggalSementara)->nama }}"
+                                    data-nohp="{{ $data->no_hp }}"
+                                    data-pelayanan="{{ $data->pelayanan->nama }}"
                                     onclick="openVerifikasiModal(this)"
                                     class="flex items-center gap-1 px-3 py-2 bg-blue-500 text-white text-xs rounded-lg hover:bg-blue-600 transition"
                                     title="{{ $isDitolak ? 'Verifikasi Ulang' : 'Verifikasi' }}">
@@ -402,12 +406,13 @@
     <style>
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
     </style>
-
+    
     <script>
         let currentPengajuanId = null;
         let currentNamaWa = null;
         let currentNoHp = null;
         let currentPelayanan = null;
+        let isVerifikasiUlang = false;
 
         // Verifikasi Modal
         function openVerifikasiModal(button) {
@@ -430,6 +435,9 @@
                 }
             }
 
+            // Deteksi apakah ini verifikasi ulang berdasarkan title button
+            isVerifikasiUlang = button.getAttribute('title') === 'Verifikasi Ulang';
+
             document.getElementById("namaMasyarakat").innerText = nama;
             document.getElementById("formVerifikasi").action = "{{ url('/list-pengajuan/verifikasi') }}/" + id;
             document.getElementById("verifikasiModal").classList.remove("hidden");
@@ -439,6 +447,7 @@
             document.getElementById("verifikasiModal").classList.add("hidden");
             document.getElementById("alasanTextarea").value = '';
             document.getElementById("alasanPenolakan").value = '';
+            isVerifikasiUlang = false;
         }
 
         function setStatus(status) {
@@ -504,9 +513,6 @@
             document.getElementById("cetakModal-" + id).classList.add("hidden");
         }
 
-        // ===================================================================
-        // ▼▼▼ FUNGSI INI TELAH DIPERBARUI UNTUK BEKERJA DI WEB & MOBILE ▼▼▼
-        // ===================================================================
         function handleCetak(id, action) {
             const tglCetak = document.getElementById('tgl_cetak-' + id).value;
             const aparaturId = document.getElementById('aparatur_id-' + id).value;
@@ -565,8 +571,5 @@
                 closeCetakModal(id);
             }
         }
-        // ===================================================================
-        // ▲▲▲ PERUBAHAN SELESAI ▲▲▲
-        // ===================================================================
     </script>
 @endsection

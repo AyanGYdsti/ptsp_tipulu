@@ -31,14 +31,28 @@ class ListPengajuanController extends Controller
     {
         try {
             $status = $request->input('status', 'Ditolak');
-            $alasan = $request->input('alasan'); // Ambil alasan dari request
+            $alasan = $request->input('alasan');
 
-            Verifikasi::create([
-                'pengajuan_id' => $id,
-                'status' => $status . ' oleh ' . Auth::user()->username,
-                'alasan' => $alasan, // Simpan alasan
-                'aparatur_id' => 4, // Harap pastikan ID ini sesuai atau dinamis
-            ]);
+            // Cari data verifikasi lama (dari aparatur yang sama)
+            $verifikasi = Verifikasi::where('pengajuan_id', $id)
+                ->where('aparatur_id', 4) // ubah ke Auth::user()->aparatur_id jika sudah dinamis
+                ->first();
+
+            if ($verifikasi) {
+                // Jika sudah pernah diverifikasi → update ulang
+                $verifikasi->update([
+                    'status' => $status . ' oleh ' . Auth::user()->username,
+                    'alasan' => $alasan,
+                ]);
+            } else {
+                // Jika belum pernah diverifikasi → buat baru
+                Verifikasi::create([
+                    'pengajuan_id' => $id,
+                    'status' => $status . ' oleh ' . Auth::user()->username,
+                    'alasan' => $alasan,
+                    'aparatur_id' => 4, // atau Auth::user()->aparatur_id
+                ]);
+            }
 
             return back()->with('success', 'Berhasil ' . strtolower($status) . ' data');
         } catch (\Throwable $th) {
@@ -46,6 +60,7 @@ class ListPengajuanController extends Controller
             return back()->with('error', 'Gagal verifikasi data');
         }
     }
+
 
     // Method publik untuk STREAM (tampilkan PDF di viewer)
     public function handleCetakStream(Request $request, $id)
@@ -80,8 +95,13 @@ class ListPengajuanController extends Controller
 
             // Ambil semua data yang mungkin dibutuhkan dengan Eager Loading
             $pengajuan = Pengajuan::with([
-                'pelayanan', 'masyarakat', 'kematian', 'pindahPenduduk',
-                'domisiliUsahaYayasan', 'usaha', 'tempatTinggalSementara'
+                'pelayanan',
+                'masyarakat',
+                'kematian',
+                'pindahPenduduk',
+                'domisiliUsahaYayasan',
+                'usaha',
+                'tempatTinggalSementara'
             ])->findOrFail($id);
 
             $aparatur = Aparatur::findOrFail($request->aparatur_id);
@@ -131,22 +151,22 @@ class ListPengajuanController extends Controller
                 'aparatur' => ucwords(strtolower($aparatur->nama)),
                 'aparatur_nip' => $aparatur->nip,
                 'nama_md' => ucwords(strtolower(optional($pengajuan->kematian)->nama)),
-                'jenis_kelamin_md'=> ucwords(strtolower(optional($pengajuan->kematian)->jenis_kelamin)),
+                'jenis_kelamin_md' => ucwords(strtolower(optional($pengajuan->kematian)->jenis_kelamin)),
                 'umur' => optional($pengajuan->kematian)->umur,
                 'alamat_md' => ucwords(strtolower(optional($pengajuan->kematian)->alamat)),
                 'tanggal_meninggal' => optional($pengajuan->kematian)->tanggal_meninggal
                     ? Carbon::parse($pengajuan->kematian->tanggal_meninggal)->isoFormat('D MMMM Y')
                     : null,
                 'hari_meninggal' => ucwords(strtolower(optional($pengajuan->kematian)->hari)),
-                'tempat_meninggal'=> ucwords(strtolower(optional($pengajuan->kematian)->tempat_meninggal)),
+                'tempat_meninggal' => ucwords(strtolower(optional($pengajuan->kematian)->tempat_meninggal)),
                 'penyebab_md' => ucwords(strtolower(optional($pengajuan->kematian)->penyebab)),
                 'desa_kelurahan' => ucwords(strtolower(optional($pengajuan->pindahPenduduk)->desa_kelurahan)),
                 'kecamatan' => ucwords(strtolower(optional($pengajuan->pindahPenduduk)->kecamatan)),
                 'kab_kota' => ucwords(strtolower(optional($pengajuan->pindahPenduduk)->kab_kota)),
                 'provinsi' => ucwords(strtolower(optional($pengajuan->pindahPenduduk)->provinsi)),
                 'tgl_pindah' => optional($pengajuan->pindahPenduduk)->tanggal_pindah
-                                ? Carbon::parse($pengajuan->pindahPenduduk->tanggal_pindah)->isoFormat('D MMMM Y')
-                                : null,
+                    ? Carbon::parse($pengajuan->pindahPenduduk->tanggal_pindah)->isoFormat('D MMMM Y')
+                    : null,
                 'alasan_pindah' => ucwords(strtolower(optional($pengajuan->pindahPenduduk)->alasan_pindah)),
                 'pengikut' => optional($pengajuan->pindahPenduduk)->pengikut,
                 'nama_usaha' => ucwords(strtolower(optional($pengajuan->domisiliUsahaYayasan)->nama_usaha)),
@@ -159,8 +179,8 @@ class ListPengajuanController extends Controller
                 'waktu_acara' => optional($pengajuan->keramaian)->pukul,
                 'tempat_acara' => ucwords(strtolower(optional($pengajuan->keramaian)->tempat)),
                 'tanggal_acara' => optional($pengajuan->keramaian)->tanggal
-                                    ? Carbon::parse($pengajuan->keramaian->tanggal)->isoFormat('D MMMM Y')
-                                    : null,
+                    ? Carbon::parse($pengajuan->keramaian->tanggal)->isoFormat('D MMMM Y')
+                    : null,
                 'penyelenggara_acara' => ucwords(strtolower(optional($pengajuan->keramaian)->penyelenggara)),
             ];
 
@@ -176,14 +196,13 @@ class ListPengajuanController extends Controller
             } else { // 'stream'
                 return $pdf->stream('surat_' . $pengajuan->id . '.pdf');
             }
-
         } catch (\Exception $e) {
             Log::error('Gagal saat generate PDF', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);
 
-           return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
     }
 
@@ -247,7 +266,6 @@ class ListPengajuanController extends Controller
             Log::info("Pengajuan berhasil dihapus", ['id' => $id]);
 
             return redirect()->back()->with('success', 'Data pengajuan berhasil dihapus');
-
         } catch (\Exception $e) {
             Log::error('Gagal menghapus pengajuan', [
                 'id' => $id,

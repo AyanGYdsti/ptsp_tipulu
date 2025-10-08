@@ -1,4 +1,4 @@
-@extends('backend.layouts.main')
+@extends('layouts.main')
 
 @section('content')
     <div class="p-6">
@@ -62,7 +62,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="mt-6">
             {{ $daftar_permohonan->links() }}
         </div>
