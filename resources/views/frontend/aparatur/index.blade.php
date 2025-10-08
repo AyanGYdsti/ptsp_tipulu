@@ -17,8 +17,8 @@
             <div class="bg-white shadow-md rounded-2xl p-6 text-center hover:shadow-lg transition-transform duration-300 hover:-translate-y-1">
                 <div class="flex justify-center mb-4">
                     @if ($item->foto && file_exists(public_path($item->foto)))
-                        <img src="{{ asset($item->foto) }}" 
-                            alt="{{ $item->nama }}" 
+                        <img src="{{ asset($item->foto) }}"
+                            alt="{{ $item->nama }}"
                             class="w-24 h-24 rounded-full object-cover border border-gray-300">
                     @else
                         <div class="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center text-gray-400 text-4xl">

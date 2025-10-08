@@ -1,7 +1,24 @@
 @extends('layouts.main')
 
 @section('content')
+
+@if(session('success'))
+        <div id="successNotification" class="fixed top-4 right-4 bg-green-500 text-white px-6 py-4 rounded-lg shadow-2xl z-[10000] animate-slide-in max-w-md">
+            <div class="flex items-center gap-3">
+                <i class="fa fa-check-circle text-2xl"></i>
+                <div>
+                    <p class="font-bold">Berhasil!</p>
+                    <p class="text-sm">{{ session('success') }}</p>
+                </div>
+                <button onclick="closeSuccessNotification()" class="ml-4 text-white hover:text-gray-200">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        @endif
+
     <div class="container mx-auto px-4 py-4">
+
         <!-- Card -->
         <div class="bg-gradient-to-br from-blue-50 to-blue-100 shadow-xl rounded-2xl p-4 sm:p-6 border border-blue-200">
             <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6 gap-4">
@@ -275,6 +292,25 @@
     </style>
 
     <script>
+
+            // Fungsi untuk menutup notifikasi sukses
+    function closeSuccessNotification() {
+        const notif = document.getElementById('successNotification');
+        if (notif) {
+            notif.style.animation = 'slide-out 0.3s ease-out';
+            setTimeout(() => notif.remove(), 300);
+        }
+    }
+
+    // Auto close notifikasi sukses setelah 5 detik
+    document.addEventListener('DOMContentLoaded', function() {
+        const successNotif = document.getElementById('successNotification');
+        if (successNotif) {
+            setTimeout(() => {
+                closeSuccessNotification();
+            }, 5000);
+        }
+    });
         document.addEventListener('DOMContentLoaded', function() {
             // Modal tambah aparatur functionality
             const modal = document.getElementById('modal');

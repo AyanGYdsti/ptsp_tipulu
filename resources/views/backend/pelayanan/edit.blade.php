@@ -117,6 +117,11 @@
 
             const form = document.getElementById('formPelayanan');
 
+            // ============ CEK SESSION SUCCESS DARI LARAVEL ============
+            @if(session('success'))
+                tampilkanNotifikasi("{{ session('success') }}", 'success');
+            @endif
+
             // ============ VALIDASI FORM DENGAN PESAN BAHASA INDONESIA ============
             const pesanError = {
                 icon: 'Icon harus diisi',
@@ -248,42 +253,6 @@
                 const errorMsg = persyaratanSelect.parentElement.querySelector('.error-message-custom');
                 if (errorMsg) errorMsg.remove();
             });
-
-            // Fungsi untuk menampilkan notifikasi
-            function tampilkanNotifikasi(pesan, tipe = 'error') {
-                // Hapus notifikasi lama jika ada
-                const oldNotif = document.querySelector('.notifikasi-custom');
-                if (oldNotif) oldNotif.remove();
-
-                const notif = document.createElement('div');
-                notif.className = 'notifikasi-custom fixed top-4 right-4 px-6 py-4 rounded-lg shadow-2xl z-[10000] animate-slide-in max-w-md';
-
-                if (tipe === 'error') {
-                    notif.classList.add('bg-red-500', 'text-white');
-                    notif.innerHTML = `
-                        <div class="flex items-center gap-3">
-                            <i class="fa fa-exclamation-circle text-xl"></i>
-                            <span class="font-medium">${pesan}</span>
-                        </div>
-                    `;
-                } else {
-                    notif.classList.add('bg-green-500', 'text-white');
-                    notif.innerHTML = `
-                        <div class="flex items-center gap-3">
-                            <i class="fa fa-check-circle text-xl"></i>
-                            <span class="font-medium">${pesan}</span>
-                        </div>
-                    `;
-                }
-
-                document.body.appendChild(notif);
-
-                // Hapus notifikasi setelah 5 detik
-                setTimeout(() => {
-                    notif.style.animation = 'slide-out 0.3s ease-out';
-                    setTimeout(() => notif.remove(), 300);
-                }, 5000);
-            }
         })
     </script>
 @endpush

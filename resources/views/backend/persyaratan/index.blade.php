@@ -2,6 +2,23 @@
 
 @section('content')
     <div class="mx-auto">
+
+        <!-- Notifikasi Pop-up Sukses -->
+        @if(session('success'))
+        <div id="successNotification" class="fixed top-4 right-4 bg-green-500 text-white px-6 py-4 rounded-lg shadow-2xl z-[10000] animate-slide-in max-w-md">
+            <div class="flex items-center gap-3">
+                <i class="fa fa-check-circle text-2xl"></i>
+                <div>
+                    <p class="font-bold">Berhasil!</p>
+                    <p class="text-sm">{{ session('success') }}</p>
+                </div>
+                <button onclick="closeSuccessNotification()" class="ml-4 text-white hover:text-gray-200">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        @endif
+
         <!-- Card -->
         <div class="bg-gradient-to-br from-blue-50 to-blue-100 shadow-xl rounded-2xl p-3 sm:p-6 border border-blue-200">
            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-3">
@@ -155,6 +172,7 @@
                     </div>
                 @endif
             </div>
+        </div>
 
     <!-- Modal Tambah Data -->
     <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -236,6 +254,7 @@
             </div>
         </div>
     </div>
+
     <style>
     @keyframes slide-in {
         from { transform: translateX(100%); opacity: 0; }
@@ -250,205 +269,190 @@
     .animate-slide-in {
         animation: slide-in 0.3s ease-out;
     }
-</style>
+    </style>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const modal = document.getElementById('modal');
-    const modalContent = document.getElementById('modalContent');
-    const openModalBtn = document.getElementById('openModalBtn');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-    const closeModalBtn2 = document.getElementById('closeModalBtn2');
-    const form = modal.querySelector('form');
-
-    // Buka modal jika ada error Laravel
-    @if ($errors->any())
-        modal.classList.remove('hidden');
-        setTimeout(() => {
-            modalContent.classList.remove('scale-95', 'opacity-0');
-            modalContent.classList.add('scale-100', 'opacity-100');
-        }, 10);
-        document.body.style.overflow = 'hidden';
-    @endif
-
-    // Buka modal secara manual
-    openModalBtn.addEventListener('click', () => {
-        modal.classList.remove('hidden');
-        setTimeout(() => {
-            modalContent.classList.remove('scale-95', 'opacity-0');
-            modalContent.classList.add('scale-100', 'opacity-100');
-        }, 10);
-        document.body.style.overflow = 'hidden';
-    });
-
-    function closeModal() {
-        modalContent.classList.remove('scale-100', 'opacity-100');
-        modalContent.classList.add('scale-95', 'opacity-0');
-        setTimeout(() => {
-            modal.classList.add('hidden');
-        }, 300);
-        document.body.style.overflow = 'auto';
-    }
-
-    [closeModalBtn, closeModalBtn2].forEach(btn => {
-        btn.addEventListener('click', closeModal);
-    });
-
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-    });
-
-    // Tutup dengan ESC
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
-    });
-
-    // Validasi sederhana seperti di halaman berita
-    form.addEventListener('submit', function(e) {
-        const nama = form.querySelector('[name="nama"]');
-        const ket = form.querySelector('[name="keterangan"]');
-
-        let hasError = false;
-        let firstError = null;
-
-        // hapus pesan error lama
-        form.querySelectorAll('.error-message-custom').forEach(m => m.remove());
-
-        if (!nama.value.trim()) {
-            tampilkanError(nama, 'Nama persyaratan harus diisi');
-            hasError = true;
-            if (!firstError) firstError = nama;
-        }
-
-        if (!ket.value.trim()) {
-            tampilkanError(ket, 'Keterangan harus diisi');
-            hasError = true;
-            if (!firstError) firstError = ket;
-        }
-
-        if (hasError) {
-            e.preventDefault();
-            tampilkanNotifikasi('Mohon lengkapi semua field yang wajib diisi dengan benar', 'error');
-            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            firstError.focus();
-        }
-    });
-
-    function tampilkanError(field, pesan) {
-        const old = field.parentElement.querySelector('.error-message-custom');
-        if (old) old.remove();
-        field.classList.add('border-red-500', '!border-red-500');
-        field.classList.remove('border-blue-300');
-
-        const err = document.createElement('p');
-        err.className = 'error-message-custom text-red-500 text-sm mt-1';
-        err.innerHTML = `<i class="fa fa-exclamation-circle"></i> ${pesan}`;
-        field.parentElement.appendChild(err);
-    }
-
-    // Hapus error ketika user mengetik
-    form.querySelectorAll('input, textarea').forEach(el => {
-        el.addEventListener('input', () => {
-            el.classList.remove('border-red-500', '!border-red-500');
-            el.classList.add('border-blue-300');
-            const msg = el.parentElement.querySelector('.error-message-custom');
-            if (msg) msg.remove();
-        });
-    });
-
-    // Fungsi notifikasi sama seperti modal berita
-    function tampilkanNotifikasi(pesan, tipe = 'error') {
-        const oldNotif = document.querySelector('.notifikasi-custom');
-        if (oldNotif) oldNotif.remove();
-
-        const notif = document.createElement('div');
-        notif.className = 'notifikasi-custom fixed top-4 right-4 px-6 py-4 rounded-lg shadow-2xl z-[10000] animate-slide-in max-w-md';
-        if (tipe === 'error') {
-            notif.classList.add('bg-red-500', 'text-white');
-            notif.innerHTML = `<div class="flex items-center gap-3">
-                <i class="fa fa-exclamation-circle text-xl"></i>
-                <span class="font-medium">${pesan}</span></div>`;
-        } else {
-            notif.classList.add('bg-green-500', 'text-white');
-            notif.innerHTML = `<div class="flex items-center gap-3">
-                <i class="fa fa-check-circle text-xl"></i>
-                <span class="font-medium">${pesan}</span></div>`;
-        }
-        document.body.appendChild(notif);
-        setTimeout(() => {
+    <script>
+    // Fungsi untuk menutup notifikasi sukses
+    function closeSuccessNotification() {
+        const notif = document.getElementById('successNotification');
+        if (notif) {
             notif.style.animation = 'slide-out 0.3s ease-out';
             setTimeout(() => notif.remove(), 300);
-        }, 5000);
+        }
     }
-});
-        // Modal Tambah
+
+    // Auto close notifikasi sukses setelah 5 detik
+    document.addEventListener('DOMContentLoaded', function() {
+        const successNotif = document.getElementById('successNotification');
+        if (successNotif) {
+            setTimeout(() => {
+                closeSuccessNotification();
+            }, 5000);
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
         const modal = document.getElementById('modal');
         const modalContent = document.getElementById('modalContent');
         const openModalBtn = document.getElementById('openModalBtn');
         const closeModalBtn = document.getElementById('closeModalBtn');
         const closeModalBtn2 = document.getElementById('closeModalBtn2');
+        const form = modal.querySelector('form');
 
+        // Buka modal jika ada error Laravel
+        @if ($errors->any())
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+            document.body.style.overflow = 'hidden';
+        @endif
+
+        // Buka modal secara manual
         openModalBtn.addEventListener('click', () => {
             modal.classList.remove('hidden');
             setTimeout(() => {
                 modalContent.classList.remove('scale-95', 'opacity-0');
                 modalContent.classList.add('scale-100', 'opacity-100');
             }, 10);
+            document.body.style.overflow = 'hidden';
         });
 
+        function closeModal() {
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            modalContent.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+            document.body.style.overflow = 'auto';
+        }
+
         [closeModalBtn, closeModalBtn2].forEach(btn => {
-            btn.addEventListener('click', () => {
-                modalContent.classList.remove('scale-100', 'opacity-100');
-                modalContent.classList.add('scale-95', 'opacity-0');
-                setTimeout(() => {
-                    modal.classList.add('hidden');
-                }, 300);
-            });
+            btn.addEventListener('click', closeModal);
         });
 
         modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modalContent.classList.remove('scale-100', 'opacity-100');
-                modalContent.classList.add('scale-95', 'opacity-0');
-                setTimeout(() => {
-                    modal.classList.add('hidden');
-                }, 300);
+            if (e.target === modal) closeModal();
+        });
+
+        // Tutup dengan ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
+        });
+
+        // Validasi sederhana seperti di halaman berita
+        form.addEventListener('submit', function(e) {
+            const nama = form.querySelector('[name="nama"]');
+            const ket = form.querySelector('[name="keterangan"]');
+
+            let hasError = false;
+            let firstError = null;
+
+            // hapus pesan error lama
+            form.querySelectorAll('.error-message-custom').forEach(m => m.remove());
+
+            if (!nama.value.trim()) {
+                tampilkanError(nama, 'Nama persyaratan harus diisi');
+                hasError = true;
+                if (!firstError) firstError = nama;
+            }
+
+            if (!ket.value.trim()) {
+                tampilkanError(ket, 'Keterangan harus diisi');
+                hasError = true;
+                if (!firstError) firstError = ket;
+            }
+
+            if (hasError) {
+                e.preventDefault();
+                tampilkanNotifikasi('Mohon lengkapi semua field yang wajib diisi dengan benar', 'error');
+                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                firstError.focus();
             }
         });
 
-        // Modal Konfirmasi Hapus
-        const deleteModal = document.getElementById('deleteModal');
-        const deleteModalContent = document.getElementById('deleteModalContent');
-        const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
-        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
-        const deleteItemName = document.getElementById('deleteItemName');
+        function tampilkanError(field, pesan) {
+            const old = field.parentElement.querySelector('.error-message-custom');
+            if (old) old.remove();
+            field.classList.add('border-red-500', '!border-red-500');
+            field.classList.remove('border-blue-300');
 
-        function confirmDelete(url, nama) {
-            deleteItemName.textContent = nama;
-            confirmDeleteBtn.href = url;
-            deleteModal.classList.remove('hidden');
-            setTimeout(() => {
-                deleteModalContent.classList.remove('scale-95', 'opacity-0');
-                deleteModalContent.classList.add('scale-100', 'opacity-100');
-            }, 10);
+            const err = document.createElement('p');
+            err.className = 'error-message-custom text-red-500 text-sm mt-1';
+            err.innerHTML = `<i class="fa fa-exclamation-circle"></i> ${pesan}`;
+            field.parentElement.appendChild(err);
         }
 
-        cancelDeleteBtn.addEventListener('click', () => {
+        // Hapus error ketika user mengetik
+        form.querySelectorAll('input, textarea').forEach(el => {
+            el.addEventListener('input', () => {
+                el.classList.remove('border-red-500', '!border-red-500');
+                el.classList.add('border-blue-300');
+                const msg = el.parentElement.querySelector('.error-message-custom');
+                if (msg) msg.remove();
+            });
+        });
+
+        // Fungsi notifikasi sama seperti modal berita
+        function tampilkanNotifikasi(pesan, tipe = 'error') {
+            const oldNotif = document.querySelector('.notifikasi-custom');
+            if (oldNotif) oldNotif.remove();
+
+            const notif = document.createElement('div');
+            notif.className = 'notifikasi-custom fixed top-4 right-4 px-6 py-4 rounded-lg shadow-2xl z-[10000] animate-slide-in max-w-md';
+            if (tipe === 'error') {
+                notif.classList.add('bg-red-500', 'text-white');
+                notif.innerHTML = `<div class="flex items-center gap-3">
+                    <i class="fa fa-exclamation-circle text-xl"></i>
+                    <span class="font-medium">${pesan}</span></div>`;
+            } else {
+                notif.classList.add('bg-green-500', 'text-white');
+                notif.innerHTML = `<div class="flex items-center gap-3">
+                    <i class="fa fa-check-circle text-xl"></i>
+                    <span class="font-medium">${pesan}</span></div>`;
+            }
+            document.body.appendChild(notif);
+            setTimeout(() => {
+                notif.style.animation = 'slide-out 0.3s ease-out';
+                setTimeout(() => notif.remove(), 300);
+            }, 5000);
+        }
+    });
+
+    // Modal Konfirmasi Hapus
+    const deleteModal = document.getElementById('deleteModal');
+    const deleteModalContent = document.getElementById('deleteModalContent');
+    const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+    const deleteItemName = document.getElementById('deleteItemName');
+
+    function confirmDelete(url, nama) {
+        deleteItemName.textContent = nama;
+        confirmDeleteBtn.href = url;
+        deleteModal.classList.remove('hidden');
+        setTimeout(() => {
+            deleteModalContent.classList.remove('scale-95', 'opacity-0');
+            deleteModalContent.classList.add('scale-100', 'opacity-100');
+        }, 10);
+    }
+
+    cancelDeleteBtn.addEventListener('click', () => {
+        deleteModalContent.classList.remove('scale-100', 'opacity-100');
+        deleteModalContent.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => {
+            deleteModal.classList.add('hidden');
+        }, 300);
+    });
+
+    deleteModal.addEventListener('click', (e) => {
+        if (e.target === deleteModal) {
             deleteModalContent.classList.remove('scale-100', 'opacity-100');
             deleteModalContent.classList.add('scale-95', 'opacity-0');
             setTimeout(() => {
                 deleteModal.classList.add('hidden');
             }, 300);
-        });
-
-        deleteModal.addEventListener('click', (e) => {
-            if (e.target === deleteModal) {
-                deleteModalContent.classList.remove('scale-100', 'opacity-100');
-                deleteModalContent.classList.add('scale-95', 'opacity-0');
-                setTimeout(() => {
-                    deleteModal.classList.add('hidden');
-                }, 300);
-            }
-        });
+        }
+    });
     </script>
 @endsection
