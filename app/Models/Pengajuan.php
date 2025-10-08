@@ -5,19 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-// Pastikan Anda mengimpor semua model yang direlasikan
-use App\Models\Masyarakat;
-use App\Models\Pelayanan;
-use App\Models\DokumenPersyaratan;
-use App\Models\Verifikasi;
-use App\Models\Kematian;
-use App\Models\PindahPenduduk;
-use App\Models\DomisiliUsahaYayasan;
-use App\Models\Usaha;
-use App\Models\TempatTinggalSementara;
-
-
-
 class Pengajuan extends Model
 {
     use HasFactory;
