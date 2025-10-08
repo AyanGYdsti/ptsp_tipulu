@@ -132,7 +132,7 @@
                                 value="{{ old('RT') }}"
                                 min="0"
                                 class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('RT') border-red-500 @enderror"
-                                placeholder="Masukkan nomor RT"
+                                placeholder="Masukkan RT"
                                 required
                             >
                             @error('RT')
@@ -150,7 +150,7 @@
                                 value="{{ old('RW') }}"
                                 min="0"
                                 class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none @error('RW') border-red-500 @enderror"
-                                placeholder="Masukkan nomor RW"
+                                placeholder="Masukkan RW"
                                 required
                             >
                             @error('RW')
@@ -347,15 +347,15 @@
                             {{-- Umur --}}
                             <div>
                                 <label for="umur" class="block text-sm font-medium text-gray-600">Umur</label>
-                                <input 
-                                    type="number" 
-                                    name="umur" 
+                                <input
+                                    type="number"
+                                    name="umur"
                                     id="umur"
-                                    min="0" 
+                                    min="0"
                                     max="120"
                                     class="mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none
                                     @error('umur') border-red-500 @enderror"
-                                    placeholder="Masukkan Umur (minimal 0 tahun)" 
+                                    placeholder="Masukkan Umur (minimal 0 tahun)"
                                     required
                                 >
                                 @error('umur')
