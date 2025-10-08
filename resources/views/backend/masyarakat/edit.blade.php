@@ -117,16 +117,24 @@
                     <select name="status"
                         class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
                         <option value="">-- Pilih Status --</option>
-                        <option value="Belum Kawin"
-                            {{ old('status', $masyarakat->status) == 'Belum Kawin' ? 'selected' : '' }}>Belum Kawin
+                        <option value="Belum Kawin" {{ old('status', $masyarakat->status) == 'Belum Kawin' ? 'selected' : '' }}>
+                            Belum Kawin
                         </option>
-                        <option value="Kawin" {{ old('status', $masyarakat->status) == 'Kawin' ? 'selected' : '' }}>Kawin
+                        <option value="Kawin" {{ old('status', $masyarakat->status) == 'Kawin' ? 'selected' : '' }}>
+                            Kawin
+                        </option>
+                        <option value="Kawin Belum Tercatat" {{ old('status', $masyarakat->status) == 'Kawin Belum Tercatat' ? 'selected' : '' }}>
+                            Kawin Belum Tercatat
+                        </option>
+                        <option value="Cerai Mati" {{ old('status', $masyarakat->status) == 'Cerai Mati' ? 'selected' : '' }}>
+                            Cerai Mati
                         </option>
                     </select>
                     @error('status')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
+
 
                 <!-- Pekerjaan -->
                 <div class="mb-4">
