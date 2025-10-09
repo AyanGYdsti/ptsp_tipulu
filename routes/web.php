@@ -45,6 +45,13 @@ Route::get('/pengajuan/{id}', [PengajuanController::class, 'index'])->name('peng
 Route::post('/pengajuan/cek/{id}', [PengajuanController::class, 'cek'])->name('pengajuan.cek');
 Route::post('/pengajuan/store/{id}', [PengajuanController::class, 'store'])->name('pengajuan.store');
 Route::get('/pengajuan/detail/{id}/{nik?}', [PengajuanController::class, 'detail'])->name('pengajuan.detail');
+
+// ✅ PINDAHKAN 3 ROUTE INI KELUAR DARI MIDDLEWARE AUTH (untuk mobile app)
+// Validasi auth sudah dilakukan di dalam controller
+Route::post('/list-pengajuan/{id}/cetak-stream', [ListPengajuanController::class, 'handleCetakStream'])->name('list-pengajuan.cetak.stream');
+Route::post('/list-pengajuan/{id}/cetak-download', [ListPengajuanController::class, 'handleCetakDownload'])->name('list-pengajuan.cetak.download');
+Route::get('/list-pengajuan/stream/{persyaratan_id}/{pengajuan_id}', [ListPengajuanController::class, 'stream'])->name('list-pengajuan.stream');
+
 // Route dengan middleware auth
 Route::middleware(['auth'])->group(function () {
     Route::get('/surat', function () {
@@ -70,12 +77,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/list-pengajuan', [ListPengajuanController::class, 'index'])->name('list-pengajuan');
     // Route::post('/list-pengajuan/cetak/{id}', [ListPengajuanController::class, 'cetak'])->name('list-pengajuan.cetak');
     Route::put('/list-pengajuan/verifikasi/{id}', [ListPengajuanController::class, 'verifikasi'])->name('list-pengajuan.verifikasi');
-    Route::get('/list-pengajuan/stream/{persyaratan_id}/{pengajuan_id}', [ListPengajuanController::class, 'stream'])->name('list-pengajuan.stream');
+    // ✅ ROUTE INI SUDAH DIPINDAHKAN KE LUAR (lihat baris 43)
+    // Route::get('/list-pengajuan/stream/{persyaratan_id}/{pengajuan_id}', [ListPengajuanController::class, 'stream'])->name('list-pengajuan.stream');
 
     Route::get('/list-pengajuan', [ListPengajuanController::class, 'index'])->name('list-pengajuan');
     Route::post('/list-pengajuan/cetak/{id}', [ListPengajuanController::class, 'cetak'])->name('list-pengajuan.cetak');
     Route::put('/list-pengajuan/verifikasi/{id}', [ListPengajuanController::class, 'verifikasi'])->name('list-pengajuan.verifikasi');
-    Route::get('/list-pengajuan/stream/{persyaratan_id}/{pengajuan_id}', [ListPengajuanController::class, 'stream'])->name('list-pengajuan.stream');
+    // ✅ ROUTE INI SUDAH DIPINDAHKAN KE LUAR (lihat baris 43)
+    // Route::get('/list-pengajuan/stream/{persyaratan_id}/{pengajuan_id}', [ListPengajuanController::class, 'stream'])->name('list-pengajuan.stream');
 
     Route::get('/persyaratan', [PersyaratanController::class, 'index'])->name('persyaratan');
     Route::get('/persyaratan/edit/{id}', [PersyaratanController::class, 'edit'])->name('persyaratan.edit');
@@ -129,7 +138,9 @@ Route::middleware(['auth'])->group(function () {
     // Route::post('/list-pengajuan/cetak/download/{id}', [ListPengajuanController::class, 'handleCetak'])
     //     ->name('list-pengajuan.cetak.download');
 
-    Route::post('/list-pengajuan/{id}/cetak-stream', [ListPengajuanController::class, 'handleCetakStream'])->name('list-pengajuan.cetak.stream');
-    Route::post('/list-pengajuan/{id}/cetak-download', [ListPengajuanController::class, 'handleCetakDownload'])->name('list-pengajuan.cetak.download');
+    // ✅ ROUTE INI SUDAH DIPINDAHKAN KE LUAR (lihat baris 41-43)
+    // Route::post('/list-pengajuan/{id}/cetak-stream', [ListPengajuanController::class, 'handleCetakStream'])->name('list-pengajuan.cetak.stream');
+    // Route::post('/list-pengajuan/{id}/cetak-download', [ListPengajuanController::class, 'handleCetakDownload'])->name('list-pengajuan.cetak.download');
+    
     Route::delete('/list-pengajuan/{id}', [ListPengajuanController::class, 'destroy'])->name('list-pengajuan.destroy');
 });
