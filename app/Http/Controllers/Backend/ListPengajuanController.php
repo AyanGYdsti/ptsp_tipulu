@@ -71,46 +71,59 @@ class ListPengajuanController extends Controller
     }
 
     // Method publik untuk STREAM (tampilkan PDF di viewer)
-    public function handleCetakStream(Request $request, $id)
-    {
-        // ✅ TAMBAHAN: Validasi auth untuk mobile app
-        if ($this->isMobileAppRequest($request)) {
-            if (!Auth::check()) {
-                Log::warning('Mobile app - Unauthorized cetak stream', [
-                    'id' => $id,
-                    'ip' => $request->ip(),
-                ]);
+    // public function handleCetakStream(Request $request, $id)
+    // {
+    //     // ✅ TAMBAHAN: Validasi auth untuk mobile app
+    //     if ($this->isMobileAppRequest($request)) {
+    //         if (!Auth::check()) {
+    //             Log::warning('Mobile app - Unauthorized cetak stream', [
+    //                 'id' => $id,
+    //                 'ip' => $request->ip(),
+    //             ]);
                 
-                return response()->json([
-                    'error' => 'Unauthorized',
-                    'message' => 'Sesi tidak valid. Silakan login ulang di aplikasi.'
-                ], 401);
-            }
-        }
+    //             return response()->json([
+    //                 'error' => 'Unauthorized',
+    //                 'message' => 'Sesi tidak valid. Silakan login ulang di aplikasi.'
+    //             ], 401);
+    //         }
+    //     }
         
-        return $this->generatePdf($request, $id, 'stream');
-    }
+    //     return $this->generatePdf($request, $id, 'stream');
+    // }
+
+    public function handleCetakStream(Request $request, $id)
+{
+    return $this->generatePdf($request, $id, 'stream');
+}
+
+public function handleCetakDownload(Request $request, $id)
+{
+    return $this->generatePdf($request, $id, 'download');
+}
+
+
+    
 
     // Method publik untuk DOWNLOAD (unduh PDF)
-    public function handleCetakDownload(Request $request, $id)
-    {
-        // ✅ TAMBAHAN: Validasi auth untuk mobile app
-        if ($this->isMobileAppRequest($request)) {
-            if (!Auth::check()) {
-                Log::warning('Mobile app - Unauthorized cetak download', [
-                    'id' => $id,
-                    'ip' => $request->ip(),
-                ]);
+    // public function handleCetakDownload(Request $request, $id)
+    // {
+    //     // ✅ TAMBAHAN: Validasi auth untuk mobile app
+    //     if ($this->isMobileAppRequest($request)) {
+    //         if (!Auth::check()) {
+    //             Log::warning('Mobile app - Unauthorized cetak download', [
+    //                 'id' => $id,
+    //                 'ip' => $request->ip(),
+    //             ]);
                 
-                return response()->json([
-                    'error' => 'Unauthorized',
-                    'message' => 'Sesi tidak valid. Silakan login ulang di aplikasi.'
-                ], 401);
-            }
-        }
+    //             return response()->json([
+    //                 'error' => 'Unauthorized',
+    //                 'message' => 'Sesi tidak valid. Silakan login ulang di aplikasi.'
+    //             ], 401);
+    //         }
+    //     }
         
-        return $this->generatePdf($request, $id, 'download');
-    }
+    //     return $this->generatePdf($request, $id, 'download');
+    // }
 
     /**
      * Method private terpusat untuk men-generate PDF.
@@ -258,19 +271,13 @@ class ListPengajuanController extends Controller
         try {
             // ✅ TAMBAHAN: Validasi auth untuk mobile app
             if ($this->isMobileAppRequest($request)) {
-                if (!Auth::check()) {
-                    Log::warning('Mobile app - Unauthorized stream dokumen', [
-                        'persyaratan_id' => $persyaratan_id,
-                        'pengajuan_id' => $pengajuan_id,
-                        'ip' => $request->ip(),
-                    ]);
-                    
-                    return response()->json([
-                        'error' => 'Unauthorized',
-                        'message' => 'Sesi tidak valid. Silakan login ulang di aplikasi.'
-                    ], 401);
-                }
+                Log::info('Akses dari mobile app diizinkan untuk stream dokumen', [
+                    'persyaratan_id' => $persyaratan_id,
+                    'pengajuan_id' => $pengajuan_id,
+                    'ip' => $request->ip(),
+                ]);
             }
+            
 
             $path = DokumenPersyaratan::where('persyaratan_id', $persyaratan_id)
                 ->where('pengajuan_id', $pengajuan_id)
