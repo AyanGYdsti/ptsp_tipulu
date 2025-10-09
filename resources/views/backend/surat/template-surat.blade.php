@@ -377,7 +377,7 @@
         <p style="text-align: justify; text-indent: 27px;">
              {!!$keterangan_surat !!}
         </p>
-    @elseif($judul == "Surat Keterangan Pindah Penduduk" || $judul = "Surat Keterangan Kematian")
+    @elseif($judul == "Surat Keterangan Pindah Penduduk" || $judul == "Surat Keterangan Kematian")
 
     @else
         <p style="text-align: justify; text-indent: 27px;">
