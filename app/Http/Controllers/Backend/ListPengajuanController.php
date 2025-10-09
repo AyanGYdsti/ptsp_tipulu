@@ -271,19 +271,13 @@ public function handleCetakDownload(Request $request, $id)
         try {
             // ✅ TAMBAHAN: Validasi auth untuk mobile app
             if ($this->isMobileAppRequest($request)) {
-                if (!Auth::check()) {
-                    Log::warning('Mobile app - Unauthorized stream dokumen', [
-                        'persyaratan_id' => $persyaratan_id,
-                        'pengajuan_id' => $pengajuan_id,
-                        'ip' => $request->ip(),
-                    ]);
-                    
-                    return response()->json([
-                        'error' => 'Unauthorized',
-                        'message' => 'Sesi tidak valid. Silakan login ulang di aplikasi.'
-                    ], 401);
-                }
+                Log::info('Akses dari mobile app diizinkan untuk stream dokumen', [
+                    'persyaratan_id' => $persyaratan_id,
+                    'pengajuan_id' => $pengajuan_id,
+                    'ip' => $request->ip(),
+                ]);
             }
+            
 
             $path = DokumenPersyaratan::where('persyaratan_id', $persyaratan_id)
                 ->where('pengajuan_id', $pengajuan_id)
