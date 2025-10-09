@@ -21,6 +21,7 @@ class BerandaController extends Controller
         $aparatur = Aparatur::orderBy('posisi', 'asc')->paginate(4);
         $berita = Berita::latest()->limit(6)->get();
 
+
         // -------------------------------------------------------------
         // Logika untuk mengambil data demografi dari tabel masyarakats
         // -------------------------------------------------------------
@@ -29,13 +30,6 @@ class BerandaController extends Controller
         // Data Jenis Kelamin
         $totalLakiLaki = Masyarakat::where('jk', 'Laki-laki')->count();
         $totalPerempuan = Masyarakat::where('jk', 'Perempuan')->count();
-
-        // Data Kelompok Usia
-        $usiaBalita = Masyarakat::whereBetween('tgl_lahir', [Carbon::now()->subYears(5), Carbon::now()])->count();
-        $usiaAnak = Masyarakat::whereBetween('tgl_lahir', [Carbon::now()->subYears(12)->subDay(), Carbon::now()->subYears(6)])->count();
-        $usiaRemaja = Masyarakat::whereBetween('tgl_lahir', [Carbon::now()->subYears(17)->subDay(), Carbon::now()->subYears(13)])->count();
-        $usiaDewasa = Masyarakat::whereBetween('tgl_lahir', [Carbon::now()->subYears(59)->subDay(), Carbon::now()->subYears(18)])->count();
-        $usiaLansia = Masyarakat::whereDate('tgl_lahir', '<=', Carbon::now()->subYears(60))->count();
 
         return view('frontend.beranda.index', [
             'landingPage' => $landingPage,
