@@ -39,7 +39,7 @@
                 <div class="mb-4">
                     <label class="block text-sm font-semibold text-gray-600 mb-1">Posisi <span class="text-red-500">*</span></label>
                     <input type="number" name="posisi" value="{{ old('posisi', $aparatur->posisi) }}" step="1"
-                        min="0"
+                        min="1"  onkeydown="return false"
                         class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
                     @error('posisi')
                         <p class="text-red-500 text-sm">{{ $message }}</p>

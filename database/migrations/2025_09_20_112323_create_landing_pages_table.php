@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama_instansi');
             $table->string('slogan');
+            $table->string('gambar_utama');
             $table->text('deskripsi');
             $table->text('visi');
             $table->text('misi');

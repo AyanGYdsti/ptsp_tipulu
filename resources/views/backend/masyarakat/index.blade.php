@@ -119,10 +119,10 @@
                                 <td class="px-2 sm:px-4 py-3 align-top">
                                     <div class="d-flex flex-column">
                                         <p class="font-bold text-sm">{{ $data->nama }}</p>
-                                        <p class="opacity-75 text-xs">Nik:{{ $data->nik }}</p>
+                                        <p class="opacity-75 text-xs">NIK:{{ $data->nik }}</p>
                                         <p class="opacity-75 text-xs">RT:{{ $data->RT }}</p>
                                         <p class="opacity-75 text-xs">RW:{{ $data->RW }}</p>
-                                        <p class="opacity-75 text-xs break-words max-w-[200px]">Alamat:{{ $data->alamat }}</p>
+                                        <p class="opacity-75 text-xs break-words max-w-[200px]">ALAMAT:{{ $data->alamat }}</p>
                                     </div>
                                 </td>
                                 <td class="px-2 sm:px-4 py-3 text-sm align-top">{{ $data->tempat_lahir . ', ' . $data->tgl_lahir }}</td>

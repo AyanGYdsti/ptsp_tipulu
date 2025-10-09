@@ -27,6 +27,7 @@ public function store(Request $request)
         $rules = [
             'nama_instansi'   => 'sometimes|string|max:255',
             'slogan'          => 'sometimes|string|max:255',
+            'gambar_utama' => 'sometimes|image|mimes:jpg,jpeg,png|max:2048',
             'deskripsi'       => 'sometimes|string',
             'visi'            => 'sometimes|string',
             'misi'            => 'sometimes|string',
@@ -39,21 +40,30 @@ public function store(Request $request)
 
         $data = $request->validate($rules);
 
-        // 🔹 3. Jika data belum ada → buat baru, kalau ada → update
+         // 🔹 Ambil data pertama (karena biasanya hanya satu landing page)
+        $landingPage = LandingPage::first();
+
+        // 🔹 Kalau upload gambar
+        if ($request->hasFile('gambar_utama')) {
+            $path = $request->file('gambar_utama')->store('landingpage', 'public');
+            $data['gambar_utama'] = $path;
+        }
+        // 🔹 Jika belum ada data → buat baru
         if (!$landingPage) {
             LandingPage::create($data);
             return back()->with('success', 'Data landing page berhasil dibuat.');
-        } else {
-            $landingPage->update($data);
-            return back()->with('success', 'Data landing page berhasil diperbarui.');
-        }
+        } 
+        // 🔹 Jika sudah ada → update
+        $landingPage->update($data);
+        return back()->with('success', 'Data landing page berhasil diperbarui.');
+
     } catch (\Exception $e) {
         // 🔹 4. Tangani error & tampilkan pesan
         return back()->with('error', 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage());
     }
 }
 
-    public function sejarah()
+public function sejarah()
 {
     $landingPage = LandingPage::first(); 
     return view('frontend.sejarah.index', compact('landingPage'));

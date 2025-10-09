@@ -194,7 +194,7 @@
 
                     <div>
                         <label class="block text-sm font-semibold text-gray-600 mb-2">Posisi <span class="text-red-500">*</span></label>
-                        <input type="number" name="posisi" value="{{ old('posisi') }}" step="1" min="0"
+                        <input type="number" name="posisi" value="{{ old('posisi') }}" step="1" min="1" onkeydown="return false"
                             class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-sm">
                         @error('posisi')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
