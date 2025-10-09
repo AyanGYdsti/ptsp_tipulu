@@ -61,16 +61,54 @@ class ListPengajuanController extends Controller
         }
     }
 
+    // ✅ TAMBAHAN: Helper untuk deteksi request dari mobile
+    private function isMobileAppRequest(Request $request)
+    {
+        return $request->hasHeader('X-Requested-With') && 
+               $request->header('X-Requested-With') === 'XMLHttpRequest' &&
+               (str_contains($request->userAgent() ?? '', 'MEAMBO-Mobile-App') ||
+                str_contains($request->header('User-Agent') ?? '', 'MEAMBO-Mobile-App'));
+    }
 
     // Method publik untuk STREAM (tampilkan PDF di viewer)
     public function handleCetakStream(Request $request, $id)
     {
+        // ✅ TAMBAHAN: Validasi auth untuk mobile app
+        if ($this->isMobileAppRequest($request)) {
+            if (!Auth::check()) {
+                Log::warning('Mobile app - Unauthorized cetak stream', [
+                    'id' => $id,
+                    'ip' => $request->ip(),
+                ]);
+                
+                return response()->json([
+                    'error' => 'Unauthorized',
+                    'message' => 'Sesi tidak valid. Silakan login ulang di aplikasi.'
+                ], 401);
+            }
+        }
+        
         return $this->generatePdf($request, $id, 'stream');
     }
 
     // Method publik untuk DOWNLOAD (unduh PDF)
     public function handleCetakDownload(Request $request, $id)
     {
+        // ✅ TAMBAHAN: Validasi auth untuk mobile app
+        if ($this->isMobileAppRequest($request)) {
+            if (!Auth::check()) {
+                Log::warning('Mobile app - Unauthorized cetak download', [
+                    'id' => $id,
+                    'ip' => $request->ip(),
+                ]);
+                
+                return response()->json([
+                    'error' => 'Unauthorized',
+                    'message' => 'Sesi tidak valid. Silakan login ulang di aplikasi.'
+                ], 401);
+            }
+        }
+        
         return $this->generatePdf($request, $id, 'download');
     }
 
@@ -84,7 +122,8 @@ class ListPengajuanController extends Controller
             Log::info("Memulai proses generate PDF", [
                 'id' => $id,
                 'action' => $action,
-                'request_data' => $request->all()
+                'request_data' => $request->all(),
+                'is_mobile' => $this->isMobileAppRequest($request)
             ]);
 
             // Validasi input dari form
@@ -202,29 +241,94 @@ class ListPengajuanController extends Controller
                 'trace' => $e->getTraceAsString()
             ]);
 
+            // ✅ TAMBAHAN: Return JSON untuk mobile app
+            if ($this->isMobileAppRequest($request)) {
+                return response()->json([
+                    'error' => 'Gagal generate PDF',
+                    'message' => $e->getMessage()
+                ], 500);
+            }
+
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
     }
 
-    public function stream($persyaratan_id, $pengajuan_id)
+    public function stream(Request $request, $persyaratan_id, $pengajuan_id)
     {
-        $path = DokumenPersyaratan::where('persyaratan_id', $persyaratan_id)
-            ->where('pengajuan_id', $pengajuan_id)
-            ->value('dokumen');
+        try {
+            // ✅ TAMBAHAN: Validasi auth untuk mobile app
+            if ($this->isMobileAppRequest($request)) {
+                if (!Auth::check()) {
+                    Log::warning('Mobile app - Unauthorized stream dokumen', [
+                        'persyaratan_id' => $persyaratan_id,
+                        'pengajuan_id' => $pengajuan_id,
+                        'ip' => $request->ip(),
+                    ]);
+                    
+                    return response()->json([
+                        'error' => 'Unauthorized',
+                        'message' => 'Sesi tidak valid. Silakan login ulang di aplikasi.'
+                    ], 401);
+                }
+            }
 
-        $persyaratan = Persyaratan::find($persyaratan_id);
-        $fullPath = public_path($path);
+            $path = DokumenPersyaratan::where('persyaratan_id', $persyaratan_id)
+                ->where('pengajuan_id', $pengajuan_id)
+                ->value('dokumen');
 
-        if (!file_exists($fullPath)) {
-            abort(404, 'File tidak ditemukan.');
+            if (!$path) {
+                // ✅ TAMBAHAN: Return JSON untuk mobile
+                if ($this->isMobileAppRequest($request)) {
+                    return response()->json([
+                        'error' => 'Not Found',
+                        'message' => 'Dokumen tidak ditemukan di database.'
+                    ], 404);
+                }
+                abort(404, 'Dokumen tidak ditemukan.');
+            }
+
+            $persyaratan = Persyaratan::find($persyaratan_id);
+            $fullPath = public_path($path);
+
+            if (!file_exists($fullPath)) {
+                // ✅ TAMBAHAN: Return JSON untuk mobile
+                if ($this->isMobileAppRequest($request)) {
+                    return response()->json([
+                        'error' => 'Not Found',
+                        'message' => 'File tidak ditemukan di server.'
+                    ], 404);
+                }
+                abort(404, 'File tidak ditemukan.');
+            }
+
+            $filename = optional($persyaratan)->nama . '.pdf';
+
+            return response()->file($fullPath, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="' . $filename . '"',
+                // ✅ TAMBAHAN: Header untuk mobile compatibility
+                'Cache-Control' => 'no-cache, must-revalidate',
+                'X-Content-Type-Options' => 'nosniff',
+            ]);
+            
+        } catch (\Exception $e) {
+            Log::error('Error stream dokumen', [
+                'persyaratan_id' => $persyaratan_id,
+                'pengajuan_id' => $pengajuan_id,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            // ✅ TAMBAHAN: Return JSON untuk mobile
+            if ($this->isMobileAppRequest($request)) {
+                return response()->json([
+                    'error' => 'Server Error',
+                    'message' => 'Gagal memuat dokumen: ' . $e->getMessage()
+                ], 500);
+            }
+
+            abort(500, 'Gagal memuat dokumen.');
         }
-
-        $filename = optional($persyaratan)->nama . '.pdf';
-
-        return response()->file($fullPath, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="' . $filename . '"',
-        ]);
     }
 
     /**
