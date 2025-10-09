@@ -8,6 +8,7 @@ use App\Models\DokumenPersyaratan;
 use App\Models\Pengajuan;
 use App\Models\Persyaratan;
 use App\Models\Verifikasi;
+use App\Models\LandingPage;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -64,7 +65,7 @@ class ListPengajuanController extends Controller
     // ✅ TAMBAHAN: Helper untuk deteksi request dari mobile
     private function isMobileAppRequest(Request $request)
     {
-        return $request->hasHeader('X-Requested-With') && 
+        return $request->hasHeader('X-Requested-With') &&
                $request->header('X-Requested-With') === 'XMLHttpRequest' &&
                (str_contains($request->userAgent() ?? '', 'MEAMBO-Mobile-App') ||
                 str_contains($request->header('User-Agent') ?? '', 'MEAMBO-Mobile-App'));
@@ -80,14 +81,14 @@ class ListPengajuanController extends Controller
     //                 'id' => $id,
     //                 'ip' => $request->ip(),
     //             ]);
-                
+
     //             return response()->json([
     //                 'error' => 'Unauthorized',
     //                 'message' => 'Sesi tidak valid. Silakan login ulang di aplikasi.'
     //             ], 401);
     //         }
     //     }
-        
+
     //     return $this->generatePdf($request, $id, 'stream');
     // }
 
@@ -102,7 +103,7 @@ public function handleCetakDownload(Request $request, $id)
 }
 
 
-    
+
 
     // Method publik untuk DOWNLOAD (unduh PDF)
     // public function handleCetakDownload(Request $request, $id)
@@ -114,14 +115,14 @@ public function handleCetakDownload(Request $request, $id)
     //                 'id' => $id,
     //                 'ip' => $request->ip(),
     //             ]);
-                
+
     //             return response()->json([
     //                 'error' => 'Unauthorized',
     //                 'message' => 'Sesi tidak valid. Silakan login ulang di aplikasi.'
     //             ], 401);
     //         }
     //     }
-        
+
     //     return $this->generatePdf($request, $id, 'download');
     // }
 
@@ -157,6 +158,7 @@ public function handleCetakDownload(Request $request, $id)
             ])->findOrFail($id);
 
             $aparatur = Aparatur::findOrFail($request->aparatur_id);
+            $landingpage = LandingPage::first();
 
             // Siapkan semua data yang akan dikirim ke view PDF
             $dataForView = [
@@ -234,6 +236,7 @@ public function handleCetakDownload(Request $request, $id)
                     ? Carbon::parse($pengajuan->keramaian->tanggal)->isoFormat('D MMMM Y')
                     : null,
                 'penyelenggara_acara' => ucwords(strtolower(optional($pengajuan->keramaian)->penyelenggara)),
+                'telepon' => $landingpage->telpon ?? null,
             ];
 
 
@@ -277,7 +280,7 @@ public function handleCetakDownload(Request $request, $id)
                     'ip' => $request->ip(),
                 ]);
             }
-            
+
 
             $path = DokumenPersyaratan::where('persyaratan_id', $persyaratan_id)
                 ->where('pengajuan_id', $pengajuan_id)
@@ -317,7 +320,7 @@ public function handleCetakDownload(Request $request, $id)
                 'Cache-Control' => 'no-cache, must-revalidate',
                 'X-Content-Type-Options' => 'nosniff',
             ]);
-            
+
         } catch (\Exception $e) {
             Log::error('Error stream dokumen', [
                 'persyaratan_id' => $persyaratan_id,

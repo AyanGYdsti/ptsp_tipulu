@@ -69,11 +69,11 @@
             </td>
 
             {{-- Kolom tengah: teks --}}
-            <td style="width: 50%; text-align: center; vertical-align: middle;">
+            <td style="width: 70%; text-align: center; vertical-align: middle;">
                 <p style="font-size: 20px; margin: 2px 0; font-weight: bold;">PEMERINTAH KOTA KENDARI</p>
                 <p style="font-size: 16px; margin: 2px 0;"><b>KECAMATAN KENDARI BARAT</b></p>
                 <p style="font-size: 16px; margin: 2px 0;"><b>KELURAHAN TIPULU</b></p>
-                <p style="margin: 2px 0;">JL. SERIGALA NO.2 TLP.(0401) 331891 KODE POS 93122</p>
+                <p style="font-size: 13px; margin: 2px 0;">JL. SERIGALA NO.2 TLP. {{ $telepon }} KODE POS 93122</p>
             </td>
 
             {{-- Kolom kanan: kosong --}}
