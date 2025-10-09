@@ -326,7 +326,7 @@
                 <tr>
                     <td>Nama Kegiatan</td>
                     <td>:</td>
-                    <td>{{ $nama_acara }}</td>
+                    <td>{{ $acara }}</td>
                 </tr>
             @elseif ($judul == 'Pengurusan Kartu Keluarga (KK)')
                 <tr>

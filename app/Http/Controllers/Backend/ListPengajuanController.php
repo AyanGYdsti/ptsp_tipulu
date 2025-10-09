@@ -175,7 +175,7 @@ public function handleCetakDownload(Request $request, $id)
                 'jenis_kelamin' => ucwords(strtolower(optional($pengajuan->masyarakat)->jk ?? optional($pengajuan->tempatTinggalSementara)->jenis_kelamin)),
                 'agama' => ucwords(strtolower(optional($pengajuan->masyarakat)->agama ?? optional($pengajuan->tempatTinggalSementara)->agama)),
                 'pekerjaan' => ucwords(strtolower(optional($pengajuan->masyarakat)->pekerjaan ?? optional($pengajuan->tempatTinggalSementara)->pekerjaan)),
-                'alamat' => ucwords(strtolower(optional($pengajuan->masyarakat)->alamat ?? optional($pengajuan->tempatTinggalSementara)->alamat)),
+                'alamat' => optional($pengajuan->masyarakat)->alamat ?? ucwords(strtolower(optional($pengajuan->tempatTinggalSementara)->alamat)),
                 'nik' => optional($pengajuan->masyarakat)->nik ?? optional($pengajuan->tempatTinggalSementara)->nik,
                 'status' => ucwords(strtolower($pengajuan->masyarakat->status ?? $pengajuan->tempatTinggalSementara->status ?? '....')),
                 'keterangan_surat' => str_replace(
@@ -192,10 +192,10 @@ public function handleCetakDownload(Request $request, $id)
                         optional($pengajuan->usaha)->tahun_berdiri ?? '....',
                         '<b>' . ucwords(strtolower($pengajuan->keperluan ?? '....')) . '</b>',
                         ucwords(strtolower(optional($pengajuan->tempatTinggalSementara)->alamat_sementara ?? '....')),
-                        str_pad($pengajuan->tempatTinggalSementara->RT ?? 0, 3, '0', STR_PAD_LEFT),
-                        str_pad($pengajuan->tempatTinggalSementara->RW ?? 0, 3, '0', STR_PAD_LEFT),
-                        '<b>' . strtoupper(optional($pengajuan->keramaian)->deskripsi_acara ?? '....') . '</b>',
-                        '<b>' . strtoupper(optional($pengajuan->keramaian)->nama_acara ?? '....') . '</b>',
+                        str_pad($pengajuan->tempatTinggalSementara->RT ?? $pengajuan->masyarakat->RT ?? 0, 3, '0', STR_PAD_LEFT),
+                        str_pad($pengajuan->tempatTinggalSementara->RW ?? $pengajuan->masyarakat->RW ??0, 3, '0', STR_PAD_LEFT),
+                        '<b>' . ucwords(strtolower(optional($pengajuan->keramaian)->deskripsi_acara ?? '....')) . '</b>',
+                        '<b>' . ucwords(strtolower(optional($pengajuan->keramaian)->nama_acara ?? '....')) . '</b>',
                     ],
                     $pengajuan->pelayanan->keterangan_surat
                 ),
@@ -237,6 +237,7 @@ public function handleCetakDownload(Request $request, $id)
                     : null,
                 'penyelenggara_acara' => ucwords(strtolower(optional($pengajuan->keramaian)->penyelenggara)),
                 'telepon' => $landingpage->telpon ?? null,
+                'acara' => ucwords(strtolower(optional($pengajuan->keramaian)->nama_acara)),
             ];
 
 
