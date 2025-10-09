@@ -8,6 +8,7 @@ use App\Models\DokumenPersyaratan;
 use App\Models\Pengajuan;
 use App\Models\Persyaratan;
 use App\Models\Verifikasi;
+use App\Models\LandingPage;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -64,7 +65,7 @@ class ListPengajuanController extends Controller
     // ✅ TAMBAHAN: Helper untuk deteksi request dari mobile
     private function isMobileAppRequest(Request $request)
     {
-        return $request->hasHeader('X-Requested-With') && 
+        return $request->hasHeader('X-Requested-With') &&
                $request->header('X-Requested-With') === 'XMLHttpRequest' &&
                (str_contains($request->userAgent() ?? '', 'MEAMBO-Mobile-App') ||
                 str_contains($request->header('User-Agent') ?? '', 'MEAMBO-Mobile-App'));
@@ -80,14 +81,14 @@ class ListPengajuanController extends Controller
     //                 'id' => $id,
     //                 'ip' => $request->ip(),
     //             ]);
-                
+
     //             return response()->json([
     //                 'error' => 'Unauthorized',
     //                 'message' => 'Sesi tidak valid. Silakan login ulang di aplikasi.'
     //             ], 401);
     //         }
     //     }
-        
+
     //     return $this->generatePdf($request, $id, 'stream');
     // }
 
@@ -102,7 +103,7 @@ public function handleCetakDownload(Request $request, $id)
 }
 
 
-    
+
 
     // Method publik untuk DOWNLOAD (unduh PDF)
     // public function handleCetakDownload(Request $request, $id)
@@ -114,14 +115,14 @@ public function handleCetakDownload(Request $request, $id)
     //                 'id' => $id,
     //                 'ip' => $request->ip(),
     //             ]);
-                
+
     //             return response()->json([
     //                 'error' => 'Unauthorized',
     //                 'message' => 'Sesi tidak valid. Silakan login ulang di aplikasi.'
     //             ], 401);
     //         }
     //     }
-        
+
     //     return $this->generatePdf($request, $id, 'download');
     // }
 
@@ -157,6 +158,7 @@ public function handleCetakDownload(Request $request, $id)
             ])->findOrFail($id);
 
             $aparatur = Aparatur::findOrFail($request->aparatur_id);
+            $landingpage = LandingPage::first();
 
             // Siapkan semua data yang akan dikirim ke view PDF
             $dataForView = [
@@ -173,7 +175,7 @@ public function handleCetakDownload(Request $request, $id)
                 'jenis_kelamin' => ucwords(strtolower(optional($pengajuan->masyarakat)->jk ?? optional($pengajuan->tempatTinggalSementara)->jenis_kelamin)),
                 'agama' => ucwords(strtolower(optional($pengajuan->masyarakat)->agama ?? optional($pengajuan->tempatTinggalSementara)->agama)),
                 'pekerjaan' => ucwords(strtolower(optional($pengajuan->masyarakat)->pekerjaan ?? optional($pengajuan->tempatTinggalSementara)->pekerjaan)),
-                'alamat' => ucwords(strtolower(optional($pengajuan->masyarakat)->alamat ?? optional($pengajuan->tempatTinggalSementara)->alamat)),
+                'alamat' => optional($pengajuan->masyarakat)->alamat ?? ucwords(strtolower(optional($pengajuan->tempatTinggalSementara)->alamat)),
                 'nik' => optional($pengajuan->masyarakat)->nik ?? optional($pengajuan->tempatTinggalSementara)->nik,
                 'status' => ucwords(strtolower($pengajuan->masyarakat->status ?? $pengajuan->tempatTinggalSementara->status ?? '....')),
                 'keterangan_surat' => str_replace(
@@ -190,10 +192,10 @@ public function handleCetakDownload(Request $request, $id)
                         optional($pengajuan->usaha)->tahun_berdiri ?? '....',
                         '<b>' . ucwords(strtolower($pengajuan->keperluan ?? '....')) . '</b>',
                         ucwords(strtolower(optional($pengajuan->tempatTinggalSementara)->alamat_sementara ?? '....')),
-                        str_pad($pengajuan->tempatTinggalSementara->RT ?? 0, 3, '0', STR_PAD_LEFT),
-                        str_pad($pengajuan->tempatTinggalSementara->RW ?? 0, 3, '0', STR_PAD_LEFT),
-                        '<b>' . strtoupper(optional($pengajuan->keramaian)->deskripsi_acara ?? '....') . '</b>',
-                        '<b>' . strtoupper(optional($pengajuan->keramaian)->nama_acara ?? '....') . '</b>',
+                        str_pad($pengajuan->tempatTinggalSementara->RT ?? $pengajuan->masyarakat->RT ?? 0, 3, '0', STR_PAD_LEFT),
+                        str_pad($pengajuan->tempatTinggalSementara->RW ?? $pengajuan->masyarakat->RW ??0, 3, '0', STR_PAD_LEFT),
+                        '<b>' . ucwords(strtolower(optional($pengajuan->keramaian)->deskripsi_acara ?? '....')) . '</b>',
+                        '<b>' . ucwords(strtolower(optional($pengajuan->keramaian)->nama_acara ?? '....')) . '</b>',
                     ],
                     $pengajuan->pelayanan->keterangan_surat
                 ),
@@ -234,6 +236,8 @@ public function handleCetakDownload(Request $request, $id)
                     ? Carbon::parse($pengajuan->keramaian->tanggal)->isoFormat('D MMMM Y')
                     : null,
                 'penyelenggara_acara' => ucwords(strtolower(optional($pengajuan->keramaian)->penyelenggara)),
+                'telepon' => $landingpage->telpon ?? null,
+                'acara' => ucwords(strtolower(optional($pengajuan->keramaian)->nama_acara)),
             ];
 
 
@@ -277,7 +281,7 @@ public function handleCetakDownload(Request $request, $id)
                     'ip' => $request->ip(),
                 ]);
             }
-            
+
 
             $path = DokumenPersyaratan::where('persyaratan_id', $persyaratan_id)
                 ->where('pengajuan_id', $pengajuan_id)
@@ -317,7 +321,7 @@ public function handleCetakDownload(Request $request, $id)
                 'Cache-Control' => 'no-cache, must-revalidate',
                 'X-Content-Type-Options' => 'nosniff',
             ]);
-            
+
         } catch (\Exception $e) {
             Log::error('Error stream dokumen', [
                 'persyaratan_id' => $persyaratan_id,
