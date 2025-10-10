@@ -27,6 +27,7 @@
     <meta property="og:url" content="http://meambo.id/">
     <meta property="og:image" content="{{ asset('assets/img/APP%20LOGO.png') }}">
     {{-- Alam suka makan--}}
+    {{-- Alam lagi --}}
 
     <!-- 🐦 Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
