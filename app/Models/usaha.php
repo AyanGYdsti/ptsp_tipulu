@@ -24,3 +24,4 @@ class Usaha extends Model
         return $this->belongsTo(Pengajuan::class);
     }
 }
+
