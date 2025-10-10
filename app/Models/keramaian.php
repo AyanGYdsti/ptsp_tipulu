@@ -16,7 +16,7 @@ class Keramaian extends Model
         'deskripsi_acara',
         'tanggal',
         'tempat',
-        'pukul',
+        'pukul' ,
     ];
 
     /**
