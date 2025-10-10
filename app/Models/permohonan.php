@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class permohonan extends Model
+class Permohonan extends Model
 {
     protected $fillable = [
         'pelayanan_id',
