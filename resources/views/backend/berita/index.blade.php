@@ -43,7 +43,7 @@
                     <tbody class="text-gray-700 text-sm bg-white">
                         @forelse ($berita as $data)
                             <tr class="border-b border-gray-200 hover:bg-blue-50 transition">
-                                <td class="px-4 py-3 text-center font-semibold text-blue-600 align-top">{{ $loop->iteration }}</td>
+                                <td class="px-4 py-3 text-center font-semibold text-blue-600 align-top">{{ $berita->firstItem() + $loop->index }}</td>
                                 <td class="px-4 py-3 align-top">{{ $data->judul }}</td>
                                 <td class="px-4 py-3 align-top">{!! Str::limit($data->deskripsi, 80) !!}</td>
                                 <td class="px-4 py-3 text-center align-top">
@@ -79,6 +79,50 @@
                         @endforelse
                     </tbody>
                 </table>
+                <!-- Pagination -->
+                @if ($berita->hasPages())
+                    <div class="mt-6 w-full flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-4 text-sm text-gray-700">
+
+                        <!-- Info jumlah data -->
+                        <div class="text-center sm:text-left text-gray-600 w-full sm:w-auto">
+                            Menampilkan
+                            <span class="font-semibold text-blue-600">
+                                {{ $berita->firstItem() }}–{{ $berita->lastItem() }}
+                            </span>
+                            dari
+                            <span class="font-semibold text-blue-600">{{ $berita->total() }}</span> data
+                        </div>
+
+                        <!-- Tombol Navigasi -->
+                        <div class="flex flex-wrap justify-center gap-2 w-full sm:w-auto">
+                            {{-- Tombol Previous --}}
+                            @if ($berita->onFirstPage())
+                                <span class="px-3 py-2 bg-gray-200 text-gray-400 rounded-lg cursor-not-allowed">&laquo;</span>
+                            @else
+                                <a href="{{ $berita->previousPageUrl() }}"
+                                class="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">&laquo;</a>
+                            @endif
+
+                            {{-- Tombol Halaman --}}
+                            @foreach ($berita->getUrlRange(1, $berita->lastPage()) as $page => $url)
+                                @if ($page == $berita->currentPage())
+                                    <span class="px-3 py-2 bg-blue-600 text-white rounded-lg font-bold">{{ $page }}</span>
+                                @else
+                                    <a href="{{ $url }}"
+                                    class="px-3 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition">{{ $page }}</a>
+                                @endif
+                            @endforeach
+
+                            {{-- Tombol Next --}}
+                            @if ($berita->hasMorePages())
+                                <a href="{{ $berita->nextPageUrl() }}"
+                                class="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">&raquo;</a>
+                            @else
+                                <span class="px-3 py-2 bg-gray-200 text-gray-400 rounded-lg cursor-not-allowed">&raquo;</span>
+                            @endif
+                        </div>
+                    </div>
+                @endif
             </div>
 
             <!-- Mobile Card View - Matching pelayanan style -->
@@ -89,7 +133,7 @@
                             <div class="flex-1">
                                 <div class="flex items-center gap-2 mb-2">
                                     <span class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">
-                                        {{ $loop->iteration }}
+                                        {{ $berita->firstItem() + $loop->index }}
                                     </span>
                                     <h3 class="font-semibold text-gray-800 text-sm">{{ $data->judul }}</h3>
                                 </div>
@@ -128,6 +172,12 @@
                         <p>Tidak ada data berita</p>
                     </div>
                 @endforelse
+                <!-- Pagination -->
+                @if ($berita->hasPages())
+                    <div class="mt-6">
+                        {{ $berita->links('vendor.pagination.tailwind') }}
+                    </div>
+                @endif
             </div>
         </div>
     </div>

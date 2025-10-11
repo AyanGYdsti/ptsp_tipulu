@@ -14,8 +14,7 @@ class BeritaController extends Controller
     {
         $title = "Berita";
 
-
-        $berita = Berita::get();
+        $berita = Berita::paginate(10);
 
         return view('backend.berita.index', compact('title', 'berita'));
     }
