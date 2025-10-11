@@ -13,4 +13,9 @@ class Masyarakat extends Model
     {
         return $this->hasMany(DokumenPersyaratan::class, 'nik');
     }
+
+    public function pengajuans()
+    {
+        return $this->hasMany(Pengajuan::class,'nik');
+    }
 }

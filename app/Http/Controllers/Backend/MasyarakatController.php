@@ -101,9 +101,10 @@ class MasyarakatController extends Controller
 
     public function delete($id)
     {
-        $masyarakat = Masyarakat::where('nik', $id);
+        $masyarakat = Masyarakat::with(['pengajuans'])->where('nik', $id)->first();
 
         try {
+            $masyarakat->pengajuans()?->delete();
             $masyarakat->delete();
 
             return back()->with('success', 'Berhasil menghapus data');
