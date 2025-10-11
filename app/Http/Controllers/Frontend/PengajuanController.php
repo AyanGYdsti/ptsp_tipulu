@@ -60,7 +60,9 @@ class PengajuanController extends Controller
             }
         }
 
-        return redirect()->route('pengajuan.detail', ['id' => $id, 'nik' => $nik])->with('success', 'Data anda terdaftar, Silahkan lengkapi pengajuan anda.');
+        session()->forget(['error', 'success']);
+
+        return redirect()->route('pengajuan.detail', ['id' => $id, 'nik' => $nik]);
     }
 
     public function detail($id, $nik = null)
