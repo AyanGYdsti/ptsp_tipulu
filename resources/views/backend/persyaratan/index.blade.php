@@ -192,7 +192,7 @@
             <form method="POST" action="{{ route('persyaratan.store') }}">
                 @csrf
                 <div class="mb-4">
-                    <label class="block text-sm font-semibold text-gray-600 mb-1">Nama Persyaratan</label>
+                    <label class="block text-sm font-semibold text-gray-600 mb-1">Nama Persyaratan<span class="text-red-500">*</span></label>
                     <input type="text" name="nama" value="{{ old('nama') }}"
                         class="w-full border border-blue-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
                     @error('nama')
@@ -200,7 +200,7 @@
                     @enderror
                 </div>
                 <div class="mb-4">
-                    <label class="block text-sm font-semibold text-gray-600 mb-1">Keterangan</label>
+                    <label class="block text-sm font-semibold text-gray-600 mb-1">Keterangan<span class="text-red-500">*</span></label>
                     <textarea name="keterangan" rows="3"
                         class="w-full border border-blue-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 resize-vertical">{{ old('keterangan') }}</textarea>
                     @error('keterangan')
