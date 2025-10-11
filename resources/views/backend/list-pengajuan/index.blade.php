@@ -38,7 +38,7 @@
                     <tbody class="text-gray-700 text-sm bg-white">
                         @forelse ($pengajuan as $data)
                             <tr class="hover:bg-blue-50 transition">
-                                <td class="px-4 py-3 text-center font-semibold text-blue-600">{{ $loop->iteration }}</td>
+                                <td class="px-4 py-3 text-center font-semibold text-blue-600">{{ $pengajuan->firstItem() + $loop->index }}</td>
                                 <td class="px-4 py-3">{{ optional($data->masyarakat)->nama ?? optional($data->tempatTinggalSementara)->nama }}</td>
                                 <td class="px-4 py-3">{{ $data->no_hp }}</td>
                                 <td class="px-4 py-3">{{ $data->pelayanan->nama }}</td>
@@ -181,7 +181,7 @@
                         <div class="flex justify-between items-start mb-3">
                             <div class="flex-1">
                                 <div class="flex items-center gap-2 mb-2">
-                                    <span class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">{{ $loop->iteration }}</span>
+                                    <span class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">{{ $pengajuan->firstItem() + $loop->index }}</span>
                                     <h3 class="font-bold text-gray-800 text-sm">{{ optional($data->masyarakat)->nama ?? optional($data->tempatTinggalSementara)->nama }}</h3>
                                 </div>
                                 <div class="space-y-1 text-xs text-gray-600">
