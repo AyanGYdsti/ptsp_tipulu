@@ -35,7 +35,8 @@ class AparaturController extends Controller
             'posisi' => 'required|unique:aparaturs,posisi',
             'foto' => 'required|mimes:jpg,png,webp,jpeg',
         ],[
-            'posisi.unique' => 'Posisi sudah ada'
+            'posisi.unique' => 'Posisi sudah ada',
+            'nip.unique' => 'NIP sudah ada',
         ]);
 
         try {
