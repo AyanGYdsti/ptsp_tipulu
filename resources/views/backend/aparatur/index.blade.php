@@ -197,7 +197,7 @@
                         <input type="number" name="posisi" value="{{ old('posisi') }}" step="1" min="1" 
                             class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-sm">
                         @error('posisi')
-                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            <p class="text-red-500 text-xs mt-1"><i class="fa fa-exclamation-circle"></i> {{ $message }}</p>
                         @enderror
                     </div>
 
@@ -208,7 +208,7 @@
                             accept="image/*">
                         <p class="text-xs text-gray-500 mt-1">Format: JPG, PNG, GIF (Max: 2MB)</p>
                         @error('foto')
-                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            <p class="text-red-500 text-xs mt-1"><i class="fa fa-exclamation-circle"></i> {{ $message }}</p>
                         @enderror
                     </div>
                 </div>
