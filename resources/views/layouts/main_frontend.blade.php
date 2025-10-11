@@ -192,6 +192,7 @@
     </div>
 
     <script src="/assets/js/script.js"></script>
+    @stack('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Auto close mobile menu setelah link diklik
@@ -279,38 +280,6 @@
 
                 // Inisialisasi grafik
                 const genderChart = new Chart(genderChartEl, genderConfig);
-            }
-
-            // Carousel untuk berita
-            const carouselInner = document.getElementById('carousel-inner');
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-
-            if (carouselInner && prevBtn && nextBtn) {
-                let currentIndex = 0;
-                const items = document.querySelectorAll('#carousel-inner > div');
-                const totalItems = items.length;
-
-                function updateCarousel() {
-                    const itemWidth = items[0].offsetWidth;
-                    carouselInner.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
-                }
-
-                nextBtn.addEventListener('click', () => {
-                    if (currentIndex < totalItems - 1) {
-                        currentIndex++;
-                        updateCarousel();
-                    }
-                });
-
-                prevBtn.addEventListener('click', () => {
-                    if (currentIndex > 0) {
-                        currentIndex--;
-                        updateCarousel();
-                    }
-                });
-
-                window.addEventListener('resize', updateCarousel);
             }
 
             // Animasi scroll

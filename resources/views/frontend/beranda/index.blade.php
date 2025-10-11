@@ -310,4 +310,84 @@
 @endsection
 
 @push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- News Carousel ---
+        const carouselInner = document.getElementById("carousel-inner");
+        const prevBtn = document.getElementById("prev-btn");
+        const nextBtn = document.getElementById("next-btn");
+        let currentIndex = 0;
+        let itemsPerView = 3;
+
+        function updateItemsPerView() {
+            if (window.innerWidth < 768) itemsPerView = 1;
+            else if (window.innerWidth < 1024) itemsPerView = 2;
+            else itemsPerView = 3;
+        }
+        updateItemsPerView();
+        window.addEventListener("resize", updateItemsPerView);
+
+        const totalItems = carouselInner.children.length;
+
+        function updateCarousel() {
+            const itemWidth =
+                carouselInner.children[0].getBoundingClientRect().width;
+            carouselInner.style.transform = `translateX(-${
+                currentIndex * itemWidth
+            }px)`;
+        }
+
+        nextBtn.addEventListener("click", () => {
+            if (currentIndex < totalItems - itemsPerView) {
+                currentIndex++;
+                updateCarousel();
+            }
+        });
+
+        prevBtn.addEventListener("click", () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateCarousel();
+            }
+        });
+
+        setInterval(() => {
+            if (currentIndex < totalItems - itemsPerView) {
+                currentIndex++;
+            } else {
+                currentIndex = 0;
+            }
+            updateCarousel();
+        }, 7000);
+
+    // Carousel untuk berita
+
+        if (carouselInner && prevBtn && nextBtn) {
+            let currentIndex = 0;
+            const items = document.querySelectorAll('#carousel-inner > div');
+            const totalItems = items.length;
+
+            function updateCarousel() {
+                const itemWidth = items[0].offsetWidth;
+                carouselInner.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+            }
+
+            nextBtn.addEventListener('click', () => {
+                if (currentIndex < totalItems - 1) {
+                    currentIndex++;
+                    updateCarousel();
+                }
+            });
+
+            prevBtn.addEventListener('click', () => {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    updateCarousel();
+                }
+            });
+
+            window.addEventListener('resize', updateCarousel);
+        }    
+    });
+</script>
 @endpush

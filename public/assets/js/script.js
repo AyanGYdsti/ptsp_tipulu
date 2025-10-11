@@ -32,54 +32,6 @@ document.addEventListener("DOMContentLoaded", function () {
         observer.observe(el);
     });
 
-    // --- News Carousel ---
-    const carouselInner = document.getElementById("carousel-inner");
-    const prevBtn = document.getElementById("prev-btn");
-    const nextBtn = document.getElementById("next-btn");
-    let currentIndex = 0;
-    let itemsPerView = 3;
-
-    function updateItemsPerView() {
-        if (window.innerWidth < 768) itemsPerView = 1;
-        else if (window.innerWidth < 1024) itemsPerView = 2;
-        else itemsPerView = 3;
-    }
-    updateItemsPerView();
-    window.addEventListener("resize", updateItemsPerView);
-
-    const totalItems = carouselInner.children.length;
-
-    function updateCarousel() {
-        const itemWidth =
-            carouselInner.children[0].getBoundingClientRect().width;
-        carouselInner.style.transform = `translateX(-${
-            currentIndex * itemWidth
-        }px)`;
-    }
-
-    nextBtn.addEventListener("click", () => {
-        if (currentIndex < totalItems - itemsPerView) {
-            currentIndex++;
-            updateCarousel();
-        }
-    });
-
-    prevBtn.addEventListener("click", () => {
-        if (currentIndex > 0) {
-            currentIndex--;
-            updateCarousel();
-        }
-    });
-
-    setInterval(() => {
-        if (currentIndex < totalItems - itemsPerView) {
-            currentIndex++;
-        } else {
-            currentIndex = 0;
-        }
-        updateCarousel();
-    }, 7000);
-
     // --- Count-up Animation ---
     function animateCountUp(el) {
         const target = +el.getAttribute("data-target");
@@ -116,61 +68,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (document.getElementById("data-penduduk")) {
         countUpObserver.observe(document.getElementById("data-penduduk"));
-    }
-
-    // --- Chart.js ---
-    const chartObserver = new IntersectionObserver(
-        (entries, observer) => {
-            if (entries[0].isIntersecting) {
-                // Gender Chart
-                new Chart(document.getElementById("genderChart"), {
-                    type: "pie",
-                    data: {
-                        labels: ["Laki-laki", "Perempuan"],
-                        datasets: [
-                            {
-                                data: [4420, 4330],
-                                backgroundColor: ["#3B82F6", "#EC4899"],
-                            },
-                        ],
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: { legend: { position: "bottom" } },
-                    },
-                });
-
-                // Age Chart
-                new Chart(document.getElementById("ageChart"), {
-                    type: "bar",
-                    data: {
-                        labels: ["0-17", "18-55", ">55"],
-                        datasets: [
-                            {
-                                label: "Jumlah Penduduk",
-                                data: [2500, 5150, 1100],
-                                backgroundColor: [
-                                    "#10B981",
-                                    "#F59E0B",
-                                    "#6366F1",
-                                ],
-                            },
-                        ],
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: { legend: { display: false } },
-                        scales: { y: { beginAtZero: true } },
-                    },
-                });
-                observer.unobserve(entries[0].target);
-            }
-        },
-        { threshold: 0.5 }
-    );
-
-    if (document.getElementById("data-penduduk")) {
-        chartObserver.observe(document.getElementById("data-penduduk"));
     }
 
     // --- Footer Year ---
@@ -315,36 +212,36 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // --- Complaint Assistant Logic ---
-    const geminiAssistBtn = document.getElementById("gemini-assist-btn");
-    const complaintDetails = document.getElementById("complaint-details");
-    const geminiStatus = document.getElementById("gemini-status");
+    // // --- Complaint Assistant Logic ---
+    // const geminiAssistBtn = document.getElementById("gemini-assist-btn");
+    // const complaintDetails = document.getElementById("complaint-details");
+    // const geminiStatus = document.getElementById("gemini-status");
 
-    geminiAssistBtn.addEventListener("click", async () => {
-        const userText = complaintDetails.value.trim();
-        if (!userText) {
-            geminiStatus.innerText =
-                "Mohon isi detail pengaduan terlebih dahulu.";
-            return;
-        }
+    // geminiAssistBtn.addEventListener("click", async () => {
+    //     const userText = complaintDetails.value.trim();
+    //     if (!userText) {
+    //         geminiStatus.innerText =
+    //             "Mohon isi detail pengaduan terlebih dahulu.";
+    //         return;
+    //     }
 
-        geminiAssistBtn.disabled = true;
-        geminiStatus.innerHTML =
-            '<div class="flex justify-center items-center gap-2"><div class="loader"></div><span>Memproses tulisan Anda...</span></div>';
+    //     geminiAssistBtn.disabled = true;
+    //     geminiStatus.innerHTML =
+    //         '<div class="flex justify-center items-center gap-2"><div class="loader"></div><span>Memproses tulisan Anda...</span></div>';
 
-        const systemInstruction =
-            "Anda adalah asisten penulis yang ahli dalam komunikasi formal. Tugas Anda adalah mengubah draf pengaduan dari warga menjadi sebuah laporan yang lebih terstruktur, jelas, sopan, dan profesional dalam Bahasa Indonesia. Pertahankan inti dari masalah yang disampaikan pengguna. Jangan menambahkan informasi yang tidak ada dalam draf asli.";
-        const prompt = `Berikut adalah draf pengaduan dari seorang warga. Tolong perbaiki menjadi laporan yang baik:\n\n"${userText}"`;
+    //     const systemInstruction =
+    //         "Anda adalah asisten penulis yang ahli dalam komunikasi formal. Tugas Anda adalah mengubah draf pengaduan dari warga menjadi sebuah laporan yang lebih terstruktur, jelas, sopan, dan profesional dalam Bahasa Indonesia. Pertahankan inti dari masalah yang disampaikan pengguna. Jangan menambahkan informasi yang tidak ada dalam draf asli.";
+    //     const prompt = `Berikut adalah draf pengaduan dari seorang warga. Tolong perbaiki menjadi laporan yang baik:\n\n"${userText}"`;
 
-        const refinedText = await callGeminiAPI(prompt, systemInstruction);
+    //     const refinedText = await callGeminiAPI(prompt, systemInstruction);
 
-        complaintDetails.value = refinedText;
-        geminiStatus.innerText = "Teks pengaduan Anda berhasil disempurnakan!";
-        geminiAssistBtn.disabled = false;
+    //     complaintDetails.value = refinedText;
+    //     geminiStatus.innerText = "Teks pengaduan Anda berhasil disempurnakan!";
+    //     geminiAssistBtn.disabled = false;
 
-        setTimeout(() => {
-            geminiStatus.innerText = "";
-        }, 4000);
-    });
+    //     setTimeout(() => {
+    //         geminiStatus.innerText = "";
+    //     }, 4000);
+    // });
     
 });
