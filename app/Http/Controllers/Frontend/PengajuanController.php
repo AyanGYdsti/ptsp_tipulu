@@ -51,16 +51,14 @@ class PengajuanController extends Controller
         $masyarakat = Masyarakat::where('nik', $request->nik)->first();
         $nik = Masyarakat::where('nik', $request->nik)->value('nik');
         if (!$nik) {
-            return back()->with('error', 'NIK tidak ditemukan, Silahkan daftar ke kelurahan tipulu');
+            return back()->with('error', 'NIK tidak ditemukan, Silahkan daftar ke kelurahan tipulu')->withoutInput();;
         }
 
         if ($pelayanan->nama === "Surat Keterangan Belum Nikah") {
             if ($masyarakat->status !== "Belum Kawin" && $masyarakat->status !== "Belum Menikah") {
-                return back()->with('error', 'Anda sudah menikah, tidak bisa mengajukan surat ini.');
+                return back()->with('error', 'Anda sudah menikah, tidak bisa mengajukan surat ini.')->withoutInput();;
             }
         }
-
-        session()->forget(['error', 'success']);
 
         return redirect()->route('pengajuan.detail', ['id' => $id, 'nik' => $nik]);
     }
