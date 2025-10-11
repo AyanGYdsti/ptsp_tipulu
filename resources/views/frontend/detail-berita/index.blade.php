@@ -16,7 +16,7 @@
 
             {{-- Gambar Utama --}}
             @if ($berita->thumbnail)
-                <img src="{{ asset($berita->thumbnail) }}" class="w-full h-full object-cover"
+                <img src="{{ asset($berita->thumbnail) }}" class="w-full h-[400px] object-cover"
                     alt="[Gambar kegiatan rapat warga]">
             @else
                 <span class="text-gray-400">-</span>
