@@ -131,7 +131,7 @@
                                     {{ $pelayanan->firstItem() + $loop->index }}
                                 </td>
                                 <td class="px-2 sm:px-4 py-3 font-medium align-top">{{ $data->nama }}</td>
-                                <td class="px-2 sm:px-4 py-3 text-center align-top">{!! $data->icon !!}</td>
+                                <td class="px-2 sm:px-4 py-3 text-center align-top"><i class="{!! $data->icon !!}"></i></td>
                                 <td class="px-2 sm:px-4 py-3 description-col align-top" title="{{ $data->deskripsi }}">{{ $data->deskripsi }}</td>
                                 <td class="px-2 sm:px-4 py-3 requirements-col align-top">
                                     @foreach ($data->pelayananPersyaratan as $item)
@@ -224,7 +224,7 @@
 
                                 <div class="text-xs text-gray-600 mb-2">
                                     <strong>Icon:</strong>
-                                    <div class="mt-1">{!! $data->icon !!}</div>
+                                    <div class="mt-1"><i class="{!! $data->icon !!}"></i></div>
                                 </div>
 
                                 <div class="text-xs text-gray-600 mb-2">
