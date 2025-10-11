@@ -170,7 +170,7 @@
                         <input type="text" name="nip" value="{{ old('nip') }}"
                             class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-sm">
                         @error('nip')
-                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            <p class="text-red-500 text-xs mt-1"><i class="fa fa-exclamation-circle"></i> {{ $message }}</p>
                         @enderror
                     </div>
 
