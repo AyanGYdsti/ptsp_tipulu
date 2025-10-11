@@ -42,7 +42,8 @@ Route::get('/visimisi', [LandingPageController::class, 'detailVisiMisi'])->name(
 Route::get('/list-aparatur', [ListaparaturController::class, 'index'])->name('frontend.aparatur.index');
 Route::get('/list-pelayanan', [FrontendListpelayananController::class, 'index'])->name('list-pelayanan');
 Route::get('/pengajuan/{id}', [PengajuanController::class, 'index'])->name('pengajuan');
-Route::post('/pengajuan/cek/{id}', [PengajuanController::class, 'cek'])->name('pengajuan.cek');
+Route::match(['get', 'post'], '/pengajuan/cek/{id}', [PengajuanController::class, 'cek'])->name('pengajuan.cek');
+
 Route::post('/pengajuan/store/{id}', [PengajuanController::class, 'store'])->name('pengajuan.store');
 Route::get('/pengajuan/detail/{id}/{nik?}', [PengajuanController::class, 'detail'])->name('pengajuan.detail');
 
