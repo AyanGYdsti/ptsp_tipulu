@@ -390,7 +390,7 @@
                     tampilkanError(nipField, pesanError.nip);
                     hasError = true;
                     if (!firstErrorField) firstErrorField = nipField;
-                }else if (nipField.value.length < 16) {
+                } else if (nipField.value.length < 16) {
                     tampilkanError(nipField, 'NIP harus lebih dari 16 karakter');
                     hasError = true;
                     if (!firstErrorField) firstErrorField = nipField;
