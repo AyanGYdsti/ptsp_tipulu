@@ -56,11 +56,11 @@ class PengajuanController extends Controller
 
         if ($pelayanan->nama === "Surat Keterangan Belum Nikah") {
             if ($masyarakat->status !== "Belum Kawin" && $masyarakat->status !== "Belum Menikah") {
-            return back()->with('error', 'Anda sudah menikah, tidak bisa mengajukan surat ini.');
+                return back()->with('error', 'Anda sudah menikah, tidak bisa mengajukan surat ini.');
+            }
         }
-    }
 
-        return redirect()->route('pengajuan.detail', ['id' => $id, 'nik' => $nik]);
+        return redirect()->route('pengajuan.detail', ['id' => $id, 'nik' => $nik])->with('success', 'Data anda terdaftar, Silahkan lengkapi pengajuan anda.');
     }
 
     public function detail($id, $nik = null)
