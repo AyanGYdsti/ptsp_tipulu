@@ -217,7 +217,7 @@
                             <div class="flex-1">
                                 <div class="flex items-center gap-2 mb-2">
                                     <span class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">
-                                        {{ $loop->iteration }}
+                                        {{ $pelayanan->firstItem() + $loop->index }}
                                     </span>
                                     <h3 class="font-semibold text-gray-800 text-sm">{{ $data->nama }}</h3>
                                 </div>
@@ -308,63 +308,7 @@
 
 
 @push('scripts')
-    <!-- Tom Select JS -->
-    <script src="/assets/js/tom-select.complete.min.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Initialize TomSelect
-            new TomSelect("#persyaratanSelect", {
-                plugins: ['remove_button'],
-                persist: false,
-                create: false,
-                maxItems: null,
-                sortField: {
-                    field: "text",
-                    direction: "asc"
-                },
-            });
-
-            // Modal functionality
-            const modal = document.getElementById('modal');
-            const modalContent = document.getElementById('modalContent');
-            const openModalBtn = document.getElementById('openModalBtn');
-            const closeModalBtn = document.getElementById('closeModalBtn');
-            const closeModalBtn2 = document.getElementById('closeModalBtn2');
-
-            function openModal() {
-                modal.classList.remove('hidden');
-                setTimeout(() => {
-                    modalContent.classList.remove('scale-95', 'opacity-0');
-                    modalContent.classList.add('scale-100', 'opacity-100');
-                }, 10);
-                document.body.style.overflow = 'hidden';
-            }
-
-            function closeModal() {
-                modalContent.classList.remove('scale-100', 'opacity-100');
-                modalContent.classList.add('scale-95', 'opacity-0');
-                setTimeout(() => {
-                    modal.classList.add('hidden');
-                }, 300);
-                document.body.style.overflow = 'auto';
-            }
-
-            openModalBtn.addEventListener('click', openModal);
-            closeModalBtn.addEventListener('click', closeModal);
-            closeModalBtn2.addEventListener('click', closeModal);
-
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    closeModal();
-                }
-            });
-
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-                    closeModal();
-                }
-            });
-        });
 
         // Delete confirmation functionality
         function confirmDelete(url, name) {
@@ -410,23 +354,23 @@
         }
 
             // Fungsi untuk menutup notifikasi sukses
-    function closeSuccessNotification() {
-        const notif = document.getElementById('successNotification');
-        if (notif) {
-            notif.style.animation = 'slide-out 0.3s ease-out';
-            setTimeout(() => notif.remove(), 300);
+        function closeSuccessNotification() {
+            const notif = document.getElementById('successNotification');
+            if (notif) {
+                notif.style.animation = 'slide-out 0.3s ease-out';
+                setTimeout(() => notif.remove(), 300);
+            }
         }
-    }
 
-    // Auto close notifikasi sukses setelah 5 detik
-    document.addEventListener('DOMContentLoaded', function() {
-        const successNotif = document.getElementById('successNotification');
-        if (successNotif) {
-            setTimeout(() => {
-                closeSuccessNotification();
-            }, 5000);
-        }
-    });
+        // Auto close notifikasi sukses setelah 5 detik
+        document.addEventListener('DOMContentLoaded', function() {
+            const successNotif = document.getElementById('successNotification');
+            if (successNotif) {
+                setTimeout(() => {
+                    closeSuccessNotification();
+                }, 5000);
+            }
+        });
 
     </script>
 @endpush
