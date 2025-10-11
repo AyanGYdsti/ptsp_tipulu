@@ -267,16 +267,19 @@
     <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-4">
         <div class="bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto transform scale-95 opacity-0 transition-all duration-300 relative"
             id="modalContent">
-            <!-- Tombol Close -->
-            <button id="closeModalBtn" class="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition z-10">
-                <i class="fa fa-times text-lg"></i>
-            </button>
-
-            <!-- Header Modal -->
-            <div class="sticky top-0 bg-gradient-to-br from-white to-blue-50 pt-6 pb-4 border-b border-blue-200 px-6">
+            <!-- Header Modal + Tombol Close -->
+            <div
+                class="sticky top-0 bg-gradient-to-br from-white to-blue-50 border-b border-blue-200 px-6 py-4 flex items-center justify-between z-10">
+                <!-- Judul -->
                 <h3 class="text-lg sm:text-xl font-bold text-blue-700 flex items-center gap-2">
-                    <i class="fa fa-plus-circle text-blue-500"></i> Tambah Masyarakat
+                    <i class="fa fa-plus-circle text-blue-500"></i>
+                    Tambah Masyarakat
                 </h3>
+
+                <!-- Tombol Close -->
+                <button id="closeModalBtn" class="text-gray-500 hover:text-red-500 transition">
+                    <i class="fa fa-times text-lg"></i>
+                </button>
             </div>
 
             <!-- Form -->
