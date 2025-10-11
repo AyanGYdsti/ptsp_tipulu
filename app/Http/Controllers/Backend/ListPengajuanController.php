@@ -23,7 +23,7 @@ class ListPengajuanController extends Controller
     public function index()
     {
         $title = "List Pengajuan";
-        $pengajuan = Pengajuan::with(['pelayanan', 'masyarakat', 'dokumenPersyaratan.persyaratan'])->orderByDesc('id')->get();
+        $pengajuan = Pengajuan::with(['pelayanan', 'masyarakat', 'dokumenPersyaratan.persyaratan'])->orderByDesc('id')->paginate(10);
         $aparaturs = Aparatur::get(['id', 'nama']);
         return view('backend.list-pengajuan.index', compact('title', 'pengajuan', 'aparaturs'));
     }

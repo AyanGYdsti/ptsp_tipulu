@@ -133,6 +133,45 @@
                         @endforelse
                     </tbody>
                 </table>
+                <!-- Pagination -->
+                @if ($pengajuan->hasPages())
+                    <div class="mt-6 w-full flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-4 text-sm text-gray-700">
+                        <div class="text-center sm:text-left text-gray-600 w-full sm:w-auto">
+                            Menampilkan
+                            <span class="font-semibold text-blue-600">
+                                {{ $pengajuan->firstItem() }}–{{ $pengajuan->lastItem() }}
+                            </span>
+                            dari
+                            <span class="font-semibold text-blue-600">{{ $pengajuan->total() }}</span> data
+                        </div>
+
+                        <!-- Tombol Navigasi -->
+                        <div class="flex flex-wrap justify-center gap-2 w-full sm:w-auto">
+                            {{-- Tombol Previous --}}
+                            @if ($pengajuan->onFirstPage())
+                                <span class="px-3 py-2 bg-gray-200 text-gray-400 rounded-lg cursor-not-allowed">&laquo;</span>
+                            @else
+                                <a href="{{ $pengajuan->previousPageUrl() }}" class="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">&laquo;</a>
+                            @endif
+
+                            {{-- Tombol Halaman --}}
+                            @foreach ($pengajuan->getUrlRange(1, $pengajuan->lastPage()) as $page => $url)
+                                @if ($page == $pengajuan->currentPage())
+                                    <span class="px-3 py-2 bg-blue-600 text-white rounded-lg font-bold">{{ $page }}</span>
+                                @else
+                                    <a href="{{ $url }}" class="px-3 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition">{{ $page }}</a>
+                                @endif
+                            @endforeach
+
+                            {{-- Tombol Next --}}
+                            @if ($pengajuan->hasMorePages())
+                                <a href="{{ $pengajuan->nextPageUrl() }}" class="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">&raquo;</a>
+                            @else
+                                <span class="px-3 py-2 bg-gray-200 text-gray-400 rounded-lg cursor-not-allowed">&raquo;</span>
+                            @endif
+                        </div>
+                    </div>
+                @endif
             </div>
 
             <!-- Mobile Card View -->
@@ -252,6 +291,12 @@
                         Tidak Ada data pengajuan.
                     </div>
                 @endforelse
+                <!-- Pagination -->
+                @if ($pengajuan->hasPages())
+                    <div class="mt-6">
+                        {{ $pengajuan->links('vendor.pagination.tailwind') }}
+                    </div>
+                @endif
             </div>
 
             {{-- LOOP MODAL UNTUK SETIAP DATA --}}
