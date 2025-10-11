@@ -167,7 +167,7 @@
 
                     <div>
                         <label class="block text-sm font-semibold text-gray-600 mb-2">NIP <span class="text-red-500">*</span></label>
-                        <input type="text" name="nip" value="{{ old('nip') }}"
+                        <input type="number" name="nip" min="1" value="{{ old('nip') }}"
                             class="w-full border border-blue-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-sm">
                         @error('nip')
                             <p class="text-red-500 text-xs mt-1"><i class="fa fa-exclamation-circle"></i> {{ $message }}</p>
@@ -385,8 +385,13 @@
 
                 // Validasi NIP
                 const nipField = this.querySelector('[name="nip"]');
+                console.log(nipField.value.length < 16)
                 if (!nipField.value.trim()) {
                     tampilkanError(nipField, pesanError.nip);
+                    hasError = true;
+                    if (!firstErrorField) firstErrorField = nipField;
+                }else if (nipField.value.length < 16) {
+                    tampilkanError(nipField, 'NIP harus lebih dari 16 karakter');
                     hasError = true;
                     if (!firstErrorField) firstErrorField = nipField;
                 }
