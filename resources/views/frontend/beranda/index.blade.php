@@ -21,9 +21,9 @@
                         <a href="#layanan"
                             class="bg-yellow-500 text-gray-900 font-bold py-3 px-8 rounded-lg text-lg hover:bg-yellow-400 transition-transform hover:scale-105 w-full sm:w-auto">Lihat
                             Layanan Kami</a>
-                        <a href="#"
+                        {{-- <a href="#"
                             class="bg-white/20 backdrop-blur-sm text-white font-medium py-3 px-8 rounded-lg text-lg hover:bg-white/30 transition-transform hover:scale-105 w-full sm:w-auto">Cara
-                            Penggunaan Sistem</a>
+                            Penggunaan Sistem</a> --}}
                     </div>
                 </div>
             </div>
